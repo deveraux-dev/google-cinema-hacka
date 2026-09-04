@@ -1,0 +1,21 @@
+.env
+*.key
+*.pem
+service-account*.json
+credentials*.json
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+dist/
+build/
+*.egg-info/
+node_modules/
+.vscode/
+.idea/
+
+# never allow any doctrine/private-repo files to be pulled in here
+CLAUDE.md
+.claude/
+.forge/
