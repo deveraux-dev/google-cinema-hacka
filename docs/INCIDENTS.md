@@ -27,8 +27,11 @@ OHS legislation site (Alta Reg 191/2021). The row-to-part mapping is a first pas
 the NCSO to correct.
 
 **Part 2, Hazard Assessment, Elimination and Control** sits above every row. It is the
-legal reason the cascade exists: a change to the work obliges the assessment to follow.
-The exact clause is to be quoted from the Code text before it appears in the pitch.
+legal reason the cascade exists. Section 7(2), quoted from Alberta's OHS legislation
+site: "A hazard assessment must be repeated, reviewed or revised when there is a change
+in the work site, work process, operations or when a new hazard is identified." A script
+revision that adds a gag, a location, or a stunt is a change in the work process. Section
+8 requires workers be involved and told. The cascade is 7(2) and 8, automated.
 Jumper (2007) was a set strike; under Part 30 that is demolition.
 
 ## Timeline
