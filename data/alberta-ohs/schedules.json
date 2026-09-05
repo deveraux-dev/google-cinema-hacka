@@ -1,0 +1,1013 @@
+[
+ {
+  "schedule": 1,
+  "table": 1,
+  "title": "Low hazard work",
+  "see": null,
+  "rows": [
+   [
+    "“Low hazard work” means work at"
+   ],
+   [
+    "",
+    "(a)",
+    "administrative sites where the work performed is clerical or administrative in nature;"
+   ],
+   [
+    "",
+    "(b)",
+    "dispersal sites"
+   ],
+   [
+    "",
+    "",
+    "(i)",
+    "where a worker is based,"
+   ],
+   [
+    "",
+    "",
+    "(ii)",
+    "where a worker is required to report for instruction, and"
+   ],
+   [
+    "",
+    "",
+    "(iii)",
+    "from which a worker is transported to a work site where the work is performed"
+   ]
+  ]
+ },
+ {
+  "schedule": 1,
+  "table": 2,
+  "title": "Medium hazard work",
+  "see": null,
+  "rows": [
+   [
+    "“Medium hazard work” means any work that is neither low hazard work nor high hazard work."
+   ]
+  ]
+ },
+ {
+  "schedule": 1,
+  "table": 3,
+  "title": "High hazard work",
+  "see": null,
+  "rows": [
+   [
+    "“High hazard work” means work involving"
+   ],
+   [
+    "(a) construction or demolition, including"
+   ],
+   [
+    "",
+    "",
+    "(i)",
+    "industrial and commercial process facilities,"
+   ],
+   [
+    "",
+    "",
+    "(ii)",
+    "pipelines and related gas or oil transmission facilities,"
+   ],
+   [
+    "",
+    "",
+    "(iii)",
+    "commercial, residential and industrial buildings,"
+   ],
+   [
+    "",
+    "",
+    "(iv)",
+    "roads, highways, bridges and related installations,"
+   ],
+   [
+    "",
+    "",
+    "(v)",
+    "sewage gathering systems,"
+   ],
+   [
+    "",
+    "",
+    "(vi)",
+    "utility installations, and"
+   ],
+   [
+    "",
+    "",
+    "(vii)",
+    "water distribution systems;"
+   ],
+   [
+    "(b) operation and maintenance of"
+   ],
+   [
+    "",
+    "",
+    "(i)",
+    "food packing or processing plants,"
+   ],
+   [
+    "",
+    "",
+    "(ii)",
+    "beverage processing plants,"
+   ],
+   [
+    "",
+    "",
+    "(iii)",
+    "electrical generation and distribution systems,"
+   ],
+   [
+    "",
+    "(iv)",
+    "foundries,"
+   ],
+   [
+    "",
+    "(v)",
+    "industrial heavy equipment repair and service facilities,"
+   ],
+   [
+    "",
+    "(vi)",
+    "sawmills and lumber processing facilities,"
+   ],
+   [
+    "",
+    "(vii)",
+    "machine shops,"
+   ],
+   [
+    "",
+    "(viii)",
+    "metal fabrication shops,"
+   ],
+   [
+    "",
+    "(ix)",
+    "gas, oil and chemical process plants,"
+   ],
+   [
+    "",
+    "(x)",
+    "steel and other base metal processing plants, and"
+   ],
+   [
+    "",
+    "(xi)",
+    "industrial process facilities not elsewhere specified;"
+   ],
+   [
+    "(c) woodlands operations;"
+   ],
+   [
+    "(d) gas and oil well drilling and servicing operations;"
+   ],
+   [
+    "(e) mining and quarrying operations;"
+   ],
+   [
+    "(f) seismic operations;"
+   ],
+   [
+    "(g) detonation of explosives."
+   ]
+  ]
+ },
+ {
+  "schedule": 1,
+  "table": 4,
+  "title": "First aid room requirements [See section 178]",
+  "see": null,
+  "rows": [
+   [
+    "(1) If an employer is required to provide a first aid room by Part 11, the employer must ensure that it is"
+   ],
+   [
+    "",
+    "(a)",
+    "located near the work area or areas it is to serve,"
+   ],
+   [
+    "",
+    "(b)",
+    "easily accessible to workers at all times,"
+   ],
+   [
+    "",
+    "(c)",
+    "able to accommodate a stretcher,"
+   ],
+   [
+    "",
+    "(d)",
+    "close to bathroom facilities,"
+   ],
+   [
+    "",
+    "(e)",
+    "of adequate size,"
+   ],
+   [
+    "",
+    "(f)",
+    "kept clean and sanitary,"
+   ],
+   [
+    "",
+    "(g)",
+    "provided with adequate lighting, ventilation and heating,"
+   ],
+   [
+    "",
+    "(h)",
+    "designated as non-smoking,"
+   ],
+   [
+    "",
+    "(i)",
+    "under the supervision of an advanced first aider or an advanced care paramedic,"
+   ],
+   [
+    "",
+    "(j)",
+    "clearly identified as a first aid facility and appropriately marked with how and where to access the first aider,"
+   ],
+   [
+    "",
+    "(k)",
+    "used only to administer first aid or health related services, and"
+   ],
+   [
+    "",
+    "(l)",
+    "equipped with"
+   ],
+   [
+    "",
+    "",
+    "(i)",
+    "a communication system,"
+   ],
+   [
+    "",
+    "",
+    "(ii)",
+    "a permanently installed sink with hot and cold potable running water,"
+   ],
+   [
+    "",
+    "",
+    "(iii)",
+    "a cot or bed with a moisture protected mattress and 2 pillows,"
+   ],
+   [
+    "",
+    "",
+    "(iv)",
+    "6 towels and 3 blankets,"
+   ],
+   [
+    "",
+    "",
+    "(v)",
+    "eye wash equipment,"
+   ],
+   [
+    "",
+    "",
+    "(vi)",
+    "a shower, or is close to a shower facility if it is a work site described in section 24, and"
+   ],
+   [
+    "",
+    "",
+    "(vii)",
+    "a CSA Standard Z1220-17 Type 2 Basic Large First Aid Kit."
+   ],
+   [
+    "(2) A first aid room must contain the following:"
+   ],
+   [
+    "",
+    "(a)",
+    "the supplies of a CSA Standard Z1220-17 Type 2 Basic Medium First Aid Kit;"
+   ],
+   [
+    "",
+    "(b)",
+    "space blanket;"
+   ],
+   [
+    "",
+    "(c)",
+    "hot and cold packs;"
+   ],
+   [
+    "",
+    "(d)",
+    "spine board and straps;"
+   ],
+   [
+    "",
+    "(e)",
+    "adjustable cervical collar or set of different sized cervical collars;"
+   ],
+   [
+    "",
+    "(f)",
+    "stretcher;"
+   ],
+   [
+    "",
+    "(g)",
+    "splint set;"
+   ],
+   [
+    "",
+    "(h)",
+    "waterproof waste bag;"
+   ],
+   [
+    "",
+    "(i)",
+    "sphygmomanometer (blood pressure cuff);"
+   ],
+   [
+    "",
+    "(j)",
+    "stethoscope;"
+   ],
+   [
+    "",
+    "(k)",
+    "disposable drinking cups;"
+   ],
+   [
+    "",
+    "(l)",
+    "portable oxygen therapy unit consisting of a cylinder(s) containing compressed oxygen, a pressure regulator, pressure gauge, a flow meter and oxygen delivery equipment;"
+   ],
+   [
+    "",
+    "(m)",
+    "flashlight;"
+   ],
+   [
+    "",
+    "(n)",
+    "bandage scissors."
+   ]
+  ]
+ },
+ {
+  "schedule": 1,
+  "table": 5,
+  "title": "First aid requirements for low hazard work",
+  "see": "sections 178, 181(1)",
+  "rows": [
+   [
+    "Number of workers at work site per shift",
+    "Close work site | (up to 20 minutes)",
+    "Distant work site | (20 – 40 minutes)",
+    "Isolated work site (more than 40 minutes)"
+   ],
+   [
+    "1",
+    "CSA Standard Z1220-17 Type 1 Personal First Aid Kit",
+    "CSA Standard Z1220-17 Type 1 Personal First Aid Kit",
+    "CSA Standard Z1220-17 Type 1 Personal First Aid Kit"
+   ],
+   [
+    "2 – 9",
+    "1 Basic First Aider | | CSA Standard Z1220-17 Type 2 Basic Small First Aid Kit",
+    "1 Basic First Aider | | CSA Standard Z1220-17 Type 2 Basic Small First Aid Kit",
+    "1 Intermediate First Aider | | CSA Standard Z1220-17 Type 2 Basic Small First Aid Kit"
+   ],
+   [
+    "10 – 49",
+    "1 Basic First Aider | | CSA Standard Z1220-17 Type 2 Basic Medium First Aid Kit",
+    "1 Basic First Aider | | CSA Standard Z1220-17 Type 2 Basic Medium First Aid Kit",
+    "1 Intermediate First Aider | | CSA Standard Z1220-17 Type 2 Basic Medium First Aid Kit"
+   ],
+   [
+    "50 – 99",
+    "1 Basic First Aider | | 1 Intermediate First Aider | | CSA Standard Z1220-17 Type 2 Basic Large First Aid Kit",
+    "1 Basic First Aider | | 1 Intermediate First Aider | | | CSA Standard Z1220-17 Type 2 Basic Large First Aid Kit",
+    "2 Intermediate First Aiders | | | | CSA Standard Z1220ؘ-17 Type 2 Basic Large First Aid Kit"
+   ],
+   [
+    "100 – 199",
+    "1 Basic First Aider | | 2 Intermediate First Aiders | | CSA Standard Z1220-17 Type 2 Basic Large First Aid Kit | | | | | | Designated area for first aid services",
+    "1 Basic First Aider | | 2 Intermediate First Aiders | | | CSA Standard Z1220-17 Type 2 Basic Large First Aid Kit | | | | 3 blankets, stretcher, | splints | | Designated area for first aid services",
+    "3 Intermediate First Aiders | | | | CSA Standard Z1220-17 Type 2 Basic Large First Aid Kit | | 3 blankets, stretcher, | splints | | Designated area for first aid services"
+   ],
+   [
+    "200 or more",
+    "1 Basic First Aider | | 2 Intermediate First Aiders | | Plus | 1 Intermediate First Aider for each additional increment of 1 to 100 workers | | CSA Standard Z1220-17 Type 2 Basic Large First Aid Kit | | | | | | Designated area for first aid services",
+    "1 Basic First Aider | | 2 Intermediate First Aiders | | | Plus | 1 Intermediate First Aider for each additional increment of 1 to 100 workers | | | CSA Standard Z1220-17 Type 2 Basic Large First Aid Kit | | | | 3 blankets, stretcher, splints | | | Designated area for first aid services",
+    "3 Intermediate First Aiders | | | | Plus | 1 Intermediate First Aider for each additional increment of 1 to 100 workers | | CSA Standard Z1220-17 Type 2 Basic Large First Aid Kit | | 3 blankets, stretcher, splints | | Designated area for first aid services"
+   ]
+  ]
+ },
+ {
+  "schedule": 1,
+  "table": 7,
+  "title": "First aid requirements for high hazard work",
+  "see": "sections 178, 181(1)",
+  "rows": [
+   [
+    "Number of workers at work site per shift",
+    "Close work site | (up to 20 minutes)",
+    "Distant work site | (20 – 40 minutes)",
+    "Isolated work site | (more than 40 minutes)"
+   ],
+   [
+    "1",
+    "CSA Standard Z1220-17 Type 1 Personal First Aid Kit",
+    "CSA Standard Z1220-17 Type 1 Personal First Aid Kit",
+    "CSA Standard Z1220-17 Type 1 Personal First Aid Kit"
+   ],
+   [
+    "2 – 4",
+    "1 Basic First Aider | | CSA Standard Z1220-17 Type 3 Intermediate Small First Aid Kit",
+    "1 Intermediate First Aider | | CSA Standard Z1220-17 Type 3 Intermediate Small First Aid Kit | | 3 blankets",
+    "1 Intermediate First Aider | | CSA Standard Z1220-17 Type 3 Intermediate Small First Aid Kit | | 3 blankets"
+   ],
+   [
+    "5 – 9",
+    "1 Basic First Aider | | 1 Intermediate First Aider | | CSA Standard Z1220-17 Type 3 Intermediate Small First Aid Kit",
+    "2 Intermediate First Aiders | | | CSA Standard Z1220-17 Type 3 Intermediate Small First Aid Kit | | 3 blankets",
+    "2 Intermediate First Aiders | | | CSA Standard Z1220-17 Type 3 Intermediate Small First Aid Kit | | 3 blankets"
+   ],
+   [
+    "10 – 19",
+    "1 Basic First Aider | | 1 Intermediate First Aider | | CSA Standard Z1220-17 Type 3 Intermediate Small First Aid Kit | | 3 blankets",
+    "2 Intermediate First Aiders | | | | CSA Standard Z1220-17 Type 3 Intermediate Small First Aid Kit | | 3 blankets, stretcher, splints",
+    "2 Intermediate First Aiders | | | | CSA Standard Z1220-17 Type 3 Intermediate Small First Aid Kit | | 3 blankets, stretcher, splints"
+   ],
+   [
+    "20 – 49",
+    "2 Basic First Aiders | | 1 Intermediate First Aider | | CSA Standard Z1220-17 Type 3 Intermediate Medium First Aid Kit | | 3 blankets",
+    "3 Intermediate First Aiders | | | | CSA Standard Z1220-17 Type 3 Intermediate Medium First Aid Kit | | 3 blankets, stretcher, splints",
+    "3 Intermediate First Aiders | | | | CSA Standard Z1220-17 Type 3 Intermediate Medium First Aid Kit | | 3 blankets, stretcher, splints"
+   ],
+   [
+    "50 – 99",
+    "2 Basic First Aiders | | 2 Intermediate First Aiders | | CSA Standard Z1220-17 Type 3 Intermediate Large First Aid Kit | | 3 blankets",
+    "2 Basic First Aiders | | 3 Intermediate First Aiders | | | CSA Standard Z1220-17 Type 3 Intermediate Large First Aid Kit | | 3 blankets, stretcher, splints",
+    "4 Intermediate First Aiders | | 1 Advanced First Aider | | | CSA Standard Z1220-17 Type 3 Intermediate Large First Aid Kit | | 3 blankets, stretcher, splints"
+   ],
+   [
+    "100 – 199",
+    "2 Basic First Aiders | | 2 Intermediate First Aiders | | 1 Advanced First Aider | | First Aid Room for workers",
+    "4 Intermediate First Aiders | | | | | 1 Advanced First Aider | | First Aid Room for workers",
+    "4 Intermediate First Aiders | | | | | 1 Advanced First Aider | | First Aid Room for workers"
+   ],
+   [
+    "200 or more",
+    "2 Basic First Aiders | | 2 Intermediate First Aiders | | 1 nurse who holds an advanced first aid certificate or 1 advanced care paramedic | | Plus | 1 Intermediate First Aider for each additional increment of 1 to 100 workers | | First Aid Room for workers",
+    "4 Intermediate First Aiders | | | | | 1 nurse who holds an advanced first aid certificate or 1 advanced care paramedic | | Plus | 1 Intermediate First Aider for each additional increment of 1 to 100 workers | | First Aid Room for workers",
+    "4 Intermediate First Aiders | | 1 Advanced First Aider | | | 1 nurse who holds an advanced first aid certificate or 1 advanced care paramedic | | Plus | 1 Intermediate First Aider for each additional increment of 1 to 100 workers | | First Aid Room for workers"
+   ]
+  ]
+ },
+ {
+  "schedule": 1,
+  "table": 1,
+  "title": "Noise exposure limits [ See sections 218, 219(1) ]",
+  "see": null,
+  "rows": [
+   [
+    "Exposure level (dBA)",
+    "Exposure duration"
+   ],
+   [
+    "82",
+    "16 hours"
+   ],
+   [
+    "83",
+    "12 hours and 41minutes"
+   ],
+   [
+    "84",
+    "10 hours and 4 minutes"
+   ],
+   [
+    "85",
+    "8 hours"
+   ],
+   [
+    "88",
+    "4 hours"
+   ],
+   [
+    "91",
+    "2 hours"
+   ],
+   [
+    "94",
+    "1 hour"
+   ],
+   [
+    "97",
+    "30 minutes"
+   ],
+   [
+    "100",
+    "15 minutes"
+   ],
+   [
+    "103",
+    "8 minutes"
+   ],
+   [
+    "106",
+    "4 minutes"
+   ],
+   [
+    "109",
+    "2 minutes"
+   ],
+   [
+    "112",
+    "56 seconds"
+   ],
+   [
+    "115 and greater",
+    "0"
+   ]
+  ]
+ },
+ {
+  "schedule": 4,
+  "table": 1,
+  "title": "Safe limit of approach distances from overhead power lines for persons and equipment",
+  "see": null,
+  "rows": [
+   [
+    "Operating voltage between conductors of overhead power line",
+    "Safe limit of approach distance for persons and equipment"
+   ],
+   [
+    "0 — 750 volts | Insulated or polyethylene | covered conductors (1)",
+    "300 millimetres"
+   ],
+   [
+    "0 — 750 volts | Bare, uninsulated",
+    "1.0 metre"
+   ],
+   [
+    "Above 750 volts | Insulated conductors (1) (2)",
+    "1.0 metre"
+   ],
+   [
+    "750 volts — 40 kilovolts",
+    "3.0 metres"
+   ],
+   [
+    "69 kilovolts, 72 kilovolts",
+    "3.5 metres"
+   ],
+   [
+    "138 kilovolts, 144 kilovolts",
+    "4.0 metres"
+   ],
+   [
+    "230 kilovolts, 260 kilovolts",
+    "5.0 metres"
+   ],
+   [
+    "500 kilovolts",
+    "7.0 metres"
+   ]
+  ]
+ },
+ {
+  "schedule": 5,
+  "table": 1,
+  "title": "Light duty double pole scaffolds less than 6 metres in height [ See section 333(2) ]",
+  "see": null,
+  "rows": [
+   [
+    "Member",
+    "Dimensions"
+   ],
+   [
+    "Uprights",
+    "38 millimetres by 89 millimetres"
+   ],
+   [
+    "Ledgers",
+    "2 — 21 millimetres by 140 millimetres | or | 1 — 21 millimetres by 184 millimetres"
+   ],
+   [
+    "Ribbons",
+    "21 millimetres by 140 millimetres"
+   ],
+   [
+    "Braces",
+    "21 millimetres by 140 millimetres"
+   ]
+  ]
+ },
+ {
+  "schedule": 5,
+  "table": 2,
+  "title": "Light duty double pole scaffolds 6 metres or more in height [ See section 333(2) ]",
+  "see": null,
+  "rows": [
+   [
+    "Member",
+    "Dimensions"
+   ],
+   [
+    "Uprights",
+    "89 millimetres by 89 millimetres"
+   ],
+   [
+    "Ledgers",
+    "2 — 21 millimetres by 140 millimetres | or | 1 — 21 millimetres by 184 millimetres"
+   ],
+   [
+    "Ribbons",
+    "21 millimetres by 140 millimetres"
+   ],
+   [
+    "Braces",
+    "21 millimetres by 140 millimetres"
+   ]
+  ]
+ },
+ {
+  "schedule": 5,
+  "table": 3,
+  "title": "Heavy duty double pole scaffolds less than 6 metres in height [ See section 333(2) ]",
+  "see": null,
+  "rows": [
+   [
+    "Member",
+    "Dimensions"
+   ],
+   [
+    "Uprights",
+    "38 millimetres by 140 millimetres"
+   ],
+   [
+    "Ledgers",
+    "2 — 21 millimetres by 140 millimetres | or | 1 — 38 millimetres by 184 millimetres"
+   ],
+   [
+    "Ribbons",
+    "21 millimetres by 140 millimetres"
+   ],
+   [
+    "Braces",
+    "21 millimetres by 140 millimetres"
+   ]
+  ]
+ },
+ {
+  "schedule": 5,
+  "table": 4,
+  "title": "Heavy duty double pole scaffolds 6 metres or more in height [ See section 333(2) ]",
+  "see": null,
+  "rows": [
+   [
+    "Member",
+    "Dimensions"
+   ],
+   [
+    "Uprights",
+    "89 millimetres by 140 millimetres"
+   ],
+   [
+    "Ledgers",
+    "2 — 21 millimetres by 140 millimetres or 1 — 38 millimetres by 184 millimetres"
+   ],
+   [
+    "Ribbons",
+    "21 millimetres by 140 millimetres"
+   ],
+   [
+    "Braces",
+    "21 millimetres by 140 millimetres"
+   ]
+  ]
+ },
+ {
+  "schedule": 5,
+  "table": 5,
+  "title": "Half-horse scaffolds less than 3 metres in height",
+  "see": "subsection 335(2)",
+  "rows": [
+   [
+    "Member",
+    "Dimensions"
+   ],
+   [
+    "Ledgers",
+    "38 millimetres by 140 millimetres"
+   ],
+   [
+    "Legs",
+    "38 millimetres by 89 millimetres"
+   ],
+   [
+    "Braces",
+    "21 millimetres by 184 millimetres"
+   ],
+   [
+    "Ribbons",
+    "21 millimetres by 140 millimetres"
+   ],
+   [
+    "Leg spread",
+    "1 metre"
+   ]
+  ]
+ },
+ {
+  "schedule": 5,
+  "table": 6,
+  "title": "Half-horse scaffolds 3 metres to 5 metres in height",
+  "see": "subsection 335(2)",
+  "rows": [
+   [
+    "Member",
+    "Dimensions"
+   ],
+   [
+    "Ledgers",
+    "38 millimetres by 140 millimetres"
+   ],
+   [
+    "Legs",
+    "38 millimetres by 140 millimetres"
+   ],
+   [
+    "Braces",
+    "21 millimetres by 184 millimetres"
+   ],
+   [
+    "Ribbons",
+    "21 millimetres by 140 millimetres"
+   ],
+   [
+    "Leg spread",
+    "1.5 metres"
+   ]
+  ]
+ },
+ {
+  "schedule": 5,
+  "table": 7,
+  "title": "Single-pole scaffolds less than 6 metres in height",
+  "see": "section 340",
+  "rows": [
+   [
+    "Member",
+    "Dimensions"
+   ],
+   [
+    "Uprights",
+    "38 millimetres by 89 millimetres"
+   ],
+   [
+    "Ledgers",
+    "2 — 21 millimetres by 140 millimetres or 1 — 21 millimetres by 184 millimetres"
+   ],
+   [
+    "Ribbons",
+    "21 millimetres by 140 millimetres"
+   ],
+   [
+    "Braces",
+    "21 millimetres by 140 millimetres"
+   ],
+   [
+    "Wall scabs",
+    "38 millimetres by 140 millimetres"
+   ]
+  ]
+ },
+ {
+  "schedule": 5,
+  "table": 8,
+  "title": "Single-pole scaffolds 6 metres to 9 metres in height",
+  "see": "section 340",
+  "rows": [
+   [
+    "Member",
+    "Dimensions"
+   ],
+   [
+    "Uprights",
+    "89 millimetres by 89 millimetres"
+   ],
+   [
+    "Ledgers",
+    "2 — 21 millimetres by 140 millimetres | or | 1 — 21 millimetres by 184 millimetres"
+   ],
+   [
+    "Ribbons",
+    "21 millimetres by 140 millimetres"
+   ],
+   [
+    "Braces",
+    "21 millimetres by 140 millimetres"
+   ],
+   [
+    "Wall scabs",
+    "38 millimetres by 140 millimetres"
+   ]
+  ]
+ },
+ {
+  "schedule": 8,
+  "table": 1,
+  "title": "Circular saw blade crack limits [ See sections 377(1), (2) ]",
+  "see": null,
+  "rows": [
+   [
+    "Diameter of saw blade (millimetres)",
+    "Maximum length of crack (millimetres)"
+   ],
+   [
+    "up — 300",
+    "13"
+   ],
+   [
+    "301 — 610",
+    "25"
+   ],
+   [
+    "611 — 915",
+    "38"
+   ],
+   [
+    "916 — 1220",
+    "50"
+   ],
+   [
+    "1221 — 1525",
+    "64"
+   ],
+   [
+    "> 1525",
+    "76"
+   ]
+  ]
+ },
+ {
+  "schedule": 8,
+  "table": 2,
+  "title": "Band saw blade crack limits [ See subsections 378(1), 378(2) ]",
+  "see": null,
+  "rows": [
+   [
+    "Width of band saw blade | (millimetres)",
+    "Maximum length of crack (millimetres)"
+   ],
+   [
+    "up — 125",
+    "1/10 of saw blade width"
+   ],
+   [
+    "126 — 300",
+    "13"
+   ],
+   [
+    "> 300",
+    "19"
+   ]
+  ]
+ },
+ {
+  "schedule": 12,
+  "table": 1,
+  "title": "Maximum effective dose limits for ionizing radiation [see sections 291.4 and 291.6]",
+  "see": null,
+  "rows": [
+   [
+    "Person",
+    "Exposure Period",
+    "Effective Dose Limit (mSv)"
+   ],
+   [
+    "Worker, who uses or is directly involved in the use of ionizing radiation equipment or an ionizing radiation source",
+    "One year",
+    "50"
+   ],
+   [
+    "Rolling 5 calendar years",
+    "100"
+   ],
+   [
+    "Worker, pregnant, who uses or is directly involved in the use of ionizing radiation equipment or an ionizing radiation source",
+    "Balance of pregnancy after informing employer",
+    "4"
+   ],
+   [
+    "Worker, student undergoing a course of instruction involving the use of ionizing radiation equipment",
+    "One year",
+    "1"
+   ],
+   [
+    "Worker, other",
+    "One year",
+    "1"
+   ]
+  ]
+ },
+ {
+  "schedule": 12,
+  "table": 2,
+  "title": "Maximum equivalent dose limits for ionizing radiation [ See section 291.4]",
+  "see": null,
+  "rows": [
+   [
+    "Person",
+    "Applicable Body Organ or Tissue",
+    "Exposure Period",
+    "Equivalent Dose Limit (mSv)"
+   ],
+   [
+    "Worker who uses or is directly involved in the use of ionizing radiation equipment or an ionizing radiation source",
+    "Lens of the eye",
+    "One year",
+    "50"
+   ],
+   [
+    "Rolling 5 calendar years",
+    "100"
+   ],
+   [
+    "Skin",
+    "One year",
+    "500"
+   ],
+   [
+    "Hands and feet",
+    "One year",
+    "500"
+   ],
+   [
+    "Worker, other",
+    "Lens of the eye",
+    "One year",
+    "15"
+   ],
+   [
+    "Skin",
+    "One year",
+    "50"
+   ],
+   [
+    "Hands and feet",
+    "One year",
+    "50"
+   ]
+  ]
+ },
+ {
+  "schedule": 12,
+  "table": 3,
+  "title": "Maximum exposure limits for laser radiation for any persons [See section 291.4]",
+  "see": null,
+  "rows": [
+   [
+    "Type of Radiation",
+    "Maximum Exposure Limit"
+   ],
+   [
+    "Laser",
+    "As set out in ANSI Standard Z136.1-2014, “American National Standard for Safe Use of Lasers” published by the American National Standards Institute"
+   ]
+  ]
+ },
+ {
+  "schedule": 12,
+  "table": 4,
+  "title": "Maximum exposure limits for radiofrequency electromagnetic fields for any persons [See section 291.4]",
+  "see": null,
+  "rows": [
+   [
+    "Type of Radiation",
+    "Maximum Exposure Limit"
+   ],
+   [
+    "Radiofrequency Electromagnetic Fields in the Range from 3 kHz to 300 GHz",
+    "As set out in Safety Code 6, (2015), “Limits of Human Exposure to Radiofrequency Electromagnetic Fields in the Frequency Range from 3kHz to 300 GHz” published by Health Canada"
+   ]
+  ]
+ }
+]
