@@ -1,0 +1,33 @@
+{
+  "production": "Backlot Test",
+  "jurisdiction": { "province": "AB", "municipality": "Calgary" },
+  "locations": [
+    { "name": "Warehouse 9", "lat": null, "lon": null, "hospital_minutes": 15, "premises": { "occupant_load": null, "fire_permit": null, "electrical_permit": null } }
+  ],
+  "crew_csv": "samples/crew.csv",
+  "script": "",
+  "schedule": [
+    { "day": "D1", "location": "Warehouse 9", "night": false, "exterior": false, "build_or_strike": false, "headcount": 30, "on_call": "" },
+    { "day": "D2", "location": "Warehouse 9", "night": true, "exterior": true, "build_or_strike": false, "headcount": 42, "on_call": "Dana Rigger" }
+  ],
+  "roles": {
+    "first_ad": "Ann Frost",
+    "safety_officer": "Sam Officer",
+    "armorer": "Al Arms",
+    "rigger": "Dana Rigger",
+    "first_aiders": ["Sam Aid"],
+    "catering_lead": "Cat Erer"
+  },
+  "site_practice": {
+    "condor_wind_kmh": null,
+    "crane_wind_kmh": null,
+    "exterior_pyro_wind_kmh": null,
+    "rig_recheck_hours": null,
+    "ticket_preexpiry_days": 90
+  },
+  "provenance": {
+    "created": "2026-09-04",
+    "revised": "2026-09-04",
+    "code_versions": { "AB": "AR 191/2021 current as of 2025-03-31", "BC": "BC Reg 296/97 amended 2026-04-01" }
+  }
+}

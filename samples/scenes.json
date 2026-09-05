@@ -1,0 +1,25 @@
+[
+  { "id": "S1", "heading": "INT. OFFICE - DAY", "day": "D1", "tags": [], "violations": [] },
+  {
+    "id": "S2",
+    "heading": "EXT. LOADING DOCK - NIGHT",
+    "day": "D2",
+    "tags": [
+      { "row": 2, "label": "pyro", "detail": "flash pot" },
+      { "row": 9, "label": "heights", "detail": "performer on 4 m platform" },
+      { "row": 13, "label": "loto", "detail": "hydraulic lift reset between takes" }
+    ],
+    "violations": []
+  },
+  {
+    "id": "S3",
+    "heading": "EXT. LOADING DOCK - NIGHT",
+    "day": "D2",
+    "tags": [
+      { "row": 2, "label": "pyro", "detail": "flash pot" },
+      { "row": 9, "label": "heights", "detail": "performer on 4 m platform" },
+      { "row": 13, "label": "loto", "detail": "hydraulic lift reset between takes" }
+    ],
+    "violations": ["AB:139"]
+  }
+]

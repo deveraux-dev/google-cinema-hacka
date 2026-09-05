@@ -1,0 +1,7 @@
+person,role,issuer,issued,expires,jurisdiction
+Dana Rigger,fall_protection,Actsafe,2024-06-01,2029-06-01,AB
+Sam Aid,first_aid,Alberta Health Services,2022-01-01,2029-01-01,AB
+Ann Frost,ncso,ACSA,2024-01-01,2029-01-01,AB
+Sam Officer,ncso,ACSA,2024-01-01,2029-01-01,AB
+Cat Erer,first_aid,Alberta Health Services,2024-01-01,2029-01-01,AB
+Dana Rigger,mobile_equipment,Alberta Construction Safety,2024-01-01,2029-01-01,AB
