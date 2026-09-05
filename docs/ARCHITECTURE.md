@@ -21,6 +21,25 @@ JURISDICTION ──► revised pages ──► DIFF ──► CASCADE ──► 
 - STEP LADDER rows (stunts, pyrotechnics): escalation is monotonic per rung. Rung n+1
   cannot open until rung n has a recorded clear. A change to the scene resets to the
   rung the change touched.
+- CERTIFICATION REGISTER: second input beside jurisdiction. Per worker, per ticket:
+  issuer, ticket type, issue date, expiry date, jurisdiction of issue, retraining
+  interval. Loaded from a CSV the production owns; never inferred by the model.
+  The Code mandates competence or certification in 186 sections (Part 6 cranes 16,
+  Part 9 fall protection 14, Part 23 scaffolds 11, Part 19 mobile equipment 11,
+  Part 33 explosives 7, Part 5 confined spaces 7). When a tagged hazard routes to a
+  section that names a competent worker, professional engineer, blaster, or operator,
+  the register is checked for a live ticket in that role, for this jurisdiction.
+  Rules, err on more retraining rather than less:
+    · no ticket on record for a mandated role → RED
+    · ticket expired, or issued under a jurisdiction that does not recognise it here → RED;
+      STOP where the role is professional engineer, blaster, or confined-space tester
+    · ticket inside the pre-expiry window (default 90 days, jurisdiction may shorten) → AMBER
+    · where two jurisdictions or two ticket bodies give different validity periods,
+      the SHORTER one governs
+    · retraining logged after expiry does not clear the scene retroactively; the
+      clear is dated from the retraining record
+  Validity periods live in the jurisdiction tables (docs/JURISDICTIONS.md) with their
+  source; a ticket type with no sourced period is treated as expired until one lands.
 
 - DIFF, CASCADE, HAZARD TAG: language steps. Online = Gemini via Google Cloud.
   Offline = local Gemma sidecar. Same JSON schema out of both, enforced by

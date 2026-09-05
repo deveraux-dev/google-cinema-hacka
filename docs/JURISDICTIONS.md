@@ -34,6 +34,24 @@ Provenance:
 | 11 Motion | Part 19 Powered Mobile Equipment; Part 31 Diving. Not fetched. | Part 16 Mobile Equipment; Part 24 Diving. Not fetched. |
 | 12 Environment | Part 6 s.106 "Wind and temperature limitations" for cranes exists; km/h value not fetched. Part 7 Emergency Preparedness. | Part 7 Thermal Environment: cold-stress provisions apply below core 36 °C or equivalent chill below -7 °C (Table 7-4), heated shelter required; heat by WBGT. Crane wind limits Part 14 not fetched. |
 
+## Certifications and retraining
+
+Ticket validity differs by province, state, and issuing body. The agent takes the
+shorter period when two apply. Blank = not sourced yet = treated as expired.
+
+| Ticket / role | Alberta validity | BC validity | Source |
+|---|---|---|---|
+| Fall protection (worker) | | Actsafe: renewal recommended every 3 years | actsafe.ca (from fall-protection research) |
+| Competent worker (Act definition) | Act definition, not yet pulled | WorkSafeBC "qualified" definition, not yet pulled | |
+| Professional engineer (certifies anchors, rigs, procedures) | APEGA licence, Code Part 3 s.14 | EGBC licence | Code s.14 (in `code.json`) |
+| Crane / hoist operator | Code Part 6 (16 sections reference competence/certification); AB trade certification, period not pulled | Part 14; BC Crane Safety certification, period not pulled | |
+| Blaster / pyrotechnician | Code Part 33 (7 sections); provincial blaster's permit, period not pulled | Part 21 blaster certificate, period not pulled; NRCan pyrotechnician card (federal) | |
+| Confined space entrant / tester / tending worker | Code Part 5 (7 sections); training period not pulled | Part 9 training, period not pulled | |
+| Powered mobile equipment operator | Code Part 19 (11 sections) | Part 16 | |
+| Scaffold erector | Code Part 23 (11 sections) | Part 13 | |
+| Firearms handler / armorer | federal PAL; industry armorer, no provincial ticket found | Actsafe Props Firearms Safety course | actsafe.ca |
+| First aid | AB OHS first aid regulation, period not pulled | WorkSafeBC OFA levels, 3-year validity, not yet fetched | |
+
 ## Gaps to close before the demo
 
 - Alberta Part 6 s.106 crane wind limit and Part 9 anchor kN: pull from the Code PDF.
