@@ -80,8 +80,14 @@ python -m venv .venv
 .venv\Scripts\activate
 pip install -e .
 copy .env.example .env   # fill in real credentials locally only
-docker run -d -p 3000:3000 --name grafana grafana/grafana-oss
 ```
+
+Grafana and its MCP server run as plain native binaries. No Docker, no container runtime.
+
+- Grafana OSS 13.2.1, standalone Windows archive: https://grafana.com/grafana/download?platform=windows&edition=oss
+- Grafana MCP server v1.3.0, `mcp-grafana_Windows_x86_64.zip`: https://github.com/grafana/mcp-grafana/releases/tag/v1.3.0
+
+Unpack both, start `grafana-server.exe`, then point `mcp-grafana.exe` at `GRAFANA_URL` with a service-account token.
 
 ## Rules that bind this repo
 
