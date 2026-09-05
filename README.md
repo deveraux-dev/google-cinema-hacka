@@ -4,7 +4,7 @@ A deterministic, multi-step agent on **Google Cloud Gemini** that turns one scri
 revision into per-department work deltas and a safety escalation, and lights them up
 on a self-hosted **Grafana** gauge wall. It keeps working with no internet.
 
-Team: Sean Morin, Sheresh
+Team: Sean Morin, Sherish
 
 ## Track
 
