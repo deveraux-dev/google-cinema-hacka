@@ -10,12 +10,20 @@ These entries are the test cases for the escalation ladder.
 | Row | Covers | Classification authority |
 |---|---|---|
 | 1 Firearms | real firearms, blanks, dummy rounds | CSATF Bulletins #1, #2; California SB 132; jurisdiction column |
-| 2 Substance | pyro, fuel, atmospherics, compressed gas, solvents | UN GHS hazard classes; WHMIS (Hazardous Products Regulations, Canada) |
-| 3 Activity | stunts, falls, rigging, vehicles, aircraft, water, crush | CSATF Safety Bulletins by number |
-| 4 Environment | wind, lightning, heat, cold | CSATF #38, #38A (30/30 rule), #34, #35; Pasquill-Gifford class |
+| 2 Pyrotechnic / explosive | pyro, squibs, mortars, fuel effects | GHS Explosives Div 1.x; CSATF #16 |
+| 3 Chemical | atmospherics (smoke, haze), solvents, paints, fuels, gases | UN GHS hazard classes; WHMIS (Hazardous Products Regulations, Canada) |
+| 4 Electrical | set power, distro, generators, live lines, water near power | Alberta OHS Code part TBD (NCSO to pin); CSATF electrical bulletins |
+| 5 Pressure / pneumatic | compressed gas, air cannons, ratchets, hydraulics, air bags | Alberta OHS Code part TBD; GHS Gases Under Pressure |
+| 6 Structural | set walls, scaffolds, platforms, rigging, falls, crush | Alberta OHS Code part TBD; CSATF fall-protection and scaffold bulletins |
+| 7 Confined space | tanks, tunnels, vehicles, water tanks, enclosed sets with atmospherics | Alberta OHS Code part TBD |
+| 8 Motion | stunts, vehicles, aircraft, water, animals | CSATF Safety Bulletins by number |
+| 9 Environment | wind, lightning, heat, cold | CSATF #38, #38A (30/30 rule), #34, #35; Pasquill-Gifford class |
 
 Row 1 is its own tier and never sits below AMBER when present. Thresholds vary by
-shoot jurisdiction (California after 2025-01-01 vs. Alberta vs. elsewhere).
+shoot jurisdiction (California after 2025-01-01 vs. Alberta vs. elsewhere). Rows 4 to 7
+are the standard occupational hazard classes a certified safety officer works from;
+they apply to a set exactly as to a construction site. Code part numbers are left
+blank until pinned from the Code text, not from memory.
 
 ## Timeline
 
@@ -26,8 +34,8 @@ shoot jurisdiction (California after 2025-01-01 vs. Alberta vs. elsewhere).
   Lee from 12 to 15 feet. SOURCED (press reconstruction).
 - The firearms specialist had been sent home early that day. No qualified handler was
   on set for the shot. SOURCED.
-- Prior warnings on the same production: a carpenter burned by live power lines; Lee
-  had raised crew-fatigue concerns. SOURCED.
+- Prior warnings on the same production: a carpenter burned by live power lines
+  (Row 4, electrical); Lee had raised crew-fatigue concerns. SOURCED.
 - Outcome: negligence ruled, no criminal charges (DA, April 27 1993). Civil settlement.
   Industry issued Safety Bulletins #1 and #2. SOURCED.
 - Decisions that failed: (a) in-house dummy manufacture; (b) armorer released before
@@ -35,47 +43,47 @@ shoot jurisdiction (California after 2025-01-01 vs. Alberta vs. elsewhere).
 - Director Alex Proyas, after Rust: "Real guns should have been banned on sets after
   The Crow." SOURCED.
 
-### 2002 · XXX · Harry O'Connor, killed · Row 3
+### 2002 · XXX · Harry O'Connor, killed · Row 8
 - Parasail stunt. First take clean. Second take, parameters changed, he struck a bridge
   pillar in Prague. SOURCED.
 - Decision that failed: stunt altered between takes without the safety setup moving with it.
 
-### 2007 · Jumper · David Ritchie, killed · Row 3 (crush)
+### 2007 · Jumper · David Ritchie, killed · Row 6 (structural, crush)
 - Frozen sand and gravel wall collapsed during set strike; vibration from heavy
   equipment. No hard hats issued. SOURCED (CBC).
 - Outcome: CAD $250,000 fine, guilty plea on three OHS counts. SOURCED.
 - Decision that failed: strike treated as low-risk; PPE not required.
 
-### 2007 · The Dark Knight · Conway Wickliffe, killed · Row 3 (vehicle)
+### 2007 · The Dark Knight · Conway Wickliffe, killed · Row 8 (vehicle)
 - Camera car struck a tree during a rehearsal. He was not restrained. SOURCED (CBS).
 - Decision that failed: rehearsal run without the restraint standard of a take.
 
-### 2009 · Harry Potter and the Deathly Hallows · David Holmes, paralysed · Row 3 (rigging)
+### 2009 · Harry Potter and the Deathly Hallows · David Holmes, paralysed · Row 6 (rigging) + Row 2
 - Wire rig plus explosion pulled him into a wall with more force than planned, in
   rehearsal. SOURCED (Rolling Stone).
 - Decision that failed: rig velocity not verified against the planned pull before a
   person was on the wire.
 
-### 2014 · Midnight Rider · Sarah Jones, killed · Row 3 (rail) + Row 4
+### 2014 · Midnight Rider · Sarah Jones, killed · Row 8 (rail) + Row 6 (trestle)
 - Filmed on a live rail trestle after CSX denied permission twice. No safety plan.
   A freight train hit the crew. SOURCED (US Dept of Labor).
 - Outcome: OSHA fine $74,900; director Randall Miller, 2 years prison. SOURCED.
 - Decision that failed: a regulatory denial was not treated as a STOP.
 
-### 2015 · Resident Evil: The Final Chapter · Olivia Jackson, arm amputated; Ricardo Cornelius, killed · Row 3
+### 2015 · Resident Evil: The Final Chapter · Olivia Jackson, arm amputated; Ricardo Cornelius, killed · Row 8 + Row 6 (crush)
 - Jackson: asked at the last minute to ride a high-speed motorcycle stunt; hit a camera
   crane arm. Cornelius: crushed when a prop Hummer slipped off a rotating platform.
   SOURCED (Deadline, CinemaBlend).
 - Decisions that failed: last-minute stunt substitution; no mechanical lock on a
   raised vehicle.
 
-### 2017 · The Walking Dead · John Bernecker, killed · Row 3 (fall)
+### 2017 · The Walking Dead · John Bernecker, killed · Row 6 (fall)
 - 22-foot fall, missed the pad by inches, no ambulance on site. SOURCED.
 - Outcome: jury found AMC negligent; later barred under workers' comp. SOURCED.
 - Decisions that failed: pad placement not re-verified; no medical standby for a
   height stunt.
 
-### 2017 · Deadpool 2 · Joi Harris, killed · Row 3 (motorcycle)
+### 2017 · Deadpool 2 · Joi Harris, killed · Row 8 (motorcycle)
 - No risk assessment, no stunt safety checklist, no production activity notification
   completed. No speed control, no perimeter. She overran the stop and went through a
   window. SOURCED (WorkSafeBC via THR, Deadline).
@@ -83,7 +91,7 @@ shoot jurisdiction (California after 2025-01-01 vs. Alberta vs. elsewhere).
 - Decision that failed: the paperwork that would have forced the perimeter was never
   opened.
 
-### 2019 · Fast & Furious 9 · Joe Watts, brain injury · Row 3 (fall)
+### 2019 · Fast & Furious 9 · Joe Watts, brain injury · Row 6 (fall, rigging)
 - Safety wire not checked between takes; stunt modified from rehearsal; matting not
   moved to match. 25-foot fall to concrete. SOURCED (Variety, Deadline).
 - Outcome: producers admitted liability, fine over USD $1M. SOURCED.
