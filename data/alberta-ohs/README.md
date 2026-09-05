@@ -13,6 +13,9 @@ Files:
   current to March 31, 2023, consolidated up to 242/2022. Offline fallback only; older.
 - `code.json` — machine-readable extraction (Part, section, heading, text), generated
   by `src/agent/ohs_code.py`. Regenerate from the HTML; never hand-edit.
+  Gap: Schedules (e.g. Schedule 2, first aid Tables 1 to 7 by headcount and travel
+  time) follow the Parts and are not yet extracted. The agent must not answer a
+  first-aid ratio question until they are.
 
 Source: https://kings-printer.alberta.ca/1266.cfm?page=2021_191.cfm&leg_type=Regs&isbncln=9780779852352&display=html
 Terms: https://kings-printer.alberta.ca/copyright.cfm

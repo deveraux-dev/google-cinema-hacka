@@ -18,6 +18,24 @@ JURISDICTION ──► revised pages ──► DIFF ──► CASCADE ──► 
   published OHS Regulation text; regulator-sourced, not practitioner-verified). Each
   table carries a `provenance` field that says which. California is a stub that
   refuses to run until someone who works under Cal/OSHA fills it.
+  The pick is province + municipality, because the premises layer is enforced
+  locally and Vancouver runs its own fire and building by-laws.
+- TWO CODE LAYERS per jurisdiction:
+    · Worker layer: OHS (Alberta OHS Code; WorkSafeBC OHSR). Routed from `data/*/code.json`.
+    · Premises layer: fire code, building code occupancy, electrical code, pressure
+      equipment, municipal film and pyro permits. Enforced by fire departments,
+      building officials, ABSA / Technical Safety BC, and the city film office.
+      Each has its own shutdown authority independent of OHS. A scene that changes
+      location, adds open flame, adds a generator, or adds crowd changes the premises
+      layer's answer even when the OHS answer is unchanged.
+  Rows 2 (pyro), 3 (chemical), 4 (electrical), 5 (pressure), 6 (structural), and 12
+  (environment) route to both layers.
+- WELFARE ROWS, headcount-driven: first aid by headcount and hospital distance,
+  drinking water, emergency response plan and contacts, food safety, rest turnaround.
+  Inputs: crew count per day and location from the call sheet; hospital distance from
+  the location. Quoted sections and turnaround numbers in docs/JURISDICTIONS.md. A
+  revision that adds extras, moves location, or extends the day re-runs these rows
+  even when no hazard row changed.
 - STEP LADDER rows (stunts, pyrotechnics): escalation is monotonic per rung. Rung n+1
   cannot open until rung n has a recorded clear. A change to the scene resets to the
   rung the change touched.

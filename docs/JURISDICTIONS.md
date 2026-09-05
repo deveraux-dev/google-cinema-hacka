@@ -38,6 +38,27 @@ Provenance:
 | 11 Motion | Part 19 Powered Mobile Equipment; Part 31 Diving. Not fetched. | Part 16 Mobile Equipment; Part 24 Diving. Not fetched. |
 | 12 Environment | Part 6 s.106 "Wind and temperature limitations" for cranes exists; km/h value not fetched. Part 7 Emergency Preparedness. | Part 7 Thermal Environment: cold-stress provisions apply below core 36 °C or equivalent chill below -7 °C (Table 7-4), heated shelter required; heat by WBGT. Crane wind limits Part 14 not fetched. |
 
+## Welfare rows, headcount-driven
+
+The call sheet's crew count and the distance to the nearest hospital are inputs. These
+rows are quoted from the extracted Codes (`src/agent/query_code.py`).
+
+| Row | Alberta | BC |
+|---|---|---|
+| First aid by headcount | Part 11 s.178: first aiders, supplies, kits, and room "in accordance with the applicable requirements of Schedule 2". Ratios are in Schedule 2, keyed by number of workers and travel time to a health-care facility. s.179 location; s.181 advanced first aider where required. | Part 3 s.3.16: at least what "Schedule 3-A" requires; s.3.17 written first aid procedures; s.3.18 communication between attendant and workers; s.3.19 records kept 3 years. |
+| Drinking water | Part 24 s.355: "an adequate supply of drinking fluids … must include potable water." | Part 28 s.28.10: potable drinking water during the workday; Part 7 s.7.31 cool potable water close to the work area for heat-exposed workers; Part 4 s.4.87 non-potable sources must be signed. |
+| Emergency response plan and contacts | Part 7 s.115: plan for emergencies requiring rescue or evacuation, workers involved; s.116 contents, including identification of emergencies, procedures, emergency equipment location; s.117 designated rescue and evacuation workers, trained; s.118 their equipment. | Part 5 s.5.101 written emergency response plan for hazardous substances; s.5.98 developed with workers; s.5.104 training and drills. General rescue/evacuation risk assessment in Part 4 s.4.13 (from earlier research; not yet quoted from extraction). |
+| Food safety (catering, craft services) | Public Health Act Food Regulation AR 31/2006: food handling permit from the health authority; food handler certificate 5-year validity (AHS recognized courses). | Food Premises Regulation BC Reg 210/99 s.10: at least one FOODSAFE Level 1 (or equivalent) holder present during all preparation, storage, and service; FOODSAFE Level 1 expires 5 years from issue. |
+| Rest turnaround (fatigue) | Employment Standards Code: 8 consecutive hours between shifts; work within a 12-hour window per day; 1 rest day per 6 worked. DGC Alberta 2026-28: 10-hour turnaround. IATSE 212 clause not retrieved. | Employment Standards Act s.36: 8 hours between shifts; 32 consecutive hours per week or 1.5x pay. BCCFU master agreement: 11-hour rest after turnaround encroached 2+ hours on 2 consecutive days (clause referenced, not quoted in full). |
+| Rest turnaround, performers | ACTRA IPA 2025-27: 11 hours set-to-set; minors 12-15 yrs 12 hours set-to-set; under 12, 12 hours door-to-door; stunt coordinator 10 hours; breach paid at 200%. | same (national agreement) |
+| Rest turnaround, US reference | SAG-AFTRA TV/Theatrical: 12 hours dismissal to next call; 10 hours on exterior location once per 4 consecutive days; forced-call penalty the lesser of daily rate or $900 (day performer). Not a Canadian rule; loaded only if jurisdiction is a US state. | |
+
+Fatigue is on the timeline: Brent Hershman, 1997, Pleasantville, died driving home after
+a 19-hour day following four 15-hour days. "Brent's Rule" proposed a 14-hour cap with
+hotel accommodation past it; never adopted industry-wide. The escalation treats a call
+sheet that breaches the loaded turnaround as AMBER for the department and RED for any
+performer or driver on a Row 8 or Row 11 task that day.
+
 ## Certifications and retraining
 
 Ticket validity differs by province, state, and issuing body. The agent takes the
