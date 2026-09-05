@@ -3,11 +3,19 @@
 ## Pipeline (fixed order, every run)
 
 ```
-revised pages ──► DIFF ──► CASCADE ──► HAZARD TAG ──► WEATHER ──► ESCALATE ──► PUBLISH
-                   │          │            │                          │            │
-                Gemini     Gemini       Gemini                     rules       Grafana
-              (or Gemma) (or Gemma)   (or Gemma)                 (NCSO ladder)  (OSS, local)
+JURISDICTION ──► revised pages ──► DIFF ──► CASCADE ──► HAZARD TAG ──► WEATHER ──► ESCALATE ──► PUBLISH
+     │                               │          │            │                          │            │
+  user picks                      Gemini     Gemini       Gemini                     rules       Grafana
+  loads thresholds              (or Gemma) (or Gemma)   (or Gemma)                 (NCSO ladder)  (OSS, local)
 ```
+
+- JURISDICTION: first input, no default. Selects the threshold table for every hazard
+  row (Alberta OHS Code, WorkSafeBC, Cal/OSHA + SB 132, …). The harmonized core never
+  changes; only the numbers and the mandatory-role rules do. A row with no threshold
+  for the chosen jurisdiction refuses to run rather than borrowing another's.
+- STEP LADDER rows (stunts, pyrotechnics): escalation is monotonic per rung. Rung n+1
+  cannot open until rung n has a recorded clear. A change to the scene resets to the
+  rung the change touched.
 
 - DIFF, CASCADE, HAZARD TAG: language steps. Online = Gemini via Google Cloud.
   Offline = local Gemma sidecar. Same JSON schema out of both, enforced by

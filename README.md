@@ -19,27 +19,35 @@ supervisor. Nothing cascades automatically to props, wardrobe, locations, stunts
 the safety officer. The documented symptoms are actors reading the wrong line and
 assistants photocopying at 3am.
 
-The safety half is worse. On *Rust*, two prior misfires were never escalated. On
-*Midnight Rider*, a railroad denied permission twice and no safety plan existed.
-Both ended in a death, a fine, and a criminal sentence. Weather hits roughly half
-of all outdoor shoots. The escalation path lives in people's heads.
+The safety half is worse. On *Deadpool 2* in Vancouver, a stunt was added with no
+risk assessment, no stunt safety checklist, and no perimeter. A rider died and
+WorkSafeBC fined the production. On *Fast & Furious 9*, the stunt changed after
+rehearsal and the matting did not move with it. The pattern across a decade of set
+deaths is the same: the work changed, the hazard assessment did not. Alberta's OHS
+Code says it in one sentence (s.7(2)): a hazard assessment must be repeated when
+the work process changes. Nobody on a set has a tool that does that.
 
 ## What the agent does
 
+0. **Jurisdiction** — the user picks where the shoot is (Alberta, BC, California, …)
+   before anything runs. Every threshold below is loaded from that choice. The core
+   is harmonized; the numbers are local. Onus on the user to adopt their own rules.
 1. **Diff** — the revised pages against the locked script, per scene.
 2. **Cascade** — typed deltas per department (props, wardrobe, locations, cast, stunts).
-3. **Hazard tag** — flags anything the rewrite introduced: pyrotechnics, weapons,
-   stunts, water, height, exterior exposure.
+3. **Hazard tag** — flags anything the rewrite introduced, by hazard row: stunts,
+   pyrotechnics, working at heights, power tools, electrical, pressure, chemical,
+   confined space, vehicles, water, firearms, exterior exposure.
 4. **Weather** — current wind and cloud for the shoot location, Pasquill-Gifford
-   stability class.
+   stability class, lightning distance.
 5. **Escalate** — a fixed ladder from GREEN to STOP, authored by a certified
-   National Construction Safety Officer (NCSO) on the team. Deterministic. The
-   model never decides the level; the rules do.
+   National Construction Safety Officer (NCSO) on the team. Stunts and pyrotechnics
+   climb a step ladder: each rung must clear before the next opens. Deterministic.
+   The model never decides the level; the rules do.
 6. **Publish** — every delta and every escalation becomes a Grafana reading and an
    annotation. The wall is what the crew reads.
 
-Gemini does the language work in steps 1 to 3. Steps 4 to 6 are rules. When the
-network is gone, a local Gemma model takes over steps 1 to 3 and the wall keeps
+Gemini does the language work in steps 1 to 3. Steps 0 and 4 to 6 are rules. When
+the network is gone, a local Gemma model takes over steps 1 to 3 and the wall keeps
 updating. The show goes on.
 
 ## Repo boundary

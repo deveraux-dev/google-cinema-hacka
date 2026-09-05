@@ -7,24 +7,33 @@ These entries are the test cases for the escalation ladder.
 
 ## Hazard rows
 
+Harmonized core, local adoption. The rows are the same everywhere. The thresholds, the
+mandatory roles, and the paperwork are loaded from the jurisdiction the user picks before
+the run. Firearms is one row among eleven, not the headline; its rules differ most by
+jurisdiction, so it is the clearest case for why the jurisdiction pick comes first.
+
 | Row | Covers | Classification authority |
 |---|---|---|
-| 1 Firearms | real firearms, blanks, dummy rounds | CSATF Bulletins #1, #2; California SB 132; jurisdiction column |
+| 1 Firearms | real firearms, blanks, dummy rounds | jurisdiction-supplied entirely (CSATF #1, #2 and SB 132 in the US; federal firearms law + provincial OHS in Canada) |
 | 2 Pyrotechnic / explosive | pyro, squibs, mortars, fuel effects | GHS Explosives Div 1.x; CSATF #16; AB OHS Code Part 10 Fire and Explosion Hazards, Part 33 Explosives |
 | 3 Chemical | atmospherics (smoke, haze), solvents, paints, fuels, gases | UN GHS hazard classes; WHMIS; AB OHS Code Part 4 Chemical Hazards, Part 26 Ventilation, Part 29 WHMIS |
 | 4 Electrical | set power, distro, generators, live lines, water near power | AB OHS Code Part 15 Control of Hazardous Energy, Part 17 Overhead Power Lines |
 | 5 Pressure / pneumatic | compressed gas, air cannons, ratchets, hydraulics, air bags | AB OHS Code Part 15 Control of Hazardous Energy, Part 25 Tools, Equipment and Machinery; GHS Gases Under Pressure |
 | 6 Structural | set walls, scaffolds, platforms, rigging, falls, crush, set strike | AB OHS Code Part 6 Cranes and Hoists, Part 9 Fall Protection, Part 21 Rigging, Part 23 Scaffolds, Part 30 Demolition |
 | 7 Confined space | tanks, tunnels, vehicles, water tanks, enclosed sets with atmospherics | AB OHS Code Part 5 Confined Spaces |
-| 8 Motion | stunts, vehicles, aircraft, water, animals | CSATF Safety Bulletins by number; AB OHS Code Part 19 Powered Mobile Equipment, Part 31 Diving |
-| 9 Environment | wind, lightning, heat, cold | CSATF #38, #38A (30/30 rule), #34, #35; AB OHS Code Part 7 Emergency Preparedness; Pasquill-Gifford class |
+| 8 Stunts (STEP LADDER) | performer stunts, falls, fights, fire on person | CSATF stunt bulletins; AB OHS Code Part 2, Part 9; WorkSafeBC per jurisdiction |
+| 9 Working at heights | platforms, cranes, condors, rooftops, wire work | AB OHS Code Part 9 Fall Protection, Part 6 Cranes and Hoists, Part 23 Scaffolds |
+| 10 Power tools and machinery | construction, set strike, grips' gear | AB OHS Code Part 25 Tools, Equipment and Machinery, Part 22 Safeguards |
+| 11 Motion | vehicles, aircraft, water, animals | CSATF Safety Bulletins by number; AB OHS Code Part 19 Powered Mobile Equipment, Part 31 Diving |
+| 12 Environment | wind, weather patterns, lightning, heat, cold | CSATF #38, #38A (30/30 rule), #34, #35; AB OHS Code Part 7 Emergency Preparedness; Pasquill-Gifford class |
 
-Row 1 is its own tier and never sits below AMBER when present. Thresholds vary by
-shoot jurisdiction (California after 2025-01-01 vs. Alberta vs. elsewhere). Rows 4 to 7
-are the standard occupational hazard classes a certified safety officer works from;
-they apply to a set exactly as to a construction site. Part titles are from Alberta's
-OHS legislation site (Alta Reg 191/2021). The row-to-part mapping is a first pass for
-the NCSO to correct.
+Rows 2 (pyrotechnics) and 8 (stunts) are STEP LADDER rows: escalation climbs one rung
+at a time and a rung cannot open until the one below has a recorded clear. Rows 4 to 7,
+9 and 10 are the standard occupational hazard classes a certified safety officer works
+from; they apply to a set exactly as to a construction site. Part titles are from
+Alberta's OHS legislation site (Alta Reg 191/2021) and stand in for the Alberta column
+only; BC and California columns are filled from their own regulators. The row-to-part
+mapping is a first pass for the NCSO to correct.
 
 **Part 2, Hazard Assessment, Elimination and Control** sits above every row. It is the
 legal reason the cascade exists. Section 7(2), quoted from Alberta's OHS legislation
@@ -63,7 +72,7 @@ Jumper (2007) was a set strike; under Part 30 that is demolition.
 - Outcome: CAD $250,000 fine, guilty plea on three OHS counts. SOURCED.
 - Decision that failed: strike treated as low-risk; PPE not required.
 
-### 2007 · The Dark Knight · Conway Wickliffe, killed · Row 8 (vehicle)
+### 2007 · The Dark Knight · Conway Wickliffe, killed · Row 11 (vehicle)
 - Camera car struck a tree during a rehearsal. He was not restrained. SOURCED (CBS).
 - Decision that failed: rehearsal run without the restraint standard of a take.
 
@@ -73,7 +82,7 @@ Jumper (2007) was a set strike; under Part 30 that is demolition.
 - Decision that failed: rig velocity not verified against the planned pull before a
   person was on the wire.
 
-### 2014 · Midnight Rider · Sarah Jones, killed · Row 8 (rail) + Row 6 (trestle)
+### 2014 · Midnight Rider · Sarah Jones, killed · Row 11 (rail) + Row 6 (trestle)
 - Filmed on a live rail trestle after CSX denied permission twice. No safety plan.
   A freight train hit the crew. SOURCED (US Dept of Labor).
 - Outcome: OSHA fine $74,900; director Randall Miller, 2 years prison. SOURCED.
