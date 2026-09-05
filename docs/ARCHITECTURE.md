@@ -99,6 +99,28 @@ JURISDICTION ──► revised pages ──► DIFF ──► CASCADE ──► 
   annotations for escalation events, and raise an alert on RED/STOP. Backing data
   source is pinned at the first runtime receipt, not before.
 
+## Surface doctrine: cognitive load of the production manager
+
+The user is a UPM, 1st AD, or production manager, on a phone, between setups. The
+surface is judged on whether it lowers their load, not on how much it shows.
+
+- One thread. The screen answers three questions and nothing else: what is on hold,
+  whose lock is on it, what takes the lock off. Code text, section numbers, and
+  sources are one tap deeper, never on the first surface.
+- Bridge every switch. Moving from the wall to a lock to the Code section keeps the
+  scene name and the hold visible. No screen where the user has to remember where
+  they came from.
+- Exit belongs to the reader. Every lock is removed by its owner with one action.
+  The system never auto-clears and never asks a question it can answer from the
+  call sheet, the register, or the Code.
+- Ration the red. A red field means STOP and only STOP. AMBER is text, not colour
+  flood. If everything glows, nothing does.
+- No prose on the wall. A lock reads "Rigger · Dana · anchor re-verify · s.152".
+  Not a paragraph.
+- Silence is authored. Nothing on hold reads as a quiet wall, not a green wall.
+
+Sean's UI/UX research feeds this section; pointers to be added as they land.
+
 ## Must show, at runtime
 
 - A Gemini call returning the DIFF schema, logged.
