@@ -10,9 +10,14 @@ JURISDICTION ──► revised pages ──► DIFF ──► CASCADE ──► 
 ```
 
 - JURISDICTION: first input, no default. Selects the threshold table for every hazard
-  row (Alberta OHS Code, WorkSafeBC, Cal/OSHA + SB 132, …). The harmonized core never
-  changes; only the numbers and the mandatory-role rules do. A row with no threshold
-  for the chosen jurisdiction refuses to run rather than borrowing another's.
+  row. The harmonized core never changes; only the numbers and the mandatory-role
+  rules do. A row with no threshold for the chosen jurisdiction refuses to run rather
+  than borrowing another's.
+  Shipping in the demo: **Alberta** (thresholds authored by the team's NCSO from the
+  Alberta OHS Code) and **British Columbia** (thresholds taken from WorkSafeBC's
+  published OHS Regulation text; regulator-sourced, not practitioner-verified). Each
+  table carries a `provenance` field that says which. California is a stub that
+  refuses to run until someone who works under Cal/OSHA fills it.
 - STEP LADDER rows (stunts, pyrotechnics): escalation is monotonic per rung. Rung n+1
   cannot open until rung n has a recorded clear. A change to the scene resets to the
   rung the change touched.

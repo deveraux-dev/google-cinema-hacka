@@ -29,9 +29,11 @@ the work process changes. Nobody on a set has a tool that does that.
 
 ## What the agent does
 
-0. **Jurisdiction** — the user picks where the shoot is (Alberta, BC, California, …)
-   before anything runs. Every threshold below is loaded from that choice. The core
-   is harmonized; the numbers are local. Onus on the user to adopt their own rules.
+0. **Jurisdiction** — the user picks where the shoot is before anything runs. Every
+   threshold below is loaded from that choice. The core is harmonized; the numbers are
+   local. Onus on the user to adopt their own rules. Shipping: Alberta (NCSO-authored)
+   and British Columbia (WorkSafeBC regulation text, regulator-sourced). Every table
+   states its own provenance.
 1. **Diff** — the revised pages against the locked script, per scene.
 2. **Cascade** — typed deltas per department (props, wardrobe, locations, cast, stunts).
 3. **Hazard tag** — flags anything the rewrite introduced, by hazard row: stunts,
