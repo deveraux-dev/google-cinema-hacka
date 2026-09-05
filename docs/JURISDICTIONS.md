@@ -7,8 +7,12 @@ in the sources reached", never "does not exist".
 Provenance:
 - **Alberta**: Alberta OHS Code, Alta Reg 191/2021, via search-ohs-laws.alberta.ca.
   Thresholds in the ladder are authored by the team's NCSO (works under this Code).
-- **British Columbia**: WorkSafeBC OHS Regulation, BC Reg 296/97, via bclaws.gov.bc.ca,
+- **British Columbia**: WorkSafeBC OHS Regulation, BC Reg 296/97, bclaws consolidation
+  last amended April 1, 2026, in `data/bc-ohs/` under the King's Printer Licence – BC,
   plus Actsafe BC motion-picture bulletins. Regulator-sourced, not practitioner-verified.
+- **Ticket periods**: where the only source is a training vendor's page, the row says
+  "(vendor)". Vendor-sourced periods are treated as the ceiling; the agent uses the
+  shorter of vendor period and any regulator period.
 
 ## The duty that makes the cascade a legal obligation
 
@@ -41,7 +45,14 @@ shorter period when two apply. Blank = not sourced yet = treated as expired.
 
 | Ticket / role | Alberta validity | BC validity | Source |
 |---|---|---|---|
-| Fall protection (worker) | | Actsafe: renewal recommended every 3 years | actsafe.ca (from fall-protection research) |
+| Fall protection (worker) | 3 years by convention; no legislated refresher interval found (training-vendor source, not regulator) | 3 years, Actsafe course renewal | safetyevolution.com (vendor); actsafe.ca/courses-workshops/fall-protection/ |
+| Confined space entry / tending | 3 years recertification (training-vendor convention aligned to Code Part 5) | not found in sources fetched | search-ohs-laws.alberta.ca Part 5 |
+| First aid | 3 years, approved agency | 3 years, WorkSafeBC OFA; valid OFA certs accepted as equivalent from 2024-11-01 | worksafebc.com first-aid pages |
+| Powered mobile equipment / forklift / AWP | 3 years by convention; employer certifies competence, no government licence | 3 years mandatory refresher, CSA B335-15 | safetyevolution.com (vendor) |
+| Blaster (industrial) | Energy Safety Canada interprovincial permit; period not found | 5 years; 6 hours CPD annually | worksafebc.com/…/blasting |
+| Crane operator | Alberta Apprenticeship trade certificate; validity not found | Provisional Level B 1 year, renewable once; full Level A validity not found | bccranesafety.ca |
+| NCSO | 3-year cycle; annual maintenance: current first aid, WHMIS TTT, LSE proficiency renewal, one course per cycle, ACSA auditor status. Grandfathered rule not found in sources. | n/a | youracsa.ca/ncso-hsa/acsa-requirementsv2/ |
+| PAL (federal) | 5 years; renewal notice 3 months before; 6-month grace after expiry | same, federal | rcmp.ca firearms licensing |
 | Competent (Act definition) | OHS Act SA 2020 cO-2.2 s.1: "'competent' in relation to a person means adequately qualified, suitably trained and with sufficient experience to safely perform work without supervision or with only a minimal degree of supervision" (King's Printer, current as of June 11, 2025) | WorkSafeBC "qualified" definition, not yet pulled | kings-printer.alberta.ca |
 | Professional engineer (certifies anchors, rigs, procedures) | APEGA licence, Code Part 3 s.14 | EGBC licence | Code s.14 (in `code.json`) |
 | Crane / hoist operator | Code Part 6 (16 sections reference competence/certification); AB trade certification, period not pulled | Part 14; BC Crane Safety certification, period not pulled | |
@@ -49,8 +60,7 @@ shorter period when two apply. Blank = not sourced yet = treated as expired.
 | Confined space entrant / tester / tending worker | Code Part 5 (7 sections); training period not pulled | Part 9 training, period not pulled | |
 | Powered mobile equipment operator | Code Part 19 (11 sections) | Part 16 | |
 | Scaffold erector | Code Part 23 (11 sections) | Part 13 | |
-| Firearms handler / armorer | federal PAL; industry armorer, no provincial ticket found | Actsafe Props Firearms Safety course | actsafe.ca |
-| First aid | AB OHS first aid regulation, period not pulled | WorkSafeBC OFA levels, 3-year validity, not yet fetched | |
+| Firearms handler / armorer | federal PAL, or working under direct supervision of a PAL holder; no provincial film-armorer ticket found | same; Actsafe Props Firearms Safety course | actsafe.ca; bcfirearmsacademy.ca (vendor) |
 
 ## Gaps to close before the demo
 
