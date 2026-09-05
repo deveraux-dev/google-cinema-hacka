@@ -1,4 +1,4 @@
-"""Entry point for the Gemini Enterprise + watsonx Orchestrate agent. Stub."""
+"""Entry point for the Gemini + Grafana script-revision agent. Stub."""
 
 
 def main() -> None:

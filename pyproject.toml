@@ -1,7 +1,7 @@
 [project]
 name = "hackathon-gemini-ibm"
 version = "0.1.0"
-description = "Gemini Enterprise agent integrating IBM watsonx Orchestrate for a media & entertainment workflow"
+description = "Gemini agent: script revision to per-department deltas and NCSO safety escalation, published to Grafana"
 requires-python = ">=3.11"
 dependencies = []
 

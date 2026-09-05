@@ -1,21 +1,55 @@
-# Summer Blockbuster Hackathon — IBM Track
+# Agentic Cinema Hackathon — Grafana Labs Track
 
-Agentic workflow on **Google Cloud Gemini Enterprise / Agent Builder**, integrating
-**IBM watsonx Orchestrate** to solve a real media & entertainment enterprise-automation
-problem.
+A deterministic, multi-step agent on **Google Cloud Gemini** that turns one script
+revision into per-department work deltas and a safety escalation, and lights them up
+on a self-hosted **Grafana** gauge wall. It keeps working with no internet.
 
-Team: Sean, Sheresh
+Team: Sean Morin, Sheresh
 
 ## Track
 
-- **Partner:** IBM (watsonx Orchestrate)
-- **Platform:** Google Cloud Gemini Enterprise Agent Platform
+- **Partner:** Grafana Labs (Grafana OSS, self-hosted, MIT-licensed repo)
+- **Platform:** Google Cloud Gemini (Vertex AI Express Mode / AI Studio) + Agent Development Kit
+
+## The problem
+
+Ninety-five percent of produced films take three or more rewrites before principal
+photography. A revision lands as colored pages, distributed by hand through the script
+supervisor. Nothing cascades automatically to props, wardrobe, locations, stunts, or
+the safety officer. The documented symptoms are actors reading the wrong line and
+assistants photocopying at 3am.
+
+The safety half is worse. On *Rust*, two prior misfires were never escalated. On
+*Midnight Rider*, a railroad denied permission twice and no safety plan existed.
+Both ended in a death, a fine, and a criminal sentence. Weather hits roughly half
+of all outdoor shoots. The escalation path lives in people's heads.
+
+## What the agent does
+
+1. **Diff** — the revised pages against the locked script, per scene.
+2. **Cascade** — typed deltas per department (props, wardrobe, locations, cast, stunts).
+3. **Hazard tag** — flags anything the rewrite introduced: pyrotechnics, weapons,
+   stunts, water, height, exterior exposure.
+4. **Weather** — current wind and cloud for the shoot location, Pasquill-Gifford
+   stability class.
+5. **Escalate** — a fixed ladder from GREEN to STOP, authored by a certified
+   National Construction Safety Officer (NCSO) on the team. Deterministic. The
+   model never decides the level; the rules do.
+6. **Publish** — every delta and every escalation becomes a Grafana reading and an
+   annotation. The wall is what the crew reads.
+
+Gemini does the language work in steps 1 to 3. Steps 4 to 6 are rules. When the
+network is gone, a local Gemma model takes over steps 1 to 3 and the wall keeps
+updating. The show goes on.
 
 ## Repo boundary
 
 This repository is **net-new** for the hackathon. No code, assets, or doctrine files
-are ported from any other private repository. Everything here must be safe for public
-disclosure and judging by Google and IBM.
+are ported from any private repository. Everything here must be safe for public
+disclosure and judging by Google and Grafana Labs.
+
+Disclosed pre-existing dependency: the offline Gemma sidecar published for a prior
+Google competition (link added when wired). It is used as-is and not claimed as new work.
 
 Do not commit:
 - API keys, service account JSON, `.env` files
@@ -26,15 +60,15 @@ Do not commit:
 - [ ] Hosted project URL
 - [ ] 3-minute demo video (YouTube/Vimeo, public, English)
 - [ ] Public repo with open-source license (this repo, MIT — see `LICENSE`)
-- [ ] Demonstrates actual runtime use of Google Cloud + IBM watsonx (imported/called
+- [ ] Demonstrates actual runtime use of Google Cloud + Grafana (imported/called
       in code, not just named)
-- [ ] Partner track selected: IBM
+- [ ] Partner track selected: Grafana Labs
 - [ ] Devpost submission form completed
 
 ## Structure
 
 ```
-src/agent/       Agent implementation (Gemini Enterprise + watsonx Orchestrate calls)
+src/agent/       Agent implementation (Gemini calls, rules, Grafana publish)
 docs/            Architecture + submission notes
 .env.example     Required environment variables (no real secrets)
 ```
@@ -46,8 +80,9 @@ python -m venv .venv
 .venv\Scripts\activate
 pip install -e .
 copy .env.example .env   # fill in real credentials locally only
+docker run -d -p 3000:3000 --name grafana grafana/grafana-oss
 ```
 
 ## Status
 
-Scaffold only — architecture and idea TBD.
+Scaffold. Track and workflow chosen. No runtime receipt yet.
