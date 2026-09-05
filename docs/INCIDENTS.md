@@ -10,20 +10,26 @@ These entries are the test cases for the escalation ladder.
 | Row | Covers | Classification authority |
 |---|---|---|
 | 1 Firearms | real firearms, blanks, dummy rounds | CSATF Bulletins #1, #2; California SB 132; jurisdiction column |
-| 2 Pyrotechnic / explosive | pyro, squibs, mortars, fuel effects | GHS Explosives Div 1.x; CSATF #16 |
-| 3 Chemical | atmospherics (smoke, haze), solvents, paints, fuels, gases | UN GHS hazard classes; WHMIS (Hazardous Products Regulations, Canada) |
-| 4 Electrical | set power, distro, generators, live lines, water near power | Alberta OHS Code part TBD (NCSO to pin); CSATF electrical bulletins |
-| 5 Pressure / pneumatic | compressed gas, air cannons, ratchets, hydraulics, air bags | Alberta OHS Code part TBD; GHS Gases Under Pressure |
-| 6 Structural | set walls, scaffolds, platforms, rigging, falls, crush | Alberta OHS Code part TBD; CSATF fall-protection and scaffold bulletins |
-| 7 Confined space | tanks, tunnels, vehicles, water tanks, enclosed sets with atmospherics | Alberta OHS Code part TBD |
-| 8 Motion | stunts, vehicles, aircraft, water, animals | CSATF Safety Bulletins by number |
-| 9 Environment | wind, lightning, heat, cold | CSATF #38, #38A (30/30 rule), #34, #35; Pasquill-Gifford class |
+| 2 Pyrotechnic / explosive | pyro, squibs, mortars, fuel effects | GHS Explosives Div 1.x; CSATF #16; AB OHS Code Part 10 Fire and Explosion Hazards, Part 33 Explosives |
+| 3 Chemical | atmospherics (smoke, haze), solvents, paints, fuels, gases | UN GHS hazard classes; WHMIS; AB OHS Code Part 4 Chemical Hazards, Part 26 Ventilation, Part 29 WHMIS |
+| 4 Electrical | set power, distro, generators, live lines, water near power | AB OHS Code Part 15 Control of Hazardous Energy, Part 17 Overhead Power Lines |
+| 5 Pressure / pneumatic | compressed gas, air cannons, ratchets, hydraulics, air bags | AB OHS Code Part 15 Control of Hazardous Energy, Part 25 Tools, Equipment and Machinery; GHS Gases Under Pressure |
+| 6 Structural | set walls, scaffolds, platforms, rigging, falls, crush, set strike | AB OHS Code Part 6 Cranes and Hoists, Part 9 Fall Protection, Part 21 Rigging, Part 23 Scaffolds, Part 30 Demolition |
+| 7 Confined space | tanks, tunnels, vehicles, water tanks, enclosed sets with atmospherics | AB OHS Code Part 5 Confined Spaces |
+| 8 Motion | stunts, vehicles, aircraft, water, animals | CSATF Safety Bulletins by number; AB OHS Code Part 19 Powered Mobile Equipment, Part 31 Diving |
+| 9 Environment | wind, lightning, heat, cold | CSATF #38, #38A (30/30 rule), #34, #35; AB OHS Code Part 7 Emergency Preparedness; Pasquill-Gifford class |
 
 Row 1 is its own tier and never sits below AMBER when present. Thresholds vary by
 shoot jurisdiction (California after 2025-01-01 vs. Alberta vs. elsewhere). Rows 4 to 7
 are the standard occupational hazard classes a certified safety officer works from;
-they apply to a set exactly as to a construction site. Code part numbers are left
-blank until pinned from the Code text, not from memory.
+they apply to a set exactly as to a construction site. Part titles are from Alberta's
+OHS legislation site (Alta Reg 191/2021). The row-to-part mapping is a first pass for
+the NCSO to correct.
+
+**Part 2, Hazard Assessment, Elimination and Control** sits above every row. It is the
+legal reason the cascade exists: a change to the work obliges the assessment to follow.
+The exact clause is to be quoted from the Code text before it appears in the pitch.
+Jumper (2007) was a set strike; under Part 30 that is demolition.
 
 ## Timeline
 
@@ -165,3 +171,4 @@ gap 3 (the paperwork opens itself when the hazard tag appears).
 - https://www.rollingstone.com/tv-movies/tv-movie-news/daniel-radcliffe-honors-harry-potter-stunt-double-documentary-trailer-1234867789
 - https://www.rkmlaw.net/analysis-of-film-set-injuries-and-deaths/
 - https://laws-lois.justice.gc.ca/eng/regulations/SI-97-5/page-1.html
+- https://search-ohs-laws.alberta.ca/legislation/occupational-health-and-safety-code/
