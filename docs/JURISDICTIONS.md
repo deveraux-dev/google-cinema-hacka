@@ -38,6 +38,27 @@ Provenance:
 | 11 Motion | Part 19 Powered Mobile Equipment; Part 31 Diving. Not fetched. | Part 16 Mobile Equipment; Part 24 Diving. Not fetched. |
 | 12 Environment | Part 6 s.106 "Wind and temperature limitations" for cranes exists; km/h value not fetched. Part 7 Emergency Preparedness. | Part 7 Thermal Environment: cold-stress provisions apply below core 36 °C or equivalent chill below -7 °C (Table 7-4), heated shelter required; heat by WBGT. Crane wind limits Part 14 not fetched. |
 
+## Premises layer: fire, occupancy, electrical, pressure, permits
+
+Enforced by different bodies than OHS, each with its own shutdown authority. The
+jurisdiction pick includes the municipality because Vancouver's Charter lets it run its
+own by-laws; Fire By-law 14419 carries 278 provisions unique to the city.
+
+| Layer | Alberta | BC | Vancouver |
+|---|---|---|---|
+| Fire code | National Fire Code Alberta Edition 2023, in force May 1, 2024, under the Safety Codes Act; enforced by accredited municipal fire departments, Alberta Safety Codes Authority elsewhere | BC Fire Code 2024, in force March 8, 2024 | Fire By-law No. 14419; Vancouver Fire & Rescue, Fire Prevention office |
+| Occupancy | National Building Code Alberta Edition 2023; occupant load posted permanently in a conspicuous location; temporary change of use rule not found | BC Building Code 2024 s.11.6 Temporary Buildings and Occupancies: temporary Group A Div 2 use in a Group F warehouse permitted with an occupant load plan "acceptable to the Fire Chief" | same, plus 14419 |
+| Electrical | CSA C22.1-24 (26th ed.) adopted, effective April 1, 2025; permits via accredited municipality or agency | Technical Safety BC, Electrical Safety Regulation; Temporary Entertainment Installation Permit valid up to 14 days, renewable; "registered representative must request inspection whenever equipment is set up at any location" | Technical Safety BC |
+| Pressure equipment | ABSA under the Safety Codes Act: pressure vessels, compressors, pressure piping. Air cannons and rams: scope not confirmed | Technical Safety BC Boiler & Pressure Vessel program; small air receivers may need label only. Air cannons and rams: scope not confirmed | Technical Safety BC |
+| Film / pyro permit | Calgary: $5M liability with the City or CFD as additional insured; NRCan-certified technician with photo ID; Fire Safety Codes Officer present above 3-inch shells; site plan and fire safety plan; 7 to 10 days. Edmonton: NRCan-certified professionals only; Edmonton Fire Rescue; up to 10 working days | embedded in municipal fire permits | City Film & Special Events approves the effect, Fire Prevention issues a date-and-time-specific permit listing approved materials; high explosives copied to NRCan Explosives Regulatory Division; SFX coordinator may be asked for resume and references and the City may withhold; location manager arranges a site meeting |
+
+Shutdown authority by layer: fire chief or safety codes officer (fire, occupancy);
+electrical inspector or Technical Safety BC (electrical); ABSA or Technical Safety BC
+(pressure); the city film office plus fire prevention (permits). Any one of them can
+stop the scene independent of the OHS answer. Not found: Alberta fire-code text on
+open flame indoors or fire watch; Alberta temporary change-of-use rule; Vancouver
+By-law 14419 full text (fetch blocked).
+
 ## Welfare rows, headcount-driven
 
 The call sheet's crew count and the distance to the nearest hospital are inputs. These

@@ -12,8 +12,8 @@ OUT = ROOT / "data" / "alberta-ohs" / "schedules.json"
 
 TAG = re.compile(r"<[^>]+>")
 WS = re.compile(r"\s+")
-SCHED = re.compile(r"<p class=Heading[^>]*>(?:(?!</p>).)*?Schedule\s*<span class=SectionNumber>(\d+)</span>(?:(?!</p>).)*?</p>", re.S)
-TABLE_HEAD = re.compile(r"<p class=Heading[^>]*>(?:(?!</p>).)*?Table (\d+)<br>\s*(.*?)</p>", re.S)
+SCHED = re.compile(r"<p class=(?:Heading|PartTitle)[^>]*>(?:(?!</p>).)*?Schedule\s*<span\s*class=SectionNumber>(\d+)</span>(?:(?!</p>).)*?</p>", re.S)
+TABLE_HEAD = re.compile(r"<p class=Heading[^>]*>(?:(?!</p>).)*?Table (\d+)\s*<br>\s*(.*?)</p>", re.S)
 SEE = re.compile(r"\[\s*See\s+(.*?)\]", re.S)
 TABLE = re.compile(r"<table[^>]*>(.*?)</table>", re.S)
 ROW = re.compile(r"<tr[^>]*>(.*?)</tr>", re.S)
