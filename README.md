@@ -8,7 +8,7 @@ Team: Sean Morin, Sheresh
 
 ## Track
 
-- **Partner:** Grafana Labs (Grafana OSS, self-hosted, MIT-licensed repo)
+- **Partner:** Grafana Labs (Grafana OSS self-hosted, driven through the official `grafana/mcp-grafana` MCP server)
 - **Platform:** Google Cloud Gemini (Vertex AI Express Mode / AI Studio) + Agent Development Kit
 
 ## The problem
@@ -82,6 +82,13 @@ pip install -e .
 copy .env.example .env   # fill in real credentials locally only
 docker run -d -p 3000:3000 --name grafana grafana/grafana-oss
 ```
+
+## Rules that bind this repo
+
+- Deadline: Sep 9, 2026, 2:00pm PDT.
+- Project must be newly created during the contest period. Open-source
+  components allowed under an OSI license, disclosed here.
+- Grafana track: use the stack at runtime primarily through the Grafana MCP server.
 
 ## Status
 

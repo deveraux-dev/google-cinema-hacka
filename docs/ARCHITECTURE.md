@@ -17,15 +17,16 @@ revised pages ──► DIFF ──► CASCADE ──► HAZARD TAG ──► WE
 - ESCALATE: a lookup table, not a model call. Inputs: hazard tags, wind, stability
   class, daylight. Output: one of GREEN / AMBER / RED / STOP plus the required
   action. Authored by the team's NCSO. Every row has a negative test.
-- PUBLISH: two Grafana touchpoints. Readings (per-department delta counts, wind,
-  escalation level) to a data source. Escalation events to the annotations API so
-  they appear as marks on every panel. Data source choice is pinned at the first
-  runtime receipt, not before.
+- PUBLISH: through the official `grafana/mcp-grafana` MCP server, per the track
+  rules ("primarily through the Grafana MCP server"). The agent calls its tools to
+  write readings (per-department delta counts, wind, escalation level), create
+  annotations for escalation events, and raise an alert on RED/STOP. Backing data
+  source is pinned at the first runtime receipt, not before.
 
 ## Must show, at runtime
 
 - A Gemini call returning the DIFF schema, logged.
-- A Grafana panel changing because the agent wrote to it, on screen.
+- A Grafana panel changing because the agent wrote to it via mcp-grafana, on screen.
 - The same run with the network disabled, using the Gemma sidecar.
 
 ## Deterministic claim
