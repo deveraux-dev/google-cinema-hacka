@@ -42,7 +42,7 @@ shorter period when two apply. Blank = not sourced yet = treated as expired.
 | Ticket / role | Alberta validity | BC validity | Source |
 |---|---|---|---|
 | Fall protection (worker) | | Actsafe: renewal recommended every 3 years | actsafe.ca (from fall-protection research) |
-| Competent worker (Act definition) | Act definition, not yet pulled | WorkSafeBC "qualified" definition, not yet pulled | |
+| Competent (Act definition) | OHS Act SA 2020 cO-2.2 s.1: "'competent' in relation to a person means adequately qualified, suitably trained and with sufficient experience to safely perform work without supervision or with only a minimal degree of supervision" (King's Printer, current as of June 11, 2025) | WorkSafeBC "qualified" definition, not yet pulled | kings-printer.alberta.ca |
 | Professional engineer (certifies anchors, rigs, procedures) | APEGA licence, Code Part 3 s.14 | EGBC licence | Code s.14 (in `code.json`) |
 | Crane / hoist operator | Code Part 6 (16 sections reference competence/certification); AB trade certification, period not pulled | Part 14; BC Crane Safety certification, period not pulled | |
 | Blaster / pyrotechnician | Code Part 33 (7 sections); provincial blaster's permit, period not pulled | Part 21 blaster certificate, period not pulled; NRCan pyrotechnician card (federal) | |
