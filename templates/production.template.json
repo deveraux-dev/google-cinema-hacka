@@ -1,0 +1,32 @@
+{
+  "production": "",
+  "jurisdiction": { "province": "", "municipality": "" },
+  "locations": [
+    { "name": "", "lat": null, "lon": null, "hospital_minutes": null, "premises": { "occupant_load": null, "fire_permit": null, "electrical_permit": null } }
+  ],
+  "crew_csv": "",
+  "script": "",
+  "schedule": [
+    { "day": "", "location": "", "night": false, "exterior": false, "build_or_strike": false, "headcount": null, "on_call": "" }
+  ],
+  "roles": {
+    "first_ad": "",
+    "safety_officer": "",
+    "armorer": "",
+    "rigger": "",
+    "first_aiders": [],
+    "catering_lead": ""
+  },
+  "site_practice": {
+    "condor_wind_kmh": null,
+    "crane_wind_kmh": null,
+    "exterior_pyro_wind_kmh": null,
+    "rig_recheck_hours": null,
+    "ticket_preexpiry_days": 90
+  },
+  "provenance": {
+    "created": "",
+    "revised": "",
+    "code_versions": { "AB": "AR 191/2021 current as of 2025-03-31", "BC": "BC Reg 296/97 amended 2026-04-01" }
+  }
+}
