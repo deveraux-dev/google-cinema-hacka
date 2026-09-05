@@ -15,6 +15,9 @@ node_modules/
 .vscode/
 .idea/
 
+# local native binaries (grafana, mcp-grafana), never committed
+.tools/
+
 # never allow any doctrine/private-repo files to be pulled in here
 CLAUDE.md
 .claude/
