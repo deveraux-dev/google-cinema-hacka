@@ -1,5 +1,5 @@
 [project]
-name = "hackathon-gemini-ibm"
+name = "google-cinema-hacka"
 version = "0.1.0"
 description = "Gemini agent: script revision to per-department deltas and NCSO safety escalation, published to Grafana"
 requires-python = ">=3.11"
