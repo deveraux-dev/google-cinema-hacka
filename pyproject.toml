@@ -5,6 +5,9 @@ description = "Gemini agent: script revision to per-department deltas and NCSO s
 requires-python = ">=3.11"
 dependencies = ["mcp>=2.1", "python-dotenv>=1.0"]
 
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
