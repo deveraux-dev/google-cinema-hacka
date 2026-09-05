@@ -24,8 +24,8 @@ risk assessment, no stunt safety checklist, and no perimeter. A rider died and
 WorkSafeBC fined the production. On *Fast & Furious 9*, the stunt changed after
 rehearsal and the matting did not move with it. The pattern across a decade of set
 deaths is the same: the work changed, the hazard assessment did not. Alberta's OHS
-Code says it in one sentence (s.7(2)): a hazard assessment must be repeated when
-the work process changes. Nobody on a set has a tool that does that.
+Code says it in one clause (s.7(4)(c)): the hazard assessment must be repeated
+"when a work process or operation changes." Nobody on a set has a tool that does that.
 
 ## What the agent does
 

@@ -36,11 +36,14 @@ only; BC and California columns are filled from their own regulators. The row-to
 mapping is a first pass for the NCSO to correct.
 
 **Part 2, Hazard Assessment, Elimination and Control** sits above every row. It is the
-legal reason the cascade exists. Section 7(2), quoted from Alberta's OHS legislation
-site: "A hazard assessment must be repeated, reviewed or revised when there is a change
-in the work site, work process, operations or when a new hazard is identified." A script
-revision that adds a gag, a location, or a stunt is a change in the work process. Section
-8 requires workers be involved and told. The cascade is 7(2) and 8, automated.
+legal reason the cascade exists. Section 7(4), quoted from the King's Printer
+consolidation (current as of March 31, 2025): "An employer must ensure that the hazard
+assessment is repeated (a) at reasonably practicable intervals to prevent the
+development of unsafe and unhealthy working conditions, (b) when a new work process is
+introduced, (c) when a work process or operation changes, or (d) before the construction
+of significant additions or alterations to a work site." A script revision that adds a
+gag, a location, or a stunt is 7(4)(b) or (c). Section 8(1) requires affected workers be
+involved. The cascade is 7(4) and 8(1), automated.
 Jumper (2007) was a set strike; under Part 30 that is demolition.
 
 ## Timeline

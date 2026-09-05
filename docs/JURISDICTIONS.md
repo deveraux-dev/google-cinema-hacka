@@ -14,8 +14,8 @@ Provenance:
 
 | | Alberta | BC |
 |---|---|---|
-| Reassess on change | Part 2 s.7: hazard assessment must be repeated at reasonably practicable intervals, and repeated, reviewed or revised on a change in the work site, work process, operations, or a new hazard. Two fetches returned two phrasings; subsection number to be confirmed against the Code PDF before it appears on screen. | Part 5 s.5.53(1) (chemical): reassessment "when there is a change in work conditions which may increase the exposure, such as a change in production rate, process or equipment." A general Part 3/4 duty exists but was not fetched. |
-| Worker involvement | Part 2 s.8: employer must involve affected workers in the assessment and in control of hazards. | not fetched |
+| Reassess on change | Part 2 s.7(4), King's Printer text: repeated "(a) at reasonably practicable intervals …, (b) when a new work process is introduced, (c) when a work process or operation changes, or (d) before the construction of significant additions or alterations to a work site." Confirmed from the consolidation in `data/alberta-ohs/`. | Part 5 s.5.53(1) (chemical): reassessment "when there is a change in work conditions which may increase the exposure, such as a change in production rate, process or equipment." A general Part 3/4 duty exists but was not fetched. |
+| Worker involvement | Part 2 s.8(1): "An employer must involve affected workers in the hazard assessment and in the control or elimination of the hazards identified." | not fetched |
 
 ## Per hazard row
 
