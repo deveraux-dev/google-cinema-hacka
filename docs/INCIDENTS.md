@@ -26,6 +26,7 @@ jurisdiction, so it is the clearest case for why the jurisdiction pick comes fir
 | 10 Power tools and machinery | construction, set strike, grips' gear | AB OHS Code Part 25 Tools, Equipment and Machinery, Part 22 Safeguards |
 | 11 Motion | vehicles, aircraft, water, animals | CSATF Safety Bulletins by number; AB OHS Code Part 19 Powered Mobile Equipment, Part 31 Diving |
 | 12 Environment | wind, weather patterns, lightning, heat, cold | CSATF #38, #38A (30/30 rule), #34, #35; AB OHS Code Part 7 Emergency Preparedness; Pasquill-Gifford class |
+| 13 Hazardous energy control (LOTO) | generators and distro, hydraulic gimbals and motion bases, air rams and cannons, camera cranes, LED walls, practical rigs, any stored energy during service, reset, or strike | AB OHS Code Part 15 Managing the Control of Hazardous Energy ss.212-215.4; BC OHSR Part 10 De-energization and Lockout ss.10.1-10.10, Part 19 ss.19.10, 19.16, 19.18 |
 
 Rows 2 (pyrotechnics) and 8 (stunts) are STEP LADDER rows: escalation climbs one rung
 at a time and a rung cannot open until the one below has a recorded clear. Rows 4 to 7,

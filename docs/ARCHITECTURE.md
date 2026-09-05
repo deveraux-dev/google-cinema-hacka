@@ -30,6 +30,32 @@ JURISDICTION ──► revised pages ──► DIFF ──► CASCADE ──► 
       layer's answer even when the OHS answer is unchanged.
   Rows 2 (pyro), 3 (chemical), 4 (electrical), 5 (pressure), 6 (structural), and 12
   (environment) route to both layers.
+- ROW 13, HAZARDOUS ENERGY CONTROL (LOTO): fires on any scene or day that services,
+  resets, or strikes powered equipment: generators, distro, hydraulic gimbals, motion
+  bases, air rams, cranes, LED walls, practical rigs. The Code's sequence is the
+  ladder: isolate (AB s.212 / BC s.10.3), verify (AB s.213), personal lock per worker
+  (AB s.214, 214.1 / BC s.10.7), group procedure where many workers or devices
+  (AB s.215 / BC s.10.9). Each step needs a recorded clear before the next opens. A
+  rig that is re-energized for a take and then re-entered for adjustment starts the
+  sequence again; that re-entry is the change 7(4)(c) names.
+- ESCALATION MIRRORS LOCKOUT. The same four rules govern every escalation and every
+  on-call, not just Row 13:
+    · Isolate: a hazard tag puts a HOLD on the scene. The hold is the energy-isolating
+      device. Nothing on that scene proceeds while a hold exists.
+    · Personal lock: each role the Code names for that hazard (armorer, rigger,
+      engineer, first aider, 1st AD, safety officer) attaches its own lock to the hold,
+      identified to the person. A lock is removed only by the person who applied it,
+      with a dated record. No one clears another's lock. No blanket clear.
+    · Verify: the scene reopens only when zero locks remain and the verify step is
+      recorded by a role different from the last lock removed. Two people, never one.
+    · Group control: when the roles or devices are many (crowd day, multi-rig set),
+      a group lock is held by one named coordinator whose lock cannot come off until
+      every individual lock is off. That coordinator is the on-call.
+  In Grafana terms: HOLD = incident opened; each lock = an annotation carrying the
+  role and person; verify = incident resolved by a different user than the last lock
+  owner; on-call = the Grafana on-call schedule for the production, paged on any
+  RED or STOP. All of it through the MCP server's incident, annotation, and on-call
+  tools. The wall shows the locks, not just the colour.
 - WELFARE ROWS, headcount-driven: first aid by headcount and hospital distance,
   drinking water, emergency response plan and contacts, food safety, rest turnaround.
   Inputs: crew count per day and location from the call sheet; hospital distance from
