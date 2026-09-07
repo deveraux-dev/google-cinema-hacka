@@ -44,6 +44,17 @@ async def call(name: str, args: dict) -> str:
             return "\n".join(c.text for c in res.content if getattr(c, "text", None))
 
 
+async def call_many(calls: list[tuple[str, dict]]) -> list[str]:
+    out: list[str] = []
+    async with stdio_client(_params()) as (r, w):
+        async with ClientSession(r, w) as s:
+            await s.initialize()
+            for name, args in calls:
+                res = await s.call_tool(name, args)
+                out.append("\n".join(c.text for c in res.content if getattr(c, "text", None)))
+    return out
+
+
 def main() -> None:
     mode = sys.argv[1] if len(sys.argv) > 1 else "list"
     if mode == "list":

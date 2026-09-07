@@ -111,4 +111,16 @@ Unpack both, start `grafana-server.exe`, then point `mcp-grafana.exe` at `GRAFAN
 
 ## Status
 
-Scaffold. Track and workflow chosen. No runtime receipt yet.
+| Half | State | Receipt (2026-09-07, local Grafana OSS 13.2.1 via `mcp-grafana` 1.3.0) |
+|---|---|---|
+| Rules engine | proven | `pytest -q` → 33 passed; `engine.replay` byte-identical twice |
+| Grafana publish | proven | `python -m agent.publish` → dashboard `backlot` (4 panels), 301 annotations tagged `backlot` (3 scenes + 298 open locks), `/api/ds/query` returns `[["S1","S2","S3"],[2,3,3]]` |
+| Gemini | unproven | `call_gemini` wired, mocked tests only; no live call yet |
+
+Run the wall yourself: start Grafana, fill `.env`, then
+
+```
+$env:PYTHONPATH='src'; .venv\Scripts\python.exe -m agent.publish 2026-09-05
+```
+
+and open `http://localhost:3000/d/backlot`.

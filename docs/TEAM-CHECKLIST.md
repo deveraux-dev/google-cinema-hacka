@@ -12,17 +12,11 @@ Status as of commit `c9982c7`. Deadline: Sep 9, 2026, 2:00pm PDT.
       call** — this is the runtime receipt judging requires, not just an import.
 - [ ] Wire `call_gemini` into whatever actually needs Gemini for the demo
       (video narration script, or the diff/cascade/tag steps — decide which).
-- [ ] Grafana publish: push `engine.run()` output to Grafana via
-      `agent.grafana_mcp` (`create_incident` for RED/STOP scenes,
-      `create_annotation` per lock). `create_incident` probed once against
-      local Grafana OSS — came back with an empty-fields response, meaning
-      the Incident app likely isn't available on this OSS instance. Needs
-      a real check before relying on it; annotations-only may be the fallback.
-- [ ] `grafana/backlot.dashboard.json` — four panels (severity per scene,
-      open locks, first aid requirement, on-call), imported via `update_dashboard`.
-      VERIFY its schema first (not done yet).
-- [ ] README "Status" section: replace with actual runtime receipts once the
-      above produce real output (incident IDs, annotation counts, replay proof).
+- [x] Grafana publish: `src/agent/publish.py` — `update_dashboard` (uid
+      `backlot`, 4 panels on a testdata csv datasource) + one `create_annotation`
+      per scene and per open lock in a single MCP session. Ran live: 301
+      annotations, dashboard queryable. Incidents dropped (not on OSS).
+- [x] README "Status" section carries the runtime receipts.
 - [ ] Offline demo segment: run with network disabled, confirm engine output
       is identical and Grafana (local) still updates.
 - [ ] Public-safety pass before final push: no API keys, no service account
