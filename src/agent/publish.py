@@ -53,15 +53,13 @@ def build_dashboard(out: dict) -> dict:
     panels = [
         _panel(
             1, "stat", "Severity per scene", {"x": 0, "y": 0, "w": 12, "h": 6}, sev_csv,
-            options={"colorMode": "background", "graphMode": "none", "textMode": "value_and_name", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "/^severity$/"}},
+            options={"colorMode": "background", "graphMode": "none", "textMode": "value_and_name", "reduceOptions": {"values": True, "calcs": ["lastNotNull"], "fields": ""}},
             fieldConfig={"defaults": {"mappings": mappings, "color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": None}, {"color": "orange", "value": 1}, {"color": "red", "value": 2}, {"color": "dark-red", "value": 3}]}}, "overrides": []},
-            transformations=[{"id": "rowsToFields", "options": {}}],
         ),
         _panel(
             2, "bargauge", "Open locks per scene", {"x": 12, "y": 0, "w": 12, "h": 6}, open_csv,
-            options={"orientation": "horizontal", "displayMode": "gradient", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "/^open$/"}},
+            options={"orientation": "horizontal", "displayMode": "gradient", "reduceOptions": {"values": True, "calcs": ["lastNotNull"], "fields": ""}},
             fieldConfig={"defaults": {"color": {"mode": "continuous-GrYlRd"}, "min": 0}, "overrides": []},
-            transformations=[{"id": "rowsToFields", "options": {}}],
         ),
         _panel(3, "table", "First aid (Schedule 2)", {"x": 0, "y": 6, "w": 12, "h": 8}, _csv(fa_rows), options={"cellHeight": "sm"}),
         {
