@@ -6,7 +6,7 @@
 JURISDICTION ──► revised pages ──► DIFF ──► CASCADE ──► HAZARD TAG ──► WEATHER ──► ESCALATE ──► PUBLISH
      │                               │          │            │                          │            │
   user picks                      Gemini     Gemini       Gemini                     rules       Grafana
-  loads thresholds              (or Gemma) (or Gemma)   (or Gemma)                 (NCSO ladder)  (OSS, local)
+  loads thresholds                                                                (NCSO ladder)  (OSS, local)
 ```
 
 - JURISDICTION: first input, no default. Selects the threshold table for every hazard
@@ -85,9 +85,9 @@ JURISDICTION ──► revised pages ──► DIFF ──► CASCADE ──► 
   Validity periods live in the jurisdiction tables (docs/JURISDICTIONS.md) with their
   source; a ticket type with no sourced period is treated as expired until one lands.
 
-- DIFF, CASCADE, HAZARD TAG: language steps. Online = Gemini via Google Cloud.
-  Offline = local Gemma sidecar. Same JSON schema out of both, enforced by
-  structured output, so the rules never see free text.
+- DIFF, CASCADE, HAZARD TAG: language steps, Gemini via Google Cloud. JSON schema
+  enforced by structured output, so the rules never see free text. Without
+  Gemini these steps pause; the rules and the wall keep running locally.
 - WEATHER: open-meteo current conditions for the shoot location. Pasquill-Gifford
   stability class computed locally. Cached, so offline mode uses the last fetch.
 - ESCALATE: a lookup table, not a model call. Inputs: hazard tags, wind, stability
@@ -125,7 +125,7 @@ Sean's UI/UX research feeds this section; pointers to be added as they land.
 
 - A Gemini call returning the DIFF schema, logged.
 - A Grafana panel changing because the agent wrote to it via mcp-grafana, on screen.
-- The same run with the network disabled, using the Gemma sidecar.
+- The rules engine and wall updating with no network (everything local).
 
 ## Deterministic claim
 

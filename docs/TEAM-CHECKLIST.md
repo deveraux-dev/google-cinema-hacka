@@ -18,10 +18,11 @@ Status as of commit `c9982c7`. Deadline: Sep 9, 2026, 2:00pm PDT.
       per scene and per open lock in a single MCP session. Ran live: 301
       annotations, dashboard queryable. Incidents dropped (not on OSS).
 - [x] README "Status" section carries the runtime receipts.
-- [ ] Offline demo segment: run with network disabled, confirm engine output
-      is identical and Grafana (local) still updates.
-- [ ] Public-safety pass before final push: no API keys, no service account
-      JSON, `.env` never committed (currently clean — keep it that way).
+- [ ] Offline demo segment (video only): wifi off on camera, `python -m agent.main`,
+      refresh the wall. No Gemma claim anywhere; README/ARCHITECTURE softened.
+- [x] Public-safety pass 2026-09-07: no `.env` ever committed, no key/token/private-key
+      patterns in tracked files or full history, no private-tooling references.
+      Re-run before the final push.
 
 ## Sehrish (front end)
 

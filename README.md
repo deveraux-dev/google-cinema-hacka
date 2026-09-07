@@ -48,18 +48,14 @@ Code says it in one clause (s.7(4)(c)): the hazard assessment must be repeated
 6. **Publish** — every delta and every escalation becomes a Grafana reading and an
    annotation. The wall is what the crew reads.
 
-Gemini does the language work in steps 1 to 3. Steps 0 and 4 to 6 are rules. When
-the network is gone, a local Gemma model takes over steps 1 to 3 and the wall keeps
-updating. The show goes on.
+Gemini does the language work in steps 1 to 3. Steps 0 and 4 to 6 are rules and run
+entirely on the local machine; the wall updates whether or not Gemini is reachable.
 
 ## Repo boundary
 
 This repository is **net-new** for the hackathon. No code, assets, or doctrine files
 are ported from any private repository. Everything here must be safe for public
 disclosure and judging by Google and Grafana Labs.
-
-Disclosed pre-existing dependency: the offline Gemma sidecar published for a prior
-Google competition (link added when wired). It is used as-is and not claimed as new work.
 
 Do not commit:
 - API keys, service account JSON, `.env` files
