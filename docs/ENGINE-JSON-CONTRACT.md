@@ -5,9 +5,9 @@ to read. It takes a production plan, scene list, clears, and crew register and
 returns one JSON object — deterministic, same input always gives the same output
 (`engine.replay` runs it twice and asserts byte-identical).
 
-CLI to produce it yourself:
+CLI to produce it yourself (`PYTHONPATH=src` is required unless you ran `pip install -e .`):
 ```
-.venv\Scripts\python.exe -m agent.engine samples/production.plan.json samples/scenes.json samples/clears.json samples/crew.csv 2026-09-05
+$env:PYTHONPATH='src'; .venv\Scripts\python.exe -m agent.engine samples/production.plan.json samples/scenes.json samples/clears.json samples/crew.csv 2026-09-05
 ```
 
 ## For Sherish: two ways to get this without touching Python
@@ -17,7 +17,7 @@ CLI to produce it yourself:
    directly for building the UI against real shapes. It won't change unless
    someone regenerates it.
 2. **Local harness (live)** — run
-   `.venv\Scripts\python.exe -m agent.harness [port] [today]` (defaults
+   `$env:PYTHONPATH='src'; .venv\Scripts\python.exe -m agent.harness [port] [today]` (defaults
    `8787`, `2026-09-05`) and `GET http://127.0.0.1:8787/engine.json` returns
    the same JSON, recomputed fresh on every request, CORS-open for a dev
    server on any port. Useful once you want to try different `today` values

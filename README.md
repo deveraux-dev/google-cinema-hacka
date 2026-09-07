@@ -92,6 +92,9 @@ pip install -e .
 copy .env.example .env   # fill in real credentials locally only
 ```
 
+If `pip install -e .` is unavailable (offline), set `PYTHONPATH=src` before any
+`python -m agent.<module>` command instead.
+
 Grafana and its MCP server run as plain native binaries. No Docker, no container runtime.
 
 - Grafana OSS 13.2.1, standalone Windows archive: https://grafana.com/grafana/download?platform=windows&edition=oss

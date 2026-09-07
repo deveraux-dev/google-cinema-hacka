@@ -35,8 +35,8 @@ Status as of commit `c9982c7`. Deadline: Sep 9, 2026, 2:00pm PDT.
       Lock, first_aid, register shapes).
 - [x] Static fixture to build against with zero Python:
       `samples/engine.output.json` (3 sample scenes: S1 RED, S2 STOP, S3 STOP).
-- [x] Live local harness for iterating: `.venv\Scripts\python.exe -m
-      agent.harness [port] [today]` → `GET http://127.0.0.1:8787/engine.json`,
+- [x] Live local harness for iterating: `$env:PYTHONPATH='src';
+      .venv\Scripts\python.exe -m agent.harness [port] [today]` → `GET http://127.0.0.1:8787/engine.json`,
       CORS-open, recomputes fresh each request.
 - [ ] Build the web app against the fixture/harness (severity badges, lock
       list, first-aid panel, register status).
