@@ -1,6 +1,6 @@
 # Devpost Submission Checklist — Grafana Labs Track
 
-- [ ] Hosted project URL (Sheresh, Vercel)
+- [ ] Hosted project URL (Sehrish, Vercel)
 - [ ] 3-minute demo video, public on YouTube/Vimeo, English or subtitled
 - [ ] Public GitHub repo, all source + assets + run instructions
 - [ ] Repo demonstrates actual runtime use of Google Cloud AND Grafana (imported/called in code)

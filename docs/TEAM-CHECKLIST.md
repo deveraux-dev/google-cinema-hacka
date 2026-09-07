@@ -1,4 +1,4 @@
-# Team checklist — Sean & Sherish
+# Team checklist — Sean & Sehrish
 
 Status as of commit `c9982c7`. Deadline: Sep 9, 2026, 2:00pm PDT.
 
@@ -28,7 +28,7 @@ Status as of commit `c9982c7`. Deadline: Sep 9, 2026, 2:00pm PDT.
 - [ ] Public-safety pass before final push: no API keys, no service account
       JSON, `.env` never committed (currently clean — keep it that way).
 
-## Sherish (front end)
+## Sehrish (front end)
 
 - [x] Contract documented: `docs/ENGINE-JSON-CONTRACT.md` — full field
       reference for `engine.run()`'s output (severity ladder, Requirement,

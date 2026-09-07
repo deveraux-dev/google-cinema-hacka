@@ -323,7 +323,7 @@ runtime receipts`.
   first aid requirement (text panel updated via `update_dashboard`), on-call (text).
   Import via the MCP `update_dashboard` tool; VERIFY its schema first.
 - README: replace "Status" with the receipts; add "Run it" with the exact commands.
-- Do not start Sheresh's web page from this plan; it consumes the engine JSON.
+- Do not start Sehrish's web page from this plan; it consumes the engine JSON.
 
 Out of scope for this plan: Gemma sidecar, Vertex Agent Engine deploy, BC Schedule
 3-A extraction, Row 1 thresholds, any lattice organ.

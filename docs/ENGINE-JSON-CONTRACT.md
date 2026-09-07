@@ -1,4 +1,4 @@
-# Engine JSON contract (for Sherish's web app)
+# Engine JSON contract (for Sehrish's web app)
 
 The rules engine (`src/agent/engine.py:run`) is the only thing the front end needs
 to read. It takes a production plan, scene list, clears, and crew register and
@@ -10,7 +10,7 @@ CLI to produce it yourself (`PYTHONPATH=src` is required unless you ran `pip ins
 $env:PYTHONPATH='src'; .venv\Scripts\python.exe -m agent.engine samples/production.plan.json samples/scenes.json samples/clears.json samples/crew.csv 2026-09-05
 ```
 
-## For Sherish: two ways to get this without touching Python
+## For Sehrish: two ways to get this without touching Python
 
 1. **Static fixture** — `samples/engine.output.json`, checked into the repo, is
    the exact output of the CLI above on the sample production. Fetch/import it
