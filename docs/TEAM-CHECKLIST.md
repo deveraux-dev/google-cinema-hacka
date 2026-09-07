@@ -8,10 +8,11 @@ Status as of commit `c9982c7`. Deadline: Sep 9, 2026, 2:00pm PDT.
       engine (`run`/`replay`), samples. 29/29 tests passing.
 - [x] `src/agent/gemini_client.py` — minimal `call_gemini(prompt)`, mocked
       tests pass (haiku placeholder, no real key needed to prove the wiring).
-- [ ] Drop in a real `GEMINI_API_KEY` in `.env` and make **one real Gemini
-      call** — this is the runtime receipt judging requires, not just an import.
-- [ ] Wire `call_gemini` into whatever actually needs Gemini for the demo
-      (video narration script, or the diff/cascade/tag steps — decide which).
+- [x] `src/agent/main.py` — engine → publish → Gemini crew brief. Runs without
+      a key (brief skipped, wall still published).
+- [ ] **Sehrish's key**: put `GEMINI_API_KEY` in `.env`, `pip install google-genai`,
+      run `python -m agent.main` and paste the `gemini_brief` output into the
+      README Status table. That is the Gemini runtime receipt.
 - [x] Grafana publish: `src/agent/publish.py` — `update_dashboard` (uid
       `backlot`, 4 panels on a testdata csv datasource) + one `create_annotation`
       per scene and per open lock in a single MCP session. Ran live: 301
