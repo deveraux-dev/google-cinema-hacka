@@ -27,6 +27,39 @@ Output: `production.plan.json` (template in `templates/`). The agent loads it on
 run. The plan is the production's hazard assessment under Part 2, revised
 automatically on every rewrite, dated per s.7(3).
 
+## Grafana MCP
+
+The Grafana integration is built through Google ADK's MCP bridge:
+
+```
+McpToolset -> StdioConnectionParams -> uvx mcp-grafana
+```
+
+Required local environment:
+
+```
+GRAFANA_URL=http://localhost:3000
+GRAFANA_SERVICE_ACCOUNT_TOKEN=<service-account-token>
+```
+
+Optional native-binary override:
+
+```
+GRAFANA_MCP_COMMAND=mcp-grafana.exe
+GRAFANA_MCP_ARGS=-t stdio
+```
+
+Validate config without launching the MCP server:
+
+```
+$env:PYTHONPATH='src'
+python -m agent.grafana_mcp --check-config
+```
+
+This prints a sanitized configuration and redacts secrets. A dashboard publish
+command should be documented only after it is verified against a running Grafana
+instance through the official MCP server.
+
 Cognitive load rules for the setup itself:
 - one question per screen, one document named per question
 - upload the document, or type the one field, never both

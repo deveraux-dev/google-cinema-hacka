@@ -85,19 +85,19 @@ JURISDICTION ──► revised pages ──► DIFF ──► CASCADE ──► 
   Validity periods live in the jurisdiction tables (docs/JURISDICTIONS.md) with their
   source; a ticket type with no sourced period is treated as expired until one lands.
 
-- DIFF, CASCADE, HAZARD TAG: language steps, Gemini via Google Cloud. JSON schema
-  enforced by structured output, so the rules never see free text. Without
-  Gemini these steps pause; the rules and the wall keep running locally.
+- DIFF, CASCADE, HAZARD TAG: structured AI analysis, Gemini via Google Cloud. JSON
+  schema is enforced by structured output, so the rules never see free text. These
+  outputs are model-generated and must not be described as deterministic.
 - WEATHER: open-meteo current conditions for the shoot location. Pasquill-Gifford
   stability class computed locally. Cached, so offline mode uses the last fetch.
 - ESCALATE: a lookup table, not a model call. Inputs: hazard tags, wind, stability
   class, daylight. Output: one of GREEN / AMBER / RED / STOP plus the required
   action. Authored by the team's NCSO. Every row has a negative test.
 - PUBLISH: through the official `grafana/mcp-grafana` MCP server, per the track
-  rules ("primarily through the Grafana MCP server"). The agent calls its tools to
-  write readings (per-department delta counts, wind, escalation level), create
-  annotations for escalation events, and raise an alert on RED/STOP. Backing data
-  source is pinned at the first runtime receipt, not before.
+  rules ("primarily through the Grafana MCP server"). The repo constructs this
+  connection using Google ADK's `McpToolset` and stdio connection parameters. Live
+  dashboard, annotation, incident, and on-call claims are pinned only after a
+  runtime receipt against a local Grafana instance.
 
 ## Surface doctrine: cognitive load of the production manager
 
@@ -127,11 +127,12 @@ Sean's UI/UX research feeds this section; pointers to be added as they land.
 - A Grafana panel changing because the agent wrote to it via mcp-grafana, on screen.
 - The rules engine and wall updating with no network (everything local).
 
-## Deterministic claim
+## Deterministic Claim
 
-Same revision + same weather = same deltas, same escalation, byte-for-byte.
-The language steps are pinned by schema and temperature 0; the rules are pure.
-A replay test asserts this.
+The Gemini analysis steps are schema-constrained structured AI analysis. They are
+not deterministic, even with temperature set to 0. Deterministic claims apply only
+to the safety engine once Sean's NCSO-authored rules are implemented and replay
+tests prove byte-for-byte stable outputs for fixed inputs.
 
 ## Not in scope
 

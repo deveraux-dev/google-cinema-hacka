@@ -1,8 +1,8 @@
 # Agentic Cinema Hackathon — Grafana Labs Track
 
-A deterministic, multi-step agent on **Google Cloud Gemini** that turns one script
-revision into per-department work deltas and a safety escalation, and lights them up
-on a self-hosted **Grafana** gauge wall. It keeps working with no internet.
+A multi-step agent on **Google Cloud Gemini** that turns one script revision into
+structured per-department work deltas and hazard tags, then routes verified rule
+outputs to a self-hosted **Grafana** wall through the official MCP server.
 
 Team: Sean Morin, Sehrish 
 
@@ -41,15 +41,16 @@ Code says it in one clause (s.7(4)(c)): the hazard assessment must be repeated
    confined space, vehicles, water, firearms, exterior exposure.
 4. **Weather** — current wind and cloud for the shoot location, Pasquill-Gifford
    stability class, lightning distance.
-5. **Escalate** — a fixed ladder from GREEN to STOP, authored by a certified
-   National Construction Safety Officer (NCSO) on the team. Stunts and pyrotechnics
-   climb a step ladder: each rung must clear before the next opens. Deterministic.
-   The model never decides the level; the rules do.
-6. **Publish** — every delta and every escalation becomes a Grafana reading and an
-   annotation. The wall is what the crew reads.
+5. **Escalate** — fixed rules from GREEN to STOP. When Sean's final NCSO rules land,
+   they become the deterministic safety engine. The model never decides the level;
+   the rules do.
+6. **Publish** — route deltas and escalations to Grafana through the official
+   `grafana/mcp-grafana` MCP server via Google ADK's `McpToolset`.
 
-Gemini does the language work in steps 1 to 3. Steps 0 and 4 to 6 are rules and run
-entirely on the local machine; the wall updates whether or not Gemini is reachable.
+Gemini does the structured AI analysis in steps 1 to 3:
+`DiffOutput -> CascadeOutput -> HazardTagOutput`. These are schema-constrained model
+outputs, not deterministic rules. Steps 0 and 4 to 6 are intended to be deterministic
+once the NCSO safety table is finalized and wired.
 
 ## Repo boundary
 
@@ -91,12 +92,22 @@ copy .env.example .env   # fill in real credentials locally only
 If `pip install -e .` is unavailable (offline), set `PYTHONPATH=src` before any
 `python -m agent.<module>` command instead.
 
-Grafana and its MCP server run as plain native binaries. No Docker, no container runtime.
+Grafana can run as a plain native binary or as whatever local setup the demo machine
+already has. The integration point in this repo is the official Grafana MCP server.
 
 - Grafana OSS 13.2.1, standalone Windows archive: https://grafana.com/grafana/download?platform=windows&edition=oss
-- Grafana MCP server v1.3.0, `mcp-grafana_Windows_x86_64.zip`: https://github.com/grafana/mcp-grafana/releases/tag/v1.3.0
+- Grafana MCP server: https://github.com/grafana/mcp-grafana
 
-Unpack both, start `grafana-server.exe`, then point `mcp-grafana.exe` at `GRAFANA_URL` with a service-account token.
+Default MCP launch uses `uvx mcp-grafana`, matching Grafana's quick-start path. To
+use a downloaded native binary instead, set:
+
+```
+GRAFANA_MCP_COMMAND=mcp-grafana.exe
+GRAFANA_MCP_ARGS=-t stdio
+```
+
+Then point the server at `GRAFANA_URL` with a service-account token or supported
+username/password credentials.
 
 ## Rules that bind this repo
 
@@ -107,18 +118,19 @@ Unpack both, start `grafana-server.exe`, then point `mcp-grafana.exe` at `GRAFAN
 
 ## Status
 
-| Half | State | Receipt (2026-09-07, local Grafana OSS 13.2.1 via `mcp-grafana` 1.3.0) |
+| Half | State | Receipt |
 |---|---|---|
-| Rules engine | proven | `pytest -q` → 33 passed; `engine.replay` byte-identical twice |
-| Grafana publish | verified | `python -m agent.publish` → dashboard `backlot` (4 panels), 301 annotations tagged `backlot` (3 scenes + 298 open locks), `/api/ds/query` returns `[["S1","S2","S3"],[2,3,3]]` |
-| Gemini | unproven | `call_gemini` wired, mocked tests only; no live call yet |
+| Structured AI analysis | verified at prior checkpoint | ADK + Gemini pipeline pushed at `d61f29d5d77de07d0b641bc7196b4d4e258c9dfd`; output order is `DiffOutput -> CascadeOutput -> HazardTagOutput` |
+| Deterministic safety engine | pending final NCSO rules | no runtime claim yet |
+| Grafana MCP adapter | config verified | `python -m pytest -q` -> 5 passed, 1 skipped; `python -m agent.grafana_mcp --check-config` prints sanitized `uvx mcp-grafana` config |
+| Live Grafana publish | pending local Grafana + MCP credentials | no dashboard or annotation runtime claim yet |
 
-Run the wall yourself: start Grafana, fill `.env`, then
+Check the MCP config without starting Grafana:
 
 ```
-$env:PYTHONPATH='src'; .venv\Scripts\python.exe -m agent.publish 2026-09-05
+$env:PYTHONPATH='src'
+python -m agent.grafana_mcp --check-config
 ```
 
-and open `http://localhost:3000/d/backlot` (default login `admin`/`admin`).
-
-![Backlot Safety Wall: severity per scene, open locks, first aid, lock events](docs/wall.png)
+Live publish instructions will be added only after they pass against a running
+Grafana instance through `mcp-grafana`.
