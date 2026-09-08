@@ -1,0 +1,85 @@
+{
+  "project": "Universal CallSheet",
+  "tagline": "Deterministic script revision cascades and offline safety governance for film production.",
+  "jurisdiction": "AB",
+  "model_primary": "gemini-3.5-flash",
+  "model_reviewer": "gemini-3.1-flash",
+  "scene": {
+    "id": "S1",
+    "heading": "EXT. LOADING DOCK - NIGHT"
+  },
+  "diff": [
+    {
+      "scene_id": "S1",
+      "element": "action",
+      "old_text": "The loading dock is quiet. A security guard walks past.",
+      "new_text": "The loading dock is quiet. A security guard walks past. Suddenly, a flash pot explodes near the dumpster. A masked performer jumps from a 20-foot elevated platform down to the concrete, rolling to safety. The crew resets the powered hydraulic lift between takes."
+    }
+  ],
+  "department_deltas": [
+    {
+      "department": "SPFX",
+      "impact": "Requires the setup, execution, and safety management of a pyrotechnic flash pot explosion near the dumpster."
+    },
+    {
+      "department": "Stunts",
+      "impact": "Requires a stunt double for the masked performer to execute a 20-foot high jump from an elevated platform onto concrete, including safety rigging, crash mats, and stunt coordination."
+    },
+    {
+      "department": "Wardrobe",
+      "impact": "Must provide a costume and mask for the new masked performer, including duplicates for the stunt double."
+    },
+    {
+      "department": "Grip",
+      "impact": "Responsible for operating and resetting the powered hydraulic lift used between takes."
+    },
+    {
+      "department": "Set Dec",
+      "impact": "Needs to source and position a 20-foot elevated platform and a dumpster in the loading dock area."
+    }
+  ],
+  "hazard_tags": [
+    {
+      "row": 2,
+      "label": "pyro",
+      "detail": "A pyrotechnic flash pot explodes near the dumpster."
+    },
+    {
+      "row": 8,
+      "label": "stunts",
+      "detail": "A stunt performer executes a 20-foot high jump from an elevated platform onto concrete."
+    },
+    {
+      "row": 9,
+      "label": "heights",
+      "detail": "The performer jumps from a 20-foot elevated platform, which is well over the 3-meter threshold."
+    },
+    {
+      "row": 11,
+      "label": "motion_pme",
+      "detail": "Operating a powered hydraulic lift in the loading dock area."
+    },
+    {
+      "row": 13,
+      "label": "loto",
+      "detail": "Resetting the powered hydraulic lift between takes, requiring hazardous energy control."
+    }
+  ],
+  "safety": {
+    "severity": "RED",
+    "reason": "Serious safety work introduced: Row 2 (pyro), Row 8 (stunts), Row 9 (heights), Row 13 (loto). Requires safety review before work proceeds.",
+    "required_clears": [
+      "Equipment owner lockout clear",
+      "Rigger/fall protection clear",
+      "SPFX lead clear",
+      "Safety officer clear",
+      "Stunt coordinator clear"
+    ]
+  },
+  "grafana": {
+    "published": false,
+    "annotation_id": "",
+    "dashboard_url": "",
+    "error": "GRAFANA_URL or GRAFANA_API_KEY missing from environment. Skipping Grafana publish."
+  }
+}
