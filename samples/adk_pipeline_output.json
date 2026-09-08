@@ -1,0 +1,68 @@
+{
+  "diff": {
+    "changes": [
+      {
+        "scene_id": "S1",
+        "element": "heading",
+        "old_text": "INT. WAREHOUSE - DAY",
+        "new_text": "INT. WAREHOUSE - NIGHT"
+      },
+      {
+        "scene_id": "S1",
+        "element": "action",
+        "old_text": "The warehouse is quiet. John walks in holding a flashlight.",
+        "new_text": "The warehouse is dark. John walks in holding a flashlight. Suddenly, a MASSIVE EXPLOSION rocks the building. The structural beams groan and spark. John is thrown onto a 15-foot high scaffold."
+      }
+    ]
+  },
+  "cascade": {
+    "scene_id": "S1",
+    "deltas": [
+      {
+        "department": "Lighting",
+        "impact": "The scene has changed from DAY to NIGHT. This requires a complete night lighting setup for a dark warehouse, managing the flashlight source, and coordinating interactive lighting effects to simulate the massive explosion and sparks."
+      },
+      {
+        "department": "SPFX",
+        "impact": "A massive explosion has been added to the scene. This requires pyrotechnics, controlled sparking effects on the structural beams, and simulated smoke or debris."
+      },
+      {
+        "department": "Stunts",
+        "impact": "John is now thrown onto a 15-foot high scaffold. This requires a stunt double, wire rigging, harness work, and safety fall protection/mats."
+      },
+      {
+        "department": "Set Dec",
+        "impact": "Requires the sourcing and construction of a safe, structurally sound 15-foot scaffold that can accommodate stunt work, as well as structural beams designed to show damage or spark."
+      },
+      {
+        "department": "Grip",
+        "impact": "Requires rigging support for the 15-foot stunt fall/throw, as well as blackout tents or flags to control light for the new NIGHT setting."
+      }
+    ]
+  },
+  "hazard_tags": {
+    "scene_id": "S1",
+    "tags": [
+      {
+        "row": 2,
+        "label": "pyro",
+        "detail": "A massive explosion rocks the building, requiring pyrotechnics and controlled sparking effects."
+      },
+      {
+        "row": 6,
+        "label": "structural",
+        "detail": "Sourcing, construction, and rigging of a 15-foot scaffold and structural beams for stunt work."
+      },
+      {
+        "row": 8,
+        "label": "stunts",
+        "detail": "John is thrown onto a 15-foot high scaffold, requiring a stunt double, wire rigging, and harness work."
+      },
+      {
+        "row": 9,
+        "label": "heights",
+        "detail": "Stunt work and rigging on a 15-foot (approx. 4.5 meters) high scaffold, which is above the 3-meter threshold."
+      }
+    ]
+  }
+}
