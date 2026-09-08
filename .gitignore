@@ -21,3 +21,4 @@ node_modules/
 # local-only files, never committed
 CLAUDE.md
 .claude/
+*.db

@@ -3,13 +3,16 @@ name = "google-cinema-hacka"
 version = "0.1.0"
 description = "Gemini agent: script revision to per-department deltas and NCSO safety escalation, published to Grafana"
 requires-python = ">=3.11"
-dependencies = ["mcp>=2.1", "python-dotenv>=1.0", "google-genai>=1.0", "google-adk>=2.8.0"]
+dependencies = ["mcp>=2.1", "python-dotenv>=1.0", "google-genai>=1.0", "google-adk>=2.8.0", "fastapi>=0.100.0", "uvicorn>=0.23.0"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
 
 [build-system]
 requires = ["setuptools>=68"]

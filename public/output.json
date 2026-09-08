@@ -77,9 +77,9 @@
     ]
   },
   "grafana": {
-    "published": false,
-    "annotation_id": "",
-    "dashboard_url": "",
-    "error": "GRAFANA_URL or GRAFANA_API_KEY missing from environment. Skipping Grafana publish."
+    "published": true,
+    "annotation_id": "1",
+    "dashboard_url": "http://localhost:3000/d/ucs-safety-wall/universal-callsheet-safety-wall",
+    "error": null
   }
 }
