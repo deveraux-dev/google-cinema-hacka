@@ -1,85 +1,114 @@
 {
   "project": "Universal CallSheet",
   "tagline": "Deterministic script revision cascades and offline safety governance for film production.",
-  "jurisdiction": "AB",
-  "model_primary": "gemini-3.5-flash",
+  "production_context": {
+    "production_name": "Backlot Test: Sovereign Stage 4",
+    "call_sheet_day": "Day 2 of 42 (Night Exterior)",
+    "location": {
+      "name": "Warehouse 9 / Backlot Stage",
+      "hospital_minutes": 15,
+      "nearest_hospital": "Foothills Medical Centre (Level 1 Trauma)"
+    },
+    "crew_on_duty": {
+      "first_ad": "Ann Frost",
+      "safety_officer": "Sam Officer",
+      "armorer": "Al Arms",
+      "rigger": "Dana Rigger",
+      "first_aider": "Sam Aid",
+      "headcount": 42
+    },
+    "jurisdiction": {
+      "code": "AB",
+      "name": "Alberta OHS Code (AR 191/2021 current to 2025-03-31)",
+      "secondary": "WorkSafeBC (BC Reg 296/97)"
+    },
+    "site_conditions": {
+      "temperature": "12\u00b0C",
+      "wind_speed_kmh": 22,
+      "wind_threshold_kmh": 40,
+      "status": "GREEN / WITHIN SAFE LIMITS"
+    }
+  },
+  "jurisdiction": "Alberta OHS Code (AR 191/2021) / Section 7(4)(c)",
+  "model_primary": "gemini-3.7-flash",
   "model_reviewer": "gemini-3.1-flash",
   "scene": {
-    "id": "S1",
-    "heading": "EXT. LOADING DOCK - NIGHT"
+    "id": "S2",
+    "heading": "INT. CARGO HOLD - NIGHT",
+    "original_script": "[Scene 2] INT. CARGO HOLD - NIGHT\nJohn and Sarah search through the storage crates under low emergency lighting.",
+    "revised_script": "[Scene 2] INT. CARGO HOLD - NIGHT\nJohn and Sarah search through the storage crates under low emergency lighting.\nHeavy atmospheric smoke fills the sealed watertight compartment.\nJohn draws a prop revolver loaded with quarter-load blanks and fires two shots toward the hatch."
   },
   "diff": [
     {
-      "scene_id": "S1",
+      "scene_id": "S2",
       "element": "action",
-      "old_text": "The loading dock is quiet. A security guard walks past.",
-      "new_text": "The loading dock is quiet. A security guard walks past. Suddenly, a flash pot explodes near the dumpster. A masked performer jumps from a 20-foot elevated platform down to the concrete, rolling to safety. The crew resets the powered hydraulic lift between takes."
+      "old_text": "[Scene 2] INT. CARGO HOLD - NIGHT\nJohn and Sarah search through the storage crates under low emergency lighting.",
+      "new_text": "[Scene 2] INT. CARGO HOLD - NIGHT\nJohn and Sarah search through the storage crates under low emergency lighting.\nHeavy atmospheric smoke fills the sealed watertight compartment.\nJohn draws a prop revolver loaded with quarter-load blanks and fires two shots toward the hatch."
     }
   ],
   "department_deltas": [
     {
-      "department": "SPFX",
-      "impact": "Requires the setup, execution, and safety management of a pyrotechnic flash pot explosion near the dumpster."
+      "department": "Props / Armory",
+      "impact": "Certified armorer required on set for blank-firing prop weapon."
     },
     {
-      "department": "Stunts",
-      "impact": "Requires a stunt double for the masked performer to execute a 20-foot high jump from an elevated platform onto concrete, including safety rigging, crash mats, and stunt coordination."
-    },
-    {
-      "department": "Wardrobe",
-      "impact": "Must provide a costume and mask for the new masked performer, including duplicates for the stunt double."
-    },
-    {
-      "department": "Grip",
-      "impact": "Responsible for operating and resetting the powered hydraulic lift used between takes."
-    },
-    {
-      "department": "Set Dec",
-      "impact": "Needs to source and position a 20-foot elevated platform and a dumpster in the loading dock area."
+      "department": "SPFX / Safety",
+      "impact": "Atmospheric fog in enclosed space requiring air quality monitoring."
     }
   ],
   "hazard_tags": [
     {
-      "row": 2,
-      "label": "pyro",
-      "detail": "A pyrotechnic flash pot explodes near the dumpster."
+      "row": 1,
+      "label": "firearms",
+      "detail": "Blank firearm discharge requiring direct armorer line-of-sight."
     },
     {
-      "row": 8,
-      "label": "stunts",
-      "detail": "A stunt performer executes a 20-foot high jump from an elevated platform onto concrete."
-    },
-    {
-      "row": 9,
-      "label": "heights",
-      "detail": "The performer jumps from a 20-foot elevated platform, which is well over the 3-meter threshold."
-    },
-    {
-      "row": 11,
-      "label": "motion_pme",
-      "detail": "Operating a powered hydraulic lift in the loading dock area."
-    },
-    {
-      "row": 13,
-      "label": "loto",
-      "detail": "Resetting the powered hydraulic lift between takes, requiring hazardous energy control."
+      "row": 7,
+      "label": "confined_space",
+      "detail": "Enclosed compartment / restricted egress space."
     }
   ],
   "safety": {
-    "severity": "RED",
-    "reason": "Serious safety work introduced: Row 2 (pyro), Row 8 (stunts), Row 9 (heights), Row 13 (loto). Requires safety review before work proceeds.",
+    "severity": "STOP",
+    "reason": "MANDATORY STOP: Life-safety regulated activity introduced (Row 1 (Firearms & Explosive Devices), Row 7 (Confined Spaces & Enclosed Tanks)). Cannot roll camera without dedicated certified safety master sign-off.",
     "required_clears": [
-      "Equipment owner lockout clear",
-      "Rigger/fall protection clear",
-      "SPFX lead clear",
-      "Safety officer clear",
-      "Stunt coordinator clear"
+      "Armorer Clear (Al Arms)",
+      "On-Site Medic Standby",
+      "Safety Officer Clear (Sam Officer)"
+    ],
+    "statutory_citations": [
+      {
+        "citation": "Alberta OHS Code Part 2, s.7(4)(c)",
+        "title": "Mandatory Hazard Assessment Revision",
+        "statute_text": "An employer must ensure that the hazard assessment is repeated before work begins on a new work site or when a work process or operation changes.",
+        "mandatory": true
+      },
+      {
+        "citation": "Alberta OHS Code Part 28, s.498 & Firearms Act",
+        "title": "Firearms & Explosive Devices",
+        "statute_text": "Special effects firearms, blank ammunition, and explosive props must be handled exclusively by a certified armorer with direct line-of-sight and verified clear zones.",
+        "clears": [
+          "Armorer Clear (Al Arms)",
+          "Safety Officer Clear (Sam Officer)"
+        ],
+        "severity": "STOP"
+      },
+      {
+        "citation": "Alberta OHS Code Part 5, s.44 (Confined Space Entry & Rescue)",
+        "title": "Confined Spaces & Enclosed Tanks",
+        "statute_text": "Entry into water tanks, sealed vehicles, or subterranean sets requires pre-entry gas testing, ventilation, and a dedicated rescue plan.",
+        "clears": [
+          "Safety Officer Clear (Sam Officer)",
+          "On-Site Medic Standby"
+        ],
+        "severity": "RED"
+      }
     ]
   },
   "grafana": {
-    "published": true,
-    "annotation_id": "1",
-    "dashboard_url": "http://localhost:3000/d/ucs-safety-wall/universal-callsheet-safety-wall",
-    "error": null
+    "published": false,
+    "annotation_id": "",
+    "dashboard_url": "",
+    "error": "Failed to connect to Grafana MCP: unhandled errors in a TaskGroup (1 sub-exception)"
   }
 }

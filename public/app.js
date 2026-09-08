@@ -6,10 +6,11 @@ let currentTab = "scenarios";
 
 // 1. Terminal Log Animation
 async function animateTerminalLogs(scenarioName) {
-    const loader = document.getElementById('terminal-loader');
     const termBody = document.getElementById('term-logs');
-    loader.style.display = 'block';
+    const statusText = document.getElementById('telemetry-status-text');
     termBody.innerHTML = '';
+    if(statusText) statusText.textContent = 'AGENT ACTIVE // ANALYZING...';
+    statusText.style.color = 'var(--accent)';
     
     const logs = [
         `> [ADK_CORE] Connecting to Gemini 3.7 Flash Engine via Google ADK...`,
@@ -37,7 +38,10 @@ async function animateTerminalLogs(scenarioName) {
     }
 
     await new Promise(r => setTimeout(r, 300));
-    loader.style.display = 'none';
+    if(statusText) {
+        statusText.textContent = 'ANALYSIS COMPLETE // AWAITING NEXT REVISION';
+        statusText.style.color = 'var(--green)';
+    }
 }
 
 // 2. Tab Switcher
@@ -171,10 +175,11 @@ async function triggerCurrentAnalysis() {
 
 // 6. Render Full Dashboard Results
 function renderDashboard(data) {
-    currentData = data;
+    currentData = data || {};
     signedClears.clear(); // Reset clearances for the new analysis
 
-    document.getElementById('display-scene-id').textContent = `SCENE ${data.scene.id}`;
+    const sceneId = data?.scene?.id || 'UNKNOWN';
+    document.getElementById('display-scene-id').textContent = `SCENE ${sceneId}`;
 
     // A. Render Screenplay Diff
     renderScreenplayDiff(data);
@@ -200,12 +205,12 @@ function renderScreenplayDiff(data) {
     const container = document.getElementById('screenplay-diff-content');
     
     // If diff changes exist, construct an intuitive visual representation
-    if (data.diff && data.diff.length > 0) {
+    if (data?.diff && Array.isArray(data.diff) && data.diff.length > 0) {
         let diffHtml = '';
         data.diff.forEach(c => {
             diffHtml += `
 <div style="margin-bottom: 16px;">
-    <div class="sp-heading">${data.scene.heading || 'SCENE'}</div>
+    <div class="sp-heading">${data?.scene?.heading || 'SCENE'}</div>
     <div class="sp-action">
         ${c.old_text ? `<span class="diff-del">${escapeHtml(c.old_text)}</span><br><br>` : ''}
         ${c.new_text ? `<span class="diff-add">${escapeHtml(c.new_text)}</span>` : ''}
@@ -216,22 +221,22 @@ function renderScreenplayDiff(data) {
         container.innerHTML = diffHtml;
     } else {
         // Render raw revised script formatted
-        container.innerHTML = `<div class="sp-heading">${data.scene.heading || ''}</div><div class="sp-action">${escapeHtml(data.scene.revised_script || 'No script text')}</div>`;
+        container.innerHTML = `<div class="sp-heading">${data?.scene?.heading || 'SCENE'}</div><div class="sp-action">${escapeHtml(data?.scene?.revised_script || 'No script text')}</div>`;
     }
 }
 
 // 8. Department Work Deltas
 function renderDepartmentDeltas(data) {
     const container = document.getElementById('department-deltas-container');
-    if (!data.department_deltas || data.department_deltas.length === 0) {
+    if (!data?.department_deltas || !Array.isArray(data.department_deltas) || data.department_deltas.length === 0) {
         container.innerHTML = `<div class="dept-card"><span class="dept-tag">ALL GUILDS</span><span class="dept-impact">No departmental work changes detected for this revision.</span></div>`;
         return;
     }
 
     container.innerHTML = data.department_deltas.map(d => `
         <div class="dept-card">
-            <span class="dept-tag">${d.department}</span>
-            <div class="dept-impact">${d.impact || d.delta}</div>
+            <span class="dept-tag">${escapeHtml(d.department || 'UNKNOWN')}</span>
+            <div class="dept-impact">${escapeHtml(d.impact || d.delta || '')}</div>
         </div>
     `).join('');
 }
@@ -278,21 +283,37 @@ function updateGateState() {
 // 10. Clearances Checklist
 function renderClearances(data) {
     const container = document.getElementById('clears-container');
-    const requiredClears = data.safety?.required_clears || [];
+    const requiredClears = data?.safety?.required_clears || [];
     
     updateClearsBadge(requiredClears);
 
-    if (requiredClears.length === 0) {
+    if (!Array.isArray(requiredClears) || requiredClears.length === 0) {
         container.innerHTML = `<div style="color: var(--text-muted); font-size: 0.88rem; padding: 10px;">No mandatory clearances required for this revision.</div>`;
         return;
     }
 
-    container.innerHTML = requiredClears.map(c => `
-        <div class="clear-row ${signedClears.has(c) ? 'signed' : ''}" onclick="toggleClear('${escapeHtml(c)}')">
-            <input type="checkbox" class="clear-checkbox" ${signedClears.has(c) ? 'checked' : ''} onclick="event.stopPropagation(); toggleClear('${escapeHtml(c)}')">
-            <span class="clear-text">${c}</span>
+    // Pass the index instead of the string to avoid single quote escaping issues in onclick!
+    window.currentRequiredClears = requiredClears; 
+    container.innerHTML = requiredClears.map((c, idx) => `
+        <div class="clear-row ${signedClears.has(c) ? 'signed' : ''}" onclick="toggleClearIdx(${idx})">
+            <input type="checkbox" class="clear-checkbox" ${signedClears.has(c) ? 'checked' : ''} onclick="event.stopPropagation(); toggleClearIdx(${idx})">
+            <span class="clear-text">${escapeHtml(c)}</span>
         </div>
     `).join('');
+}
+
+function toggleClearIdx(idx) {
+    const clearName = window.currentRequiredClears[idx];
+    if (!clearName) return;
+    
+    if (signedClears.has(clearName)) {
+        signedClears.delete(clearName);
+    } else {
+        signedClears.add(clearName);
+    }
+    
+    renderClearances(currentData);
+    updateGateState();
 }
 
 function toggleClear(clearName) {
@@ -315,15 +336,15 @@ function updateClearsBadge(requiredClears) {
 // 11. Hazard Tags Deck
 function renderHazardTags(data) {
     const container = document.getElementById('hazards-container');
-    if (!data.hazard_tags || data.hazard_tags.length === 0) {
+    if (!data?.hazard_tags || !Array.isArray(data.hazard_tags) || data.hazard_tags.length === 0) {
         container.innerHTML = `<span style="color: var(--text-muted); font-size: 0.85rem;">No jurisdiction hazards identified.</span>`;
         return;
     }
 
     container.innerHTML = data.hazard_tags.map((t, idx) => `
         <div class="hazard-pill" onclick="showHazardModal(${idx})">
-            <span class="hazard-pill-row">Row ${t.row}</span>
-            <span>${t.label}</span>
+            <span class="hazard-pill-row">Row ${escapeHtml(String(t.row || '?'))}</span>
+            <span>${escapeHtml(t.label || 'Unknown')}</span>
         </div>
     `).join('');
 }
@@ -331,12 +352,17 @@ function renderHazardTags(data) {
 function showHazardModal(idx) {
     if (!currentData || !currentData.hazard_tags) return;
     const tag = currentData.hazard_tags[idx];
+    if (!tag) return;
     
-    document.getElementById('modal-title').textContent = `Hazard: ${tag.label.toUpperCase()} (Row ${tag.row})`;
+    const label = tag.label ? tag.label.toUpperCase() : 'UNKNOWN HAZARD';
+    const row = tag.row || '?';
+    const detail = tag.detail || 'No detail provided by the backend ADK.';
+
+    document.getElementById('modal-title').textContent = `Hazard: ${label} (Row ${row})`;
     document.getElementById('modal-body').innerHTML = `
         <p style="color: var(--text-muted); margin-bottom: 8px;">Extracted Script Reasoning:</p>
         <div style="background: rgba(255,255,255,0.05); padding: 14px; border-left: 3px solid var(--blue); border-radius: 4px; font-size: 0.95rem; line-height: 1.5; color: #f4f4f7;">
-            ${tag.detail}
+            ${escapeHtml(detail)}
         </div>
         <div style="margin-top: 16px; font-size: 0.8rem; color: var(--text-dim);">
             Governed under Alberta OHS Code AR 191/2021 Hazard Classification Matrix.
@@ -348,18 +374,18 @@ function showHazardModal(idx) {
 // 12. Statutory Citations List
 function renderStatutoryCitations(data) {
     const container = document.getElementById('statutory-container');
-    const statutes = data.safety?.statutory_citations || [];
+    const statutes = data?.safety?.statutory_citations || [];
 
-    if (statutes.length === 0) {
+    if (!Array.isArray(statutes) || statutes.length === 0) {
         container.innerHTML = `<div style="color: var(--text-muted); font-size: 0.85rem;">Standard General Duty Clause (AB OHS Act s.3) applies.</div>`;
         return;
     }
 
     container.innerHTML = statutes.map((st, idx) => `
         <div class="statute-card" onclick="showStatuteModal(${idx})">
-            <span class="statute-citation">${st.citation}</span>
-            <div class="statute-title">${st.title}</div>
-            <div class="statute-excerpt">${st.statute_text}</div>
+            <span class="statute-citation">${escapeHtml(st.citation || 'CITATION')}</span>
+            <div class="statute-title">${escapeHtml(st.title || 'Unknown Statute')}</div>
+            <div class="statute-excerpt">${escapeHtml(st.statute_text || '')}</div>
         </div>
     `).join('');
 }
@@ -367,21 +393,35 @@ function renderStatutoryCitations(data) {
 function showStatuteModal(idx) {
     if (!currentData || !currentData.safety?.statutory_citations) return;
     const st = currentData.safety.statutory_citations[idx];
+    if (!st) return;
 
-    document.getElementById('modal-title').textContent = st.citation;
+    document.getElementById('modal-title').textContent = st.citation || 'Citation Detail';
     document.getElementById('modal-body').innerHTML = `
-        <h4 style="color: #ffffff; margin-bottom: 10px; font-size: 1.1rem;">${st.title}</h4>
+        <h4 style="color: #ffffff; margin-bottom: 10px; font-size: 1.1rem;">${escapeHtml(st.title || 'Unknown Title')}</h4>
         <div style="background: rgba(255,255,255,0.05); padding: 16px; border-left: 3px solid var(--gold); border-radius: 4px; font-size: 0.95rem; line-height: 1.6; color: #f4f4f7; font-family: var(--font-sans);">
-            "${st.statute_text}"
+            "${escapeHtml(st.statute_text || 'No text provided')}"
         </div>
-        ${st.clears ? `
+        ${st.clears && Array.isArray(st.clears) ? `
             <div style="margin-top: 14px;">
                 <strong style="font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase;">Statutory Required Clears:</strong>
                 <ul style="margin-top: 6px; padding-left: 18px; color: #d4d4d8; font-size: 0.85rem;">
-                    ${st.clears.map(c => `<li>${c}</li>`).join('')}
+                    ${st.clears.map(c => `<li>${escapeHtml(c)}</li>`).join('')}
                 </ul>
             </div>
         ` : ''}
+    `;
+    document.getElementById('detail-modal').classList.add('active');
+}
+
+// 12b. Raw Backend JSON Connection Modal
+function showRawJsonConnection() {
+    document.getElementById('modal-title').textContent = "Backend ADK JSON Payload";
+    const payloadHtml = currentData ? escapeHtml(JSON.stringify(currentData, null, 2)) : "No payload available";
+    document.getElementById('modal-body').innerHTML = `
+        <p style="color: var(--text-muted); margin-bottom: 8px; font-size: 0.85rem;">Raw data object received from FastAPI/Gemini:</p>
+        <div style="background: #09090c; border: 1px solid var(--border); padding: 14px; border-radius: 6px; max-height: 50vh; overflow-y: auto;">
+            <pre style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--green); margin: 0;">${payloadHtml}</pre>
+        </div>
     `;
     document.getElementById('detail-modal').classList.add('active');
 }
@@ -440,7 +480,27 @@ function escapeHtml(text) {
 
 // App Initialization
 document.addEventListener('DOMContentLoaded', async () => {
+    initScrollAnimations();
     await loadProductionContext();
     await loadScenarios();
     await loadLatestData();
 });
+
+// Scroll Reveal Animations
+function initScrollAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                // Optional: Stop observing once revealed if you only want it to animate once
+                // observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+    // Observe static elements
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+    
+    // Store observer on window to re-trigger dynamically injected content if needed
+    window.scrollObserver = observer;
+}

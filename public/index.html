@@ -100,18 +100,23 @@
         </div>
     </div>
 
-    <!-- Live Execution Terminal / Loading Overlay -->
-    <div class="terminal-overlay" id="terminal-loader" style="display: none;">
-        <div class="terminal-window">
-            <div class="terminal-top">
-                <span class="term-dot red"></span>
-                <span class="term-dot yellow"></span>
-                <span class="term-dot green"></span>
-                <span class="term-title">GOOGLE ADK PIPELINE // DETERMINISTIC SAFETY GATE</span>
+    <!-- Persistent Agentic AI Telemetry Trace -->
+    <div class="agent-telemetry-panel">
+        <div class="telemetry-header">
+            <div class="telemetry-title">
+                <span class="pulse-ring"></span>
+                <span>GEMINI ADK AGENTIC REASONING TRACE</span>
             </div>
-            <div class="terminal-body" id="term-logs">
-                <div class="term-line">> Initializing sovereign pipeline...</div>
+            <div style="display: flex; gap: 16px; align-items: center;">
+                <div class="telemetry-status" id="telemetry-status-text">WAITING FOR REVISION...</div>
+                <button class="json-trace-btn" onclick="showRawJsonConnection()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    Raw JSON
+                </button>
             </div>
+        </div>
+        <div class="telemetry-body" id="term-logs">
+            <div class="term-line">> System online. Awaiting script revision cascade.</div>
         </div>
     </div>
 
@@ -122,7 +127,7 @@
         <div class="col-left">
             
             <!-- Screenplay Redline Diff Inspector -->
-            <div class="hud-card">
+            <div class="hud-card reveal-on-scroll">
                 <div class="card-header">
                     <div class="card-title-group">
                         <span class="card-icon">📜</span>
@@ -140,7 +145,7 @@
             </div>
 
             <!-- Department Cascades -->
-            <div class="hud-card">
+            <div class="hud-card reveal-on-scroll">
                 <div class="card-header">
                     <div class="card-title-group">
                         <span class="card-icon">⚡</span>
@@ -161,7 +166,7 @@
         <div class="col-right">
 
             <!-- Master Safety Verdict -->
-            <div class="hud-card safety-verdict-card" id="verdict-card">
+            <div class="hud-card safety-verdict-card reveal-on-scroll" id="verdict-card">
                 <div class="verdict-header">
                     <div>
                         <span class="verdict-label">STAGE SAFETY GOVERNANCE VERDICT</span>
@@ -182,7 +187,7 @@
             </div>
 
             <!-- Interactive Department Clearances -->
-            <div class="hud-card">
+            <div class="hud-card reveal-on-scroll">
                 <div class="card-header">
                     <div class="card-title-group">
                         <span class="card-icon">🛡️</span>
@@ -199,7 +204,7 @@
             </div>
 
             <!-- Extracted Hazard Tags -->
-            <div class="hud-card">
+            <div class="hud-card reveal-on-scroll">
                 <div class="card-header">
                     <div class="card-title-group">
                         <span class="card-icon">⚠️</span>
@@ -214,24 +219,23 @@
                 </div>
             </div>
 
-            <!-- Statutory Legal Citations Drawer -->
-            <div class="hud-card statutory-card">
-                <div class="card-header">
-                    <div class="card-title-group">
-                        <span class="card-icon">⚖️</span>
-                        <div>
-                            <h3 class="card-title">Statutory Legal Citations</h3>
-                            <p class="card-sub">Official Alberta Occupational Health & Safety Code Statutes</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="statutory-list" id="statutory-container">
-                    <!-- Legal clauses injected here -->
+        </div>
+    </div>
+
+    <!-- Statutory Legal Citations Drawer (Full Width to balance layout) -->
+    <div class="hud-card statutory-card reveal-on-scroll" style="margin-top: 24px;">
+        <div class="card-header">
+            <div class="card-title-group">
+                <span class="card-icon">⚖️</span>
+                <div>
+                    <h3 class="card-title">Statutory Legal Citations</h3>
+                    <p class="card-sub">Official Alberta Occupational Health & Safety Code Statutes</p>
                 </div>
             </div>
-
         </div>
-
+        <div class="statutory-grid" id="statutory-container">
+            <!-- Legal clauses injected here -->
+        </div>
     </div>
 
 </main>
