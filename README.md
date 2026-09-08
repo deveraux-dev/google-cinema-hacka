@@ -16,28 +16,17 @@
 
 ## 🚀 Quick Links
 
-**[1. Watch the PPT Pitch Video (3 min)](#)** | **[2. Watch the Live Tech Demo (1.5 min)](#)** | **[3. Launch Live Demo Portal](#)** | **[4. Explore Source Code](#)**
+**[1. Watch the 3-Minute Demo Video](#)** | **[2. Launch Live Demo Portal](#)** | **[3. Explore Source Code](#)**
 
-For evaluators: watch the short PPT pitch first for the plain-English story of film set liabilities, then watch the live tech demo to see the deterministic safety system in action.
+For evaluators and safety professionals: watch the short 3-minute demo to see exactly how UCS stops a dangerous script change from reaching the film set.
 
-<table>
-  <tr>
-    <td width="50%" align="center">
-      <a href="#">
-        <img src="https://via.placeholder.com/640x360/1a1a1a/ffffff?text=Pitch+Video+Thumbnail" alt="Watch the UCS pitch presentation" width="100%">
-      </a>
-      <br>
-      <b>PPT Pitch / Presentation Video</b>
-    </td>
-    <td width="50%" align="center">
-      <a href="#">
-        <img src="https://via.placeholder.com/640x360/1a1a1a/ffffff?text=Demo+Video+Thumbnail" alt="Watch the UCS live tech demo" width="100%">
-      </a>
-      <br>
-      <b>Live Tech Demo Video</b>
-    </td>
-  </tr>
-</table>
+<div align="center">
+  <a href="#">
+    <img src="https://via.placeholder.com/800x450/1a1a1a/ffffff?text=Universal+CallSheet+Demo+Video" alt="Watch the UCS live tech demo" width="80%">
+  </a>
+  <br>
+  <b>Universal CallSheet Demo Video</b>
+</div>
 <br/>
 
 > **TL;DR:** Ninety-five percent of films take multiple rewrites before shooting. When a script changes, the hazard assessment must change. An AI may extract the narrative changes and suggest hazards, but it never makes the final legal safety decision. UCS runs the extracted hazards through deterministic Alberta OHS Code rules and pushes a hard STOP to the Grafana Incident Wall.
@@ -68,7 +57,7 @@ Generative models are phenomenal at parsing unstructured script text into struct
 - 🛑 **Strict Validation:** A combination of Row 2 (Pyro) and Row 9 (Heights > 3m) immediately triggers a `RED` severity.
 - 🔐 **Bounded Dispatch:** The official Grafana MCP server pushes the immutable incident annotation to the self-hosted production wall.
 
-The experience is designed to make a technical safety property feel obvious: **the system proves what it detected, why it halted production, and exactly which department heads must sign off.**
+The experience is designed to make a technical safety property feel obvious to any non-technical user: **the system proves what it detected, why it halted production, and exactly which department heads must sign off.**
 
 ## 🎥 Interactive Demonstration
 
