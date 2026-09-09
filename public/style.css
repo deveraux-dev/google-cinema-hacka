@@ -1349,13 +1349,25 @@ button, a, summary { min-height: 44px; }
 .dept-tag { display: block; margin-bottom: 5px; color: var(--blue); font: 700 .62rem var(--font-mono); }
 .dept-impact { color: var(--ink); font-size: .75rem; line-height: 1.4; }
 .clears-list, .hazard-tag-deck { display: grid; gap: 7px; padding-top: 14px; }
-.clear-row { min-height: 48px; border-color: var(--line); background: var(--surface-quiet); }
+.clear-row { min-height: 48px; border-color: var(--line); background: var(--surface-quiet); cursor: pointer; transition: border-color .18s ease, background .18s ease, transform .18s ease; }
+.clear-row:hover { border-color: var(--blue); background: var(--surface-raised); transform: translateX(2px); }
+.clear-row:has(.clear-checkbox:checked) { border-color: rgba(86,229,169,.55); background: var(--green-soft); }
+.clear-checkbox { width: 22px; height: 22px; accent-color: var(--green); cursor: pointer; }
 .hazard-pill { min-height: 48px; border-color: var(--line); border-radius: 4px; background: var(--surface-quiet); text-align: left; }
 .statute-card { cursor: pointer; }
 .statute-citation { margin-bottom: 6px; color: var(--blue); background: var(--blue-soft); border-radius: 3px; font-size: .6rem; }
 .statute-title { font-size: .76rem; }
 .statute-excerpt { font-size: .7rem; }
 .technical-panel { overflow: hidden; }
+.review-map { padding: 16px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); }
+.review-map-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.review-map-head h3 { margin: 0; font-size: .95rem; }
+.review-map-head .eyebrow { margin-bottom: 4px; }
+.review-map-dot { width: 9px; height: 9px; margin-top: 4px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 5px var(--amber-soft); }
+.review-map-row { display: grid; grid-template-columns: 78px minmax(0, 1fr); gap: 10px; padding: 10px 0; border-top: 1px solid var(--line); }
+.review-map-row span { color: var(--muted); font: 600 .62rem var(--font-mono); text-transform: uppercase; }
+.review-map-row strong { min-width: 0; color: var(--ink); font-size: .75rem; line-height: 1.35; }
+.review-map-link { display: inline-block; margin-top: 10px; }
 .technical-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
 .technical-head h3 { margin: 0; font-size: .95rem; }
 .technical-head .eyebrow { margin-bottom: 4px; }

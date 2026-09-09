@@ -418,6 +418,13 @@ function renderSafetyVerdict(data) {
     if (nextAction) nextAction.textContent = severity === 'GREEN' ? 'Proceed with standard production checks.' : `Complete ${clears.length || 'the required'} safety clearance${clears.length === 1 ? '' : 's'} before roll.`;
     if (affectedTeams) affectedTeams.textContent = departments.length ? departments.join(' · ') : 'No department change recorded';
 
+    const railDecision = document.getElementById('rail-decision');
+    const railClears = document.getElementById('rail-clears');
+    const railNext = document.getElementById('rail-next');
+    if (railDecision) railDecision.textContent = severity === 'GREEN' ? 'GREEN // Camera may roll' : `${severity} // Camera held pending review`;
+    if (railClears) railClears.textContent = clears.length ? `${clears.length - signedClears.size} of ${clears.length} pending` : 'No mandatory sign-offs';
+    if (railNext) railNext.textContent = severity === 'GREEN' ? 'Proceed with standard production checks.' : `Complete ${clears.length || 'the required'} clearance${clears.length === 1 ? '' : 's'} before roll.`;
+
     updateGateState();
 }
 
