@@ -11,6 +11,7 @@
 
 <div class="top-nav">
     <div class="nav-brand">
+        <img src="assets/ucs-logo.jpg" alt="UCS Logo" style="height: 32px; border-radius: 4px; box-shadow: 2px 2px 0 var(--line);">
         <div class="brand-badge">PROD HUD</div>
         <div class="brand-text">
             <span class="brand-title">UNIVERSAL CALLSHEET</span>
@@ -21,8 +22,8 @@
         <div class="status-pill status-live" id="network-status">
             <span class="dot-pulse"></span> STAGE 4 ACTIVE
         </div>
-        <div class="status-pill status-offline" id="offline-badge" style="display: none; background: rgba(220, 38, 38, 0.2); border: 1px solid var(--red); color: var(--red);">
-            <span class="dot-pulse" style="background: var(--red); animation: none;"></span> OFFLINE FALLBACK
+        <div class="status-pill status-offline" id="offline-badge" style="display: none;">
+            <span class="dot-pulse-offline"></span> LOCAL CACHE ACTIVE
         </div>
         <a id="grafana-nav-link" href="http://localhost:3000/d/ucs-safety-wall" target="_blank" class="grafana-nav-btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
@@ -71,7 +72,7 @@
         </div>
         <button class="run-pipeline-btn" id="main-run-btn" onclick="triggerCurrentAnalysis()" aria-live="polite">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-            Execute Gemini ADK Pipeline
+            Extract Revision & Run Safety Gate
         </button>
     </div>
 

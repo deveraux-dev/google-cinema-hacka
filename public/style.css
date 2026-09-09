@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
 :root {
     /* 13forge Dark Mode Tokens */
     --canvas: #0a0e0c;
@@ -11,8 +13,8 @@
     
     --green: #00d27a;
     --green-soft: rgba(0, 210, 122, 0.12);
-    --red: #ff4757;
-    --red-soft: rgba(255, 71, 87, 0.12);
+    --red: #8f2d35;
+    --red-soft: rgba(143, 45, 53, 0.12);
     --blue: #40a9ff;
     --blue-soft: rgba(64, 169, 255, 0.12);
     --amber: #fadb14;
@@ -172,12 +174,25 @@ body {
     border: 1px solid rgba(16, 185, 129, 0.4);
 }
 
+.status-offline {
+    background: var(--amber-soft);
+    color: var(--gold);
+    border: 1px solid rgba(250, 219, 20, 0.4);
+}
+
 .dot-pulse {
     width: 8px;
     height: 8px;
     background: var(--green);
     border-radius: 50%;
     animation: pulse 1.5s infinite;
+}
+
+.dot-pulse-offline {
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
 }
 
 @keyframes pulse {
@@ -326,6 +341,7 @@ body {
 
 .tab-btn:hover:not(.active) {
     color: #e4e4e7;
+    transform: translate(-1px, -1px);
 }
 
 .run-pipeline-btn {
@@ -346,6 +362,8 @@ body {
 
 .run-pipeline-btn:hover {
     opacity: 0.9;
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--line-strong);
 }
 
 .run-pipeline-btn:disabled {
@@ -385,6 +403,8 @@ body {
 .scenario-card:hover {
     border-color: #525266;
     background: var(--surface-hover);
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 var(--line-strong);
 }
 
 .scenario-card.active {
@@ -832,7 +852,7 @@ body {
 }
 
 .severity-RED { background: var(--red-bg); color: var(--red); border: 2px solid var(--red); }
-.severity-STOP { background: rgba(239,68,68,0.25); color: #ffffff; border: 2px solid var(--red); box-shadow: 0 0 35px var(--red); }
+.severity-STOP { background: rgba(143,45,53,0.15); color: #ffffff; border: 2px solid var(--red); box-shadow: 5px 5px 0 var(--red); }
 .severity-REVIEW { background: var(--gold-bg); color: var(--gold); border: 2px solid var(--gold); box-shadow: 0 0 25px var(--gold-glow); }
 .severity-GREEN { background: var(--green-bg); color: var(--green); border: 2px solid var(--green); box-shadow: 0 0 25px var(--green-glow); }
 

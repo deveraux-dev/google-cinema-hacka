@@ -23,7 +23,7 @@ async function animateTerminalLogs(scenarioName) {
     ];
 
     for (let log of logs) {
-        await new Promise(r => setTimeout(r, 70));
+        await new Promise(r => setTimeout(r, 35));
         const line = document.createElement('div');
         line.className = 'term-line';
         line.textContent = log;
@@ -31,7 +31,7 @@ async function animateTerminalLogs(scenarioName) {
         termBody.scrollTop = termBody.scrollHeight;
     }
 
-    await new Promise(r => setTimeout(r, 300));
+    await new Promise(r => setTimeout(r, 200));
     if(statusText) {
         statusText.textContent = 'WAITING FOR BACKEND RECEIPT...';
         statusText.style.color = 'var(--gold)';
@@ -236,7 +236,7 @@ async function triggerCurrentAnalysis() {
         loadLatestData();
     } finally {
         btn.disabled = false;
-        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Execute Gemini ADK Pipeline`;
+        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Extract Revision & Run Safety Gate`;
     }
 }
 
