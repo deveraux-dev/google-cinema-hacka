@@ -1,5 +1,5 @@
 let currentScenarios = [];
-let activeScenarioId = "S1";
+let activeScenarioId = "S2";
 let currentData = null;
 let signedClears = new Set();
 let currentTab = "scenarios";
@@ -228,8 +228,9 @@ async function loadScenarios() {
     }
     renderScenarioDeck(currentScenarios);
     if (currentScenarios.length > 0) {
-        document.getElementById('custom-orig-text').value = currentScenarios[0].original_text;
-        document.getElementById('custom-rev-text').value = currentScenarios[0].revised_text;
+        const activeScenario = currentScenarios.find(s => s.id === activeScenarioId) || currentScenarios[0];
+        document.getElementById('custom-orig-text').value = activeScenario.original_text;
+        document.getElementById('custom-rev-text').value = activeScenario.revised_text;
     }
 }
 
@@ -347,7 +348,7 @@ async function triggerCurrentAnalysis(trigger = 'manual') {
     } finally {
         btn.disabled = false;
         btn.removeAttribute('aria-busy');
-        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Run Revision Safety Analysis`;
+        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Analyze revision`;
     }
 }
 
@@ -552,7 +553,7 @@ function showHazardModal(idx) {
     
     const label = tag.label ? tag.label.toUpperCase() : 'UNKNOWN HAZARD';
     const row = tag.row || '?';
-    const detail = tag.detail || 'No detail provided by the backend ADK.';
+    const detail = tag.detail || 'No detail provided by the backend analysis.';
 
     document.getElementById('modal-title').textContent = `Hazard: ${label} (Row ${row})`;
     document.getElementById('modal-body').innerHTML = `
@@ -611,10 +612,10 @@ function showStatuteModal(idx) {
 
 // 12b. Raw Backend JSON Connection Modal
 function showRawJsonConnection() {
-    document.getElementById('modal-title').textContent = "Backend ADK JSON Payload";
+    document.getElementById('modal-title').textContent = "Backend JSON Payload";
     const payloadHtml = currentData ? escapeHtml(JSON.stringify(currentData, null, 2)) : "No payload available";
     document.getElementById('modal-body').innerHTML = `
-        <p style="color: var(--text-muted); margin-bottom: 8px; font-size: 0.85rem;">Raw data object received from FastAPI/Gemini:</p>
+        <p style="color: var(--text-muted); margin-bottom: 8px; font-size: 0.85rem;">Raw data object rendered from the FastAPI JSON contract:</p>
         <div style="background: #09090c; border: 1px solid var(--border); padding: 14px; border-radius: 6px; max-height: 50vh; overflow-y: auto;">
             <pre style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--green); margin: 0;">${payloadHtml}</pre>
         </div>

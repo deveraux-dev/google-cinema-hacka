@@ -85,6 +85,8 @@ npm run test:ui
 
 ## Two-Minute Demo
 
+Public demo video: https://youtu.be/XzUXE0kLOAs
+
 The complete recording plan, exact narration, truthful fallback wording, and export checklist are in [docs/DEMO_VIDEO_SCRIPT.md](docs/DEMO_VIDEO_SCRIPT.md).
 
 1. Open the scenario deck and leave **Auto-review ON**.

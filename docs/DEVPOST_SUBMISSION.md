@@ -6,6 +6,9 @@
 ## Tagline
 Structured AI script revision analysis and deterministic safety governance for film production.
 
+## Demo Video
+https://youtu.be/XzUXE0kLOAs
+
 ## Track
 **Grafana Labs Track** (Agentic Cinema Hackathon)
 
