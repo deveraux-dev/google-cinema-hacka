@@ -170,7 +170,6 @@ async def analyze_scene(req: AnalyzeRequest):
         "production_context": PRODUCTION_CONTEXT,
         "jurisdiction": "Alberta OHS Code (AR 191/2021) / Section 7(4)(c)",
         "model_primary": os.environ.get("GEMINI_MODEL", "gemini-3.7-flash"),
-        "model_reviewer": "gemini-3.1-flash", 
         "analysis": {
             "mode": analysis_mode,
             "note": analysis_note,
