@@ -49,7 +49,7 @@ Auto-review is bounded automation, not unrestricted agent authority. With the to
 | Auto-review | Tested | UI and API tests verify `trigger: auto_review` and the automatic S2 `STOP` path. |
 | Local Grafana MCP | Verified locally | Official `mcp-grafana` stdio transport created real annotations during local verification. |
 | Hosted Grafana MCP | Supported / unverified | Streamable HTTP configuration exists, but no hosted MCP receipt is claimed here. |
-| Vercel runtime | Supported / environment-dependent | FastAPI import and Vercel-safe paths are implemented; hosted MCP remains an external dependency. |
+| Vercel runtime | Deployed / protected | A production deployment was created, but public access and hosted MCP still depend on Vercel project settings. |
 
 ## Built with
 
