@@ -15,7 +15,11 @@ def test_app_serves_context_and_scenarios():
     assert len(scenarios.json()) >= 4
 
 
-def test_analyze_works_without_adk_or_grafana_credentials():
+def test_analyze_works_without_adk_or_grafana_credentials(monkeypatch):
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
+    monkeypatch.delenv("GRAFANA_URL", raising=False)
+    monkeypatch.delenv("GRAFANA_SERVICE_ACCOUNT_TOKEN", raising=False)
     client = TestClient(app)
 
     response = client.post("/api/analyze", json={"scenario_id": "S1"})
