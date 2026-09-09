@@ -1262,8 +1262,10 @@ button, a, summary { min-height: 44px; }
 .main-container { max-width: 1440px; padding: 32px clamp(16px, 4vw, 48px) 56px; }
 .hero-strip { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; padding: 10px 0 30px; }
 .eyebrow, .context-label, .meta-label { margin: 0 0 7px; color: var(--muted); font: 600 .65rem var(--font-mono); letter-spacing: .09em; text-transform: uppercase; }
-.hero-strip h1 { max-width: 700px; margin: 0; font-size: clamp(2rem, 4vw, 3.3rem); line-height: 1.05; letter-spacing: -.03em; }
+.hero-strip h1 { max-width: 700px; margin: 0; font-size: clamp(2rem, 4vw, 3.3rem); line-height: 1.05; letter-spacing: 0; }
 .hero-copy { max-width: 650px; margin: 12px 0 0; color: var(--muted); font-size: 1rem; }
+.hero-trust-line { max-width: 650px; margin: 8px 0 0; color: var(--text); font-size: .83rem; }
+.hero-trust-line strong { color: var(--accent); font-weight: 700; }
 .hero-proof { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; max-width: 360px; }
 .hero-proof span, .provenance-badge { padding: 6px 8px; border: 1px solid var(--line-strong); border-radius: 4px; color: var(--muted); font: 600 .6rem var(--font-mono); letter-spacing: .04em; }
 .context-ribbon { display: grid; grid-template-columns: 1.3fr repeat(4, 1fr); gap: 1px; margin-bottom: 28px; border: 1px solid var(--line); background: var(--line); }
@@ -1273,7 +1275,7 @@ button, a, summary { min-height: 44px; }
 .review-start, .verdict-section { margin-bottom: 28px; }
 .section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
 .section-heading-tight { align-items: center; }
-.section-heading h2 { margin: 0; font-size: 1.35rem; letter-spacing: -.02em; }
+.section-heading h2 { margin: 0; font-size: 1.35rem; letter-spacing: 0; }
 .section-heading .eyebrow { margin-bottom: 5px; }
 .mode-switch { display: flex; gap: 4px; padding: 3px; border: 1px solid var(--line); background: var(--surface-quiet); }
 .tab-btn { min-height: 38px; padding: 7px 12px; border: 0; border-radius: 3px; color: var(--muted); background: transparent; font: 600 .75rem var(--font-sans); cursor: pointer; }
