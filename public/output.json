@@ -171,9 +171,10 @@
     ]
   },
   "grafana": {
-    "published": false,
-    "annotation_id": "",
-    "dashboard_url": "",
-    "error": "GRAFANA_URL and GRAFANA_SERVICE_ACCOUNT_TOKEN are required. Skipping Grafana publish."
+    "published": true,
+    "annotation_id": "30",
+    "dashboard_url": "http://localhost:3000",
+    "receipt": "{\"Payload\":{\"id\":30,\"message\":\"Annotation added\"}}",
+    "error": null
   }
 }

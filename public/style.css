@@ -577,6 +577,59 @@ body {
     color: var(--gold);
 }
 
+.chain-status-panel {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.chain-step {
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 12px 14px;
+    min-width: 0;
+    box-shadow: 3px 3px 0 var(--line);
+}
+
+.chain-step strong,
+.chain-label {
+    display: block;
+    overflow-wrap: anywhere;
+}
+
+.chain-label {
+    color: var(--text-dim);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.chain-step strong {
+    color: var(--ink);
+    font-size: 0.86rem;
+}
+
+.chain-step.live {
+    border-color: var(--green);
+    background: var(--green-soft);
+}
+
+.chain-step.fallback,
+.chain-step.skipped {
+    border-color: var(--gold);
+    background: var(--amber-soft);
+}
+
+.chain-step.stop,
+.chain-step.red {
+    border-color: var(--red);
+    background: var(--red-soft);
+}
+
 /* Results Layout Grid */
 .results-layout {
     display: grid;
@@ -1076,8 +1129,12 @@ footer {
     .tab-group,
     .run-pipeline-btn,
     .nav-controls,
-    .grafana-nav-btn {
+    .grafana-nav-btn,
+    .chain-status-panel {
         width: 100%;
+    }
+    .chain-status-panel {
+        grid-template-columns: minmax(0, 1fr);
     }
     .tab-group {
         flex-direction: column;

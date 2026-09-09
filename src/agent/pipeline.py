@@ -8,6 +8,17 @@ load_dotenv()
 MODEL_NAME = os.environ.get("GEMINI_MODEL", "gemini-3.7-flash")
 ADK_IMPORT_ERROR: Exception | None = None
 
+
+def has_gemini_credentials() -> bool:
+    return bool(
+        os.environ.get("GEMINI_API_KEY")
+        or os.environ.get("GOOGLE_API_KEY")
+        or (
+            os.environ.get("GOOGLE_CLOUD_PROJECT")
+            and os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
+        )
+    )
+
 try:
     from google.adk import Agent
     from google.genai import types
@@ -190,6 +201,10 @@ class RevisionPipeline:
     def analyze_revision(self, scene_id: str, original_text: str, revised_text: str):
         if not self.using_adk:
             print(f"Google ADK unavailable ({self.adk_error}). Engaging offline structured fallback.")
+            return self._offline_fallback(scene_id, original_text, revised_text)
+
+        if not has_gemini_credentials():
+            print("No Gemini credentials found. Engaging offline structured fallback before remote ADK call.")
             return self._offline_fallback(scene_id, original_text, revised_text)
 
         print(f"Starting analysis for Scene {scene_id} with Gemini Model: {MODEL_NAME}...")

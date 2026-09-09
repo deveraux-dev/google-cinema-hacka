@@ -1,4 +1,5 @@
 import os
+import json
 
 async def publish_to_grafana(scene_id: str, severity: str, hazard_labels: list, required_clears: list) -> dict:
     """
@@ -6,13 +7,15 @@ async def publish_to_grafana(scene_id: str, severity: str, hazard_labels: list, 
     """
     grafana_url = os.environ.get("GRAFANA_URL")
     grafana_token = os.environ.get("GRAFANA_SERVICE_ACCOUNT_TOKEN") or os.environ.get("GRAFANA_API_KEY")
+    grafana_username = os.environ.get("GRAFANA_USERNAME")
+    grafana_password = os.environ.get("GRAFANA_PASSWORD")
 
-    if not grafana_url or not grafana_token:
+    if not grafana_url or not (grafana_token or (grafana_username and grafana_password)):
         return {
             "published": False,
             "annotation_id": "",
             "dashboard_url": "",
-            "error": "GRAFANA_URL and GRAFANA_SERVICE_ACCOUNT_TOKEN are required. Skipping Grafana publish."
+            "error": "GRAFANA_URL plus GRAFANA_SERVICE_ACCOUNT_TOKEN or GRAFANA_USERNAME/GRAFANA_PASSWORD are required. Skipping Grafana publish."
         }
 
     try:
@@ -83,7 +86,7 @@ async def publish_to_grafana(scene_id: str, severity: str, hazard_labels: list, 
                     }
                 )
 
-                if result.isError:
+                if getattr(result, "is_error", False):
                     return {
                         "published": False,
                         "annotation_id": "",
@@ -91,14 +94,24 @@ async def publish_to_grafana(scene_id: str, severity: str, hazard_labels: list, 
                         "error": f"MCP Tool Error: {result.content}"
                     }
                 
-                # Parse response for ID/URL if possible
-                # If the tool just returns success text, we parse what we can
                 output_content = str(result.content)
+                annotation_id = "grafana-mcp-success"
+                if result.content:
+                    first_content = result.content[0]
+                    text = getattr(first_content, "text", "")
+                    if text:
+                        try:
+                            parsed = json.loads(text)
+                            annotation_id = str(parsed.get("Payload", {}).get("id") or annotation_id)
+                            output_content = text
+                        except json.JSONDecodeError:
+                            pass
                 
                 return {
                     "published": True,
-                    "annotation_id": "grafana-mcp-success", # Real ID would be parsed from output_content if available
+                    "annotation_id": annotation_id,
                     "dashboard_url": grafana_url, # Best effort link
+                    "receipt": output_content,
                     "error": None
                 }
                 

@@ -69,6 +69,40 @@ function renderAnalysisReceipt(data) {
             : 'OFFLINE STRUCTURED FALLBACK COMPLETE';
         statusText.style.color = mode === 'google_adk_gemini' ? 'var(--green)' : 'var(--gold)';
     }
+
+    updateChainStatus(data);
+}
+
+function setChainStep(id, value, state) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const strong = el.querySelector('strong');
+    if (strong) strong.textContent = value;
+    el.classList.remove('live', 'fallback', 'skipped', 'stop', 'red');
+    if (state) el.classList.add(state);
+}
+
+function updateChainStatus(data) {
+    const mode = data?.analysis?.mode || 'unknown';
+    const severity = data?.safety?.severity || 'UNKNOWN';
+    const grafana = data?.grafana || {};
+
+    setChainStep(
+        'chain-analysis',
+        mode === 'google_adk_gemini' ? 'Live Gemini' : mode.replaceAll('_', ' '),
+        mode === 'google_adk_gemini' ? 'live' : 'fallback'
+    );
+    setChainStep(
+        'chain-safety',
+        severity,
+        severity === 'GREEN' ? 'live' : severity === 'STOP' ? 'stop' : severity.toLowerCase()
+    );
+    setChainStep(
+        'chain-grafana',
+        grafana.published ? 'Published' : 'Skipped',
+        grafana.published ? 'live' : 'skipped'
+    );
+    setChainStep('chain-frontend', 'Rendered JSON', 'live');
 }
 
 // 2. Tab Switcher

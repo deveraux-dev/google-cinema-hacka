@@ -26,9 +26,10 @@ One concrete workflow:
 | --- | --- | --- |
 | Frontend HUD | Verified locally | Served by FastAPI from `public/`; defensive static and embedded fallback paths exist. |
 | Backend API | Verified locally | `GET /api/context`, `GET /api/scenarios`, `POST /api/analyze`, and `GET /api/latest` import and run. |
-| Structured AI analysis | Supported, fallback-safe | Uses Google ADK/Gemini when installed and configured; otherwise returns schema-compatible offline fallback output. |
+| Structured AI analysis | Supported, fallback-safe | `google-adk` imports after dependency install; no Gemini key was present in this shell, so runtime used `offline_structured_fallback`. |
 | Safety engine | Tested locally | `engine.safety.evaluate_safety` returns deterministic severity and required clears from hazard rows. |
-| Grafana MCP | Config/client path present | Uses official `grafana/mcp-grafana` through MCP. Live publish requires local Grafana credentials and is reported truthfully in the JSON response. |
+| Grafana MCP | Verified locally | Grafana OSS `13.0.2` was healthy on `localhost:3000`; `uvx mcp-grafana` `v1.3.0` created annotation ids `26-29` using local basic auth. |
+| Frontend/backend/Grafana receipt | Verified locally | Browser loaded backend JSON and displayed `Analysis: offline structured fallback`, `Safety Engine: RED`, `Grafana MCP: Published`, `Frontend JSON: Rendered JSON`. |
 | Test suite | Passing | `python -m pytest -q` passes on this branch after the latest fixes. |
 
 ## Run Locally
@@ -81,6 +82,13 @@ GRAFANA_MCP_COMMAND=uvx
 GRAFANA_MCP_ARGS=mcp-grafana
 ```
 
+Local Grafana basic auth is also supported by `mcp-grafana`:
+
+```text
+GRAFANA_USERNAME=admin
+GRAFANA_PASSWORD=admin
+```
+
 Check the Grafana MCP adapter config without starting Grafana:
 
 ```powershell
@@ -100,8 +108,10 @@ Revised scene
   -> optional Grafana MCP annotation
 ```
 
-The important boundary: AI extracts structured facts from the script. Python rules
-make the safety decision.
+The important boundary: AI extracts structured facts from the script when Gemini
+credentials are present. Python rules make the safety decision. Without Gemini
+credentials, the app uses a schema-compatible offline fallback and marks that mode
+in the JSON and HUD.
 
 ## Repo Boundary
 

@@ -29,6 +29,8 @@ for (const viewport of [
     await page.getByRole("button", { name: /execute/i }).click();
     await expect(page.locator("#verdict-badge")).toContainText(/RED|STOP|GREEN|REVIEW/);
     await expect(page.locator("#telemetry-status-text")).toContainText(/COMPLETE/);
+    await expect(page.locator("#chain-frontend")).toContainText(/Rendered JSON/);
+    await expect(page.locator("#chain-safety")).toContainText(/RED|STOP|GREEN|REVIEW/);
     await expect(page.getByRole("button", { name: /raw backend json/i })).toBeVisible();
 
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);

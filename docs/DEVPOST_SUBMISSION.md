@@ -56,7 +56,7 @@ Universal CallSheet (UCS) is an intelligent, deterministic safety governance sys
 ---
 
 ## Accomplishments We're Proud Of
-- **End-to-End Auditable Chain:** Successfully demonstrating a verified path from raw script revision to Gemini extraction, deterministic safety gate, Grafana MCP annotation, and live HUD update in seconds.
+- **End-to-End Auditable Chain:** Successfully demonstrating a verified local path from script revision input to schema-compatible extraction, deterministic safety gate, Grafana MCP annotation, and live HUD update. Live Gemini requires a configured API key and is reported separately from fallback mode.
 - **100% Pass on Automated Test Suite:** Unit and integration tests verify every step of the agent, engine, and MCP client with automated pytest test passes.
 - **Zero-Cloud-Retention Architecture:** All historical runs and local caches stay on-premises/in-workspace, preserving confidentiality for pre-release scripts.
 
