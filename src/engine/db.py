@@ -21,19 +21,22 @@ def get_connection():
 
 def init_db():
     """Initialize the database schema."""
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS runs (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-            scene_id TEXT,
-            severity TEXT,
-            full_output_json TEXT
-        )
-    ''')
-    conn.commit()
-    conn.close()
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS runs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                scene_id TEXT,
+                severity TEXT,
+                full_output_json TEXT
+            )
+        ''')
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        print(f"Warning: Could not initialize database schema (likely read-only filesystem): {e}")
 
 def log_run(output_dict: dict):
     """Log a complete pipeline run to the database."""

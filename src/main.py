@@ -6,6 +6,7 @@ import sqlite3
 from typing import Optional
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
+from fastapi.concurrency import run_in_threadpool
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 
@@ -165,7 +166,9 @@ async def analyze_scene(req: AnalyzeRequest):
 
     # Step 1: Gemini / Google ADK Extraction
     pipeline = RevisionPipeline()
-    adk_result = pipeline.analyze_revision(scene_id, original_text, revised_text)
+    adk_result = await run_in_threadpool(
+        pipeline.analyze_revision, scene_id, original_text, revised_text
+    )
     
     diff_output = adk_result["diff"].model_dump()
     cascade_output = adk_result["cascade"].model_dump()
