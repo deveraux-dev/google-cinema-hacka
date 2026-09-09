@@ -266,8 +266,10 @@ async def get_latest():
 
 # Mount assets before the catch-all public route so the branded UI works on the
 # same origin in local FastAPI and Vercel deployments.
-app.mount("/assets", StaticFiles(directory=ASSETS_DIR), name="assets")
-app.mount("/", StaticFiles(directory=PUBLIC_DIR, html=True), name="public")
+if os.path.exists(ASSETS_DIR):
+    app.mount("/assets", StaticFiles(directory=ASSETS_DIR), name="assets")
+if os.path.exists(PUBLIC_DIR):
+    app.mount("/", StaticFiles(directory=PUBLIC_DIR, html=True), name="public")
 
 if __name__ == "__main__":
     import uvicorn
