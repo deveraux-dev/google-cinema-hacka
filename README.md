@@ -85,6 +85,8 @@ npm run test:ui
 
 ## Two-Minute Demo
 
+The complete recording plan, exact narration, truthful fallback wording, and export checklist are in [docs/DEMO_VIDEO_SCRIPT.md](docs/DEMO_VIDEO_SCRIPT.md).
+
 1. Open the scenario deck and leave **Auto-review ON**.
 2. Select S2, the confined-space firearm revision.
 3. Show the automatic chain: structured analysis, safety engine, Grafana status, frontend receipt.
