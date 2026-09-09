@@ -21,6 +21,10 @@ async function animateTerminalLogs(scenarioName) {
         statusText.textContent = 'ANALYSIS REQUEST SENT...';
         statusText.style.color = 'var(--accent)';
     }
+    setChainStep('chain-analysis', 'Running', 'review');
+    setChainStep('chain-safety', 'Queued', 'fallback');
+    setChainStep('chain-grafana', 'Pending', 'skipped');
+    setChainStep('chain-frontend', 'Waiting', 'fallback');
     
     const logs = [
         `> [REQUEST] Scenario ${scenarioName} queued for structured analysis.`,
@@ -63,6 +67,13 @@ function renderAnalysisReceipt(data) {
     const delivery = data?.runtime?.delivery || (mode === 'embedded_static_fallback' ? 'embedded_snapshot' : 'unknown');
     const isLiveRequest = delivery === 'live_request';
     const isSnapshot = ['history_snapshot', 'static_snapshot', 'embedded_snapshot'].includes(delivery);
+    const provenance = document.getElementById('provenance-badge');
+    if (provenance) {
+        provenance.textContent = isLiveRequest
+            ? (mode === 'google_adk_gemini' ? 'LIVE GEMINI REQUEST' : 'LIVE STRUCTURED FALLBACK')
+            : delivery.replaceAll('_', ' ').toUpperCase();
+        provenance.className = `provenance-badge ${isLiveRequest ? 'provenance-live' : 'provenance-snapshot'}`;
+    }
 
     appendTerminalLine(`> [ANALYSIS] Mode: ${mode}; delivery: ${delivery}.`, mode === 'google_adk_gemini' && isLiveRequest ? 'success' : 'warning');
     appendTerminalLine(`> [SAFETY_ENGINE] Severity returned by backend: ${severity}.`, severity === 'GREEN' ? 'success' : 'warning');
@@ -152,11 +163,15 @@ function updateGrafanaLink(data) {
 // 2. Tab Switcher
 function switchTab(tab) {
     currentTab = tab;
-    document.getElementById('tab-scenarios-btn').classList.toggle('active', tab === 'scenarios');
-    document.getElementById('tab-editor-btn').classList.toggle('active', tab === 'editor');
+    const scenarioTab = document.getElementById('tab-scenarios-btn');
+    const editorTab = document.getElementById('tab-editor-btn');
+    scenarioTab.classList.toggle('active', tab === 'scenarios');
+    editorTab.classList.toggle('active', tab === 'editor');
+    scenarioTab.setAttribute('aria-selected', tab === 'scenarios');
+    editorTab.setAttribute('aria-selected', tab === 'editor');
     
-    document.getElementById('scenario-deck-panel').style.display = tab === 'scenarios' ? 'grid' : 'none';
-    document.getElementById('custom-editor-panel').style.display = tab === 'editor' ? 'block' : 'none';
+    document.getElementById('scenario-deck-panel').hidden = tab !== 'scenarios';
+    document.getElementById('custom-editor-panel').hidden = tab !== 'editor';
 }
 
 // 3. Load Production Context
@@ -219,6 +234,7 @@ function renderScenarioDeck(scenarios) {
     deck.querySelectorAll('.scenario-card').forEach(card => {
         card.addEventListener('click', () => selectScenario(card.dataset.scenarioId));
     });
+    updateSelectionSummary();
 }
 
 function selectScenario(id) {
@@ -229,13 +245,20 @@ function selectScenario(id) {
         document.getElementById('custom-rev-text').value = sc.revised_text;
     }
     renderScenarioDeck(currentScenarios);
-    triggerCurrentAnalysis();
+    updateSelectionSummary();
+}
+
+function updateSelectionSummary() {
+    const summary = document.getElementById('selection-summary-text');
+    const scenario = currentScenarios.find(s => s.id === activeScenarioId);
+    if (summary && scenario) summary.textContent = `${scenario.id} selected: ${scenario.title}. Ready to review.`;
 }
 
 // 5. Trigger Analysis (Live API Call)
 async function triggerCurrentAnalysis() {
     const btn = document.getElementById('main-run-btn');
     btn.disabled = true;
+    btn.setAttribute('aria-busy', 'true');
     btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> Analyzing revision...`;
 
     let payload = {};
@@ -279,6 +302,7 @@ async function triggerCurrentAnalysis() {
         loadLatestData();
     } finally {
         btn.disabled = false;
+        btn.removeAttribute('aria-busy');
         btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Run Revision Safety Analysis`;
     }
 }
@@ -359,6 +383,17 @@ function renderSafetyVerdict(data) {
     document.getElementById('verdict-badge').textContent = severity;
     document.getElementById('verdict-badge').className = `severity-badge-lg severity-${severity}`;
     document.getElementById('verdict-reason-text').textContent = reason;
+
+    const helper = document.getElementById('verdict-helper');
+    const nextAction = document.getElementById('next-action-text');
+    const affectedTeams = document.getElementById('affected-teams-text');
+    const clears = data.safety?.required_clears || [];
+    const departments = (data.department_deltas || []).map(item => item.department).filter(Boolean);
+    if (helper) helper.textContent = severity === 'GREEN'
+        ? 'No high-risk hazards were detected in this revision.'
+        : `${clears.length} clearance${clears.length === 1 ? '' : 's'} ${clears.length === 1 ? 'is' : 'are'} required before the next take.`;
+    if (nextAction) nextAction.textContent = severity === 'GREEN' ? 'Proceed with standard production checks.' : `Complete ${clears.length || 'the required'} safety clearance${clears.length === 1 ? '' : 's'} before roll.`;
+    if (affectedTeams) affectedTeams.textContent = departments.length ? departments.join(' · ') : 'No department change recorded';
 
     updateGateState();
 }
@@ -653,6 +688,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initScrollAnimations();
     await loadProductionContext();
     await loadScenarios();
+    switchTab('scenarios');
     await loadLatestData();
 });
 

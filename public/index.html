@@ -3,284 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universal CallSheet - Film Production Safety Command Center</title>
+    <meta name="theme-color" content="#121316">
+    <title>Universal CallSheet | Revision safety cockpit</title>
     <link rel="icon" href="data:,">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to analysis</a>
 
-<div class="top-nav">
+<header class="top-nav">
     <div class="nav-brand">
-        <img src="assets/ucs-logo.jpg" alt="Universal CallSheet logo" class="brand-logo">
-        <div class="brand-badge">PROD HUD</div>
+        <img src="assets/ucs-logo.jpg" alt="Universal CallSheet" class="brand-logo">
         <div class="brand-text">
             <span class="brand-title">UNIVERSAL CALLSHEET</span>
-            <span class="brand-sub">OHS safety governance and script revision cascades</span>
+            <span class="brand-sub">Revision safety cockpit</span>
         </div>
     </div>
     <div class="nav-controls">
-        <div class="status-pill status-live" id="network-status">
-            <span class="dot-pulse"></span> API CONNECTED
+        <div class="status-pill status-live" id="network-status" role="status">
+            <span class="dot-pulse" aria-hidden="true"></span> API CONNECTED
         </div>
-        <div class="status-pill status-offline" id="offline-badge" style="display: none; background: rgba(220, 38, 38, 0.2); border: 1px solid var(--red); color: var(--red);">
-            <span class="dot-pulse" style="background: var(--red); animation: none;"></span> OFFLINE FALLBACK
+        <div class="status-pill status-offline" id="offline-badge" role="status" hidden>
+            <span class="dot-pulse-offline" aria-hidden="true"></span> SNAPSHOT MODE
         </div>
         <a id="grafana-nav-link" href="#" aria-disabled="true" class="grafana-nav-btn is-disabled">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-            Grafana Incident Wall
+            <span class="nav-icon" aria-hidden="true">↗</span> Grafana receipt
         </a>
     </div>
-</div>
+</header>
 
-<!-- Production Call Sheet Telemetry Banner -->
-<div class="callsheet-banner">
-    <div class="banner-item">
-        <span class="banner-label">PRODUCTION</span>
-        <span class="banner-value" id="ctx-prod">Backlot Test: Stage 4</span>
-    </div>
-    <div class="banner-item">
-        <span class="banner-label">CALL SHEET</span>
-        <span class="banner-value highlight-gold" id="ctx-day">Day 2 of 42 (Night Exterior)</span>
-    </div>
-    <div class="banner-item">
-        <span class="banner-label">LOCATION & EMS</span>
-        <span class="banner-value" id="ctx-loc">Warehouse 9 (15m to Level 1 Trauma)</span>
-    </div>
-    <div class="banner-item">
-        <span class="banner-label">CREW & SAFETY LEAD</span>
-        <span class="banner-value" id="ctx-leads">1st AD: Ann Frost | Safety: Sam Officer</span>
-    </div>
-    <div class="banner-item">
-        <span class="banner-label">OHS JURISDICTION</span>
-        <span class="banner-value" id="ctx-juris">Alberta OHS Code (AR 191/2021)</span>
-    </div>
-</div>
+<main class="main-container" id="main-content">
+    <section class="hero-strip" aria-labelledby="page-title">
+        <div>
+            <p class="eyebrow">SCREENPLAY REVISION GOVERNANCE</p>
+            <h1 id="page-title">Know what changed before the camera rolls.</h1>
+            <p class="hero-copy">UCS turns a script revision into a clear stage decision, the people who must act, and the evidence behind it.</p>
+        </div>
+        <div class="hero-proof" aria-label="Runtime architecture">
+            <span>STRUCTURED AI</span><span>DETERMINISTIC SAFETY</span><span>GRAFANA RECEIPT</span>
+        </div>
+    </section>
 
-<main class="main-container">
+    <section class="context-ribbon" aria-label="Production context">
+        <div><span class="context-label">PRODUCTION</span><strong id="ctx-prod">Backlot Test: Stage 4</strong></div>
+        <div><span class="context-label">CALL SHEET</span><strong id="ctx-day">Day 2 of 42</strong></div>
+        <div><span class="context-label">LOCATION</span><strong id="ctx-loc">Warehouse 9</strong></div>
+        <div><span class="context-label">LEADS</span><strong id="ctx-leads">1st AD / Safety</strong></div>
+        <div><span class="context-label">JURISDICTION</span><strong id="ctx-juris">Alberta OHS</strong></div>
+    </section>
 
-    <!-- Scenario Switcher & Live Editor Tabs -->
-    <div class="deck-controls">
-        <div class="tab-group">
-            <button class="tab-btn active" id="tab-scenarios-btn" onclick="switchTab('scenarios')" aria-controls="scenario-deck-panel">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>
-                Production Scenario Deck
+    <section class="review-start" aria-labelledby="review-heading">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">01 / SELECT A REVISION</p>
+                <h2 id="review-heading">What changed on the page?</h2>
+            </div>
+            <div class="mode-switch" role="tablist" aria-label="Revision source">
+                <button class="tab-btn active" id="tab-scenarios-btn" role="tab" aria-selected="true" aria-controls="scenario-deck-panel" onclick="switchTab('scenarios')">Scenario deck</button>
+                <button class="tab-btn" id="tab-editor-btn" role="tab" aria-selected="false" aria-controls="custom-editor-panel" onclick="switchTab('editor')">Custom revision</button>
+            </div>
+        </div>
+        <div class="scenario-deck" id="scenario-deck-panel" role="tabpanel" aria-labelledby="tab-scenarios-btn"></div>
+        <section class="custom-editor-panel" id="custom-editor-panel" role="tabpanel" aria-labelledby="tab-editor-btn" hidden>
+            <div class="editor-grid">
+                <label class="editor-col"><span class="editor-label">Original scene</span><textarea id="custom-orig-text" class="screenplay-textarea" placeholder="Paste the original screenplay scene..."></textarea></label>
+                <label class="editor-col"><span class="editor-label">Revised scene</span><textarea id="custom-rev-text" class="screenplay-textarea" placeholder="Paste the revised screenplay scene..."></textarea></label>
+            </div>
+        </section>
+        <div class="review-action-row">
+            <div class="selection-summary"><span class="selection-dot" aria-hidden="true"></span><span id="selection-summary-text">Select a scenario to review its revision.</span></div>
+            <button class="run-pipeline-btn" id="main-run-btn" onclick="triggerCurrentAnalysis()" aria-live="polite">
+                <span aria-hidden="true">▶</span> Analyze revision
             </button>
-            <button class="tab-btn" id="tab-editor-btn" onclick="switchTab('editor')" aria-controls="custom-editor-panel">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Live Custom Screenplay Editor
-            </button>
         </div>
-        <button class="run-pipeline-btn" id="main-run-btn" onclick="triggerCurrentAnalysis()" aria-live="polite">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-            Run Revision Safety Analysis
-        </button>
-    </div>
+    </section>
 
-    <!-- Scenarios Selection Deck -->
-    <div class="scenario-deck" id="scenario-deck-panel">
-        <!-- Injected via JavaScript -->
-    </div>
-
-    <!-- Custom Script Editor Panel -->
-    <div class="custom-editor-panel" id="custom-editor-panel" style="display: none;">
-        <div class="editor-grid">
-            <div class="editor-col">
-                <div class="editor-header">
-                    <span>ORIGINAL SCREENPLAY SCENE</span>
-                    <span class="badge-subtle">Baseline (Before Revision)</span>
-                </div>
-                <textarea id="custom-orig-text" class="screenplay-textarea" placeholder="Paste original screenplay text here..."></textarea>
+    <section class="verdict-section" aria-labelledby="verdict-heading">
+        <div class="section-heading section-heading-tight">
+            <div><p class="eyebrow">02 / STAGE DECISION</p><h2 id="verdict-heading">Can the camera roll?</h2><span class="scene-tag" id="display-scene-id">SCENE —</span></div>
+            <span class="provenance-badge" id="provenance-badge">WAITING FOR ANALYSIS</span>
+        </div>
+        <div class="verdict-card safety-verdict-card" id="verdict-card">
+            <div class="verdict-main">
+                <div class="verdict-kicker">CURRENT DECISION</div>
+                <div class="verdict-line"><div class="severity-badge-lg" id="verdict-badge">—</div><div><h3 class="verdict-reason" id="verdict-reason-text">Choose a revision, then run the analysis.</h3><p class="verdict-helper" id="verdict-helper">UCS will identify changed hazards, apply deterministic safety rules, and return the required next action.</p></div></div>
             </div>
-            <div class="editor-col">
-                <div class="editor-header">
-                    <span>REVISED SCREENPLAY SCENE</span>
-                    <span class="badge-subtle highlight-gold">Incoming Revision</span>
-                </div>
-                <textarea id="custom-rev-text" class="screenplay-textarea" placeholder="Paste revised screenplay text here..."></textarea>
+            <div class="camera-gate" id="camera-gate-box">
+                <div class="gate-status"><span class="gate-icon" id="gate-icon">WAIT</span><div><strong id="gate-title">AWAITING REVISION</strong><p id="gate-desc">No stage decision has been issued yet.</p></div></div>
             </div>
+            <div class="verdict-meta"><div><span class="meta-label">NEXT ACTION</span><strong id="next-action-text">Analyze the selected revision</strong></div><div><span class="meta-label">AFFECTED TEAMS</span><strong id="affected-teams-text">Will appear after analysis</strong></div></div>
         </div>
-    </div>
+    </section>
 
-    <!-- Persistent Agentic AI Telemetry Trace -->
-    <div class="agent-telemetry-panel">
-        <div class="telemetry-header">
-            <div class="telemetry-title">
-                <span class="pulse-ring"></span>
-                <span>GEMINI ADK AGENTIC REASONING TRACE</span>
+    <section class="chain-status-panel" aria-label="Runtime chain status">
+        <div class="chain-step" id="chain-analysis"><span class="chain-index">01</span><span class="chain-label">Structured analysis</span><strong>Waiting</strong></div>
+        <div class="chain-step" id="chain-safety"><span class="chain-index">02</span><span class="chain-label">Safety engine</span><strong>Waiting</strong></div>
+        <div class="chain-step" id="chain-grafana"><span class="chain-index">03</span><span class="chain-label">Grafana MCP</span><strong>Waiting</strong></div>
+        <div class="chain-step" id="chain-frontend"><span class="chain-index">04</span><span class="chain-label">Frontend receipt</span><strong>Waiting</strong></div>
+    </section>
+
+    <section class="evidence-layout" aria-label="Analysis evidence">
+        <div class="evidence-main">
+            <details class="evidence-panel" open>
+                <summary><span><b>Revision impact</b><small>What changed in the screenplay</small></span><span class="summary-state">OPEN</span></summary>
+                <div class="evidence-body"><div class="screenplay-viewer" id="screenplay-diff-content"><p class="empty-state">Run an analysis to render the revision diff.</p></div></div>
+            </details>
+            <details class="evidence-panel" open>
+                <summary><span><b>Required clearances</b><small>Who must sign off before roll</small></span><span class="clears-counter" id="clears-counter-badge">0 / 0</span></summary>
+                <div class="evidence-body"><div class="clears-list" id="clears-container"><p class="empty-state">Clearances will appear after analysis.</p></div></div>
+            </details>
+            <details class="evidence-panel">
+                <summary><span><b>Department cascade</b><small>Operational work created by this revision</small></span><span class="summary-state">DETAIL</span></summary>
+                <div class="evidence-body"><div class="dept-grid" id="department-deltas-container"><p class="empty-state">Department impacts will appear after analysis.</p></div></div>
+            </details>
+        </div>
+        <aside class="evidence-rail">
+            <details class="evidence-panel" open>
+                <summary><span><b>Hazard evidence</b><small>Rules-triggering signals</small></span><span class="summary-state">DETAIL</span></summary>
+                <div class="evidence-body"><div class="hazard-tag-deck" id="hazards-container"><p class="empty-state">Hazards will appear after analysis.</p></div></div>
+            </details>
+            <details class="evidence-panel">
+                <summary><span><b>Statutory basis</b><small>Applicable safety references</small></span><span class="summary-state">DETAIL</span></summary>
+                <div class="evidence-body"><div class="statutory-grid" id="statutory-container"><p class="empty-state">Citations will appear after analysis.</p></div></div>
+            </details>
+            <div class="technical-panel">
+                <div class="technical-head"><div><p class="eyebrow">TECHNICAL PROOF</p><h3>Receipt and chain</h3></div><button class="json-trace-btn" onclick="showRawJsonConnection()" aria-label="Raw backend JSON">{ } JSON</button></div>
+                <div class="telemetry-body" id="term-logs" role="log" aria-live="polite"><div class="term-line">System ready. Select a revision to begin.</div></div>
+                <div class="telemetry-status" id="telemetry-status-text">WAITING FOR REVISION</div>
             </div>
-            <div style="display: flex; gap: 16px; align-items: center;">
-                <div class="telemetry-status" id="telemetry-status-text">WAITING FOR REVISION...</div>
-                <button class="json-trace-btn" onclick="showRawJsonConnection()" aria-label="Raw backend JSON">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-                    Raw JSON
-                </button>
-            </div>
-        </div>
-        <div class="telemetry-body" id="term-logs">
-            <div class="term-line">> System online. Awaiting script revision cascade.</div>
-        </div>
-    </div>
-
-    <div class="chain-status-panel" aria-label="Runtime chain status">
-        <div class="chain-step" id="chain-analysis">
-            <span class="chain-label">Analysis</span>
-            <strong>Waiting</strong>
-        </div>
-        <div class="chain-step" id="chain-safety">
-            <span class="chain-label">Safety Engine</span>
-            <strong>Waiting</strong>
-        </div>
-        <div class="chain-step" id="chain-grafana">
-            <span class="chain-label">Grafana MCP</span>
-            <strong>Waiting</strong>
-        </div>
-        <div class="chain-step" id="chain-frontend">
-            <span class="chain-label">Frontend JSON</span>
-            <strong>Waiting</strong>
-        </div>
-    </div>
-
-    <!-- Main Results Dashboard -->
-    <div id="results-display" class="results-layout">
-        
-        <!-- Left Column: Screenplay Diff & Department Deltas -->
-        <div class="col-left">
-            
-            <!-- Screenplay Redline Diff Inspector -->
-            <div class="hud-card reveal-on-scroll">
-                <div class="card-header">
-                    <div class="card-title-group">
-                        <span class="card-icon card-icon-text" aria-hidden="true">DIFF</span>
-                        <div>
-                            <h3 class="card-title">Screenplay Revision Redline Diff</h3>
-                            <p class="card-sub">Structured revision changes from the analysis pipeline</p>
-                        </div>
-                    </div>
-                    <span class="scene-tag" id="display-scene-id">SCENE S1</span>
-                </div>
-                
-                <div class="screenplay-viewer" id="screenplay-diff-content">
-                    <!-- Script Redline View Injected Here -->
-                </div>
-            </div>
-
-            <!-- Department Cascades -->
-            <div class="hud-card reveal-on-scroll">
-                <div class="card-header">
-                    <div class="card-title-group">
-                        <span class="card-icon card-icon-text" aria-hidden="true">OPS</span>
-                        <div>
-                            <h3 class="card-title">Department Work Cascades</h3>
-                            <p class="card-sub">Automated operational deltas per production guild</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="dept-grid" id="department-deltas-container">
-                    <!-- Department cards injected here -->
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Right Column: Safety Verdict, Statutory Law & Department Signoffs -->
-        <div class="col-right">
-
-            <!-- Master Safety Verdict -->
-            <div class="hud-card safety-verdict-card reveal-on-scroll" id="verdict-card">
-                <div class="verdict-header">
-                    <div>
-                        <span class="verdict-label">STAGE SAFETY GOVERNANCE VERDICT</span>
-                        <h2 class="verdict-reason" id="verdict-reason-text">Evaluating...</h2>
-                    </div>
-                    <div class="severity-badge-lg" id="verdict-badge">RED</div>
-                </div>
-
-                <div class="camera-gate" id="camera-gate-box">
-                    <div class="gate-status">
-                        <span class="gate-icon" id="gate-icon">LOCK</span>
-                        <div>
-                            <strong id="gate-title">STAGE LOCKED // CAMERA CANNOT ROLL</strong>
-                            <p id="gate-desc">Mandatory safety clearances must be signed off by designated leads before 1st AD calls action.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Interactive Department Clearances -->
-            <div class="hud-card reveal-on-scroll">
-                <div class="card-header">
-                    <div class="card-title-group">
-                        <span class="card-icon card-icon-text" aria-hidden="true">LOCK</span>
-                        <div>
-                            <h3 class="card-title">Required Safety Clearances</h3>
-                            <p class="card-sub">Mandatory lead sign-offs before roll</p>
-                        </div>
-                    </div>
-                    <span class="clears-counter" id="clears-counter-badge">0 / 0 Cleared</span>
-                </div>
-                <div class="clears-list" id="clears-container">
-                    <!-- Checkboxes injected here -->
-                </div>
-            </div>
-
-            <!-- Extracted Hazard Tags -->
-            <div class="hud-card reveal-on-scroll">
-                <div class="card-header">
-                    <div class="card-title-group">
-                        <span class="card-icon card-icon-text" aria-hidden="true">HAZ</span>
-                        <div>
-                            <h3 class="card-title">Jurisdiction Hazard Ladder</h3>
-                            <p class="card-sub">Mapped against Alberta OHS Code Part 2 Ladder (1-13)</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="hazard-tag-deck" id="hazards-container">
-                    <!-- Tags injected here -->
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Statutory Legal Citations Drawer (Full Width to balance layout) -->
-    <div class="hud-card statutory-card reveal-on-scroll" style="margin-top: 24px;">
-        <div class="card-header">
-            <div class="card-title-group">
-                <span class="card-icon card-icon-text" aria-hidden="true">LAW</span>
-                <div>
-                    <h3 class="card-title">Statutory Legal Citations</h3>
-                    <p class="card-sub">Official Alberta Occupational Health & Safety Code Statutes</p>
-                </div>
-            </div>
-        </div>
-        <div class="statutory-grid" id="statutory-container">
-            <!-- Legal clauses injected here -->
-        </div>
-    </div>
-
+        </aside>
+    </section>
 </main>
 
-<!-- Modal for Detailed Hazard / Legal Inspection -->
-<div class="modal-overlay" id="detail-modal" onclick="if(event.target === this) closeModal()">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3 id="modal-title">Regulatory Detail</h3>
-            <button class="modal-close" onclick="closeModal()" aria-label="Close detail modal">&times;</button>
-        </div>
-        <div id="modal-body">
-            <!-- Injected via JS -->
-        </div>
-    </div>
+<div class="modal-overlay" id="detail-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="if(event.target === this) closeModal()">
+    <div class="modal-content"><div class="modal-header"><h3 id="modal-title">Evidence detail</h3><button class="modal-close" onclick="closeModal()" aria-label="Close detail modal">×</button></div><div id="modal-body"></div></div>
 </div>
 
-<footer>
-    <div class="footer-content">
-        <p><strong>Universal CallSheet (UCS)</strong> - Script revision and OHS safety governance platform</p>
-        <p>Built for the <strong>Agentic Cinema Hackathon (Grafana Labs Track)</strong> using Google Cloud Gemini and Google ADK</p>
-        <p class="footer-disclaimer">Notice: This system operates as an assistive safety governance framework under Alberta OHS Act SA 2020 cO-2.2 and AR 191/2021. Final authority remains with designated safety personnel and applicable regulatory bodies.</p>
-    </div>
-</footer>
-
+<footer><div class="footer-content"><strong>Universal CallSheet</strong><span>Structured screenplay revision analysis with deterministic safety governance.</span><span class="footer-disclaimer">Assistive governance framework. Final authority remains with designated safety personnel and applicable regulatory bodies.</span></div></footer>
 <script src="app.js"></script>
 </body>
 </html>
