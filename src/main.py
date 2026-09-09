@@ -23,6 +23,7 @@ load_dotenv()
 app = FastAPI(title="Universal CallSheet (UCS) - Production Safety Command Center")
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PUBLIC_DIR = os.path.join(REPO_ROOT, "public")
+ASSETS_DIR = os.path.join(REPO_ROOT, "assets")
 WRITE_STATIC_OUTPUT = os.environ.get("UCS_WRITE_STATIC_OUTPUT", "0") == "1"
 
 # Production Metadata from samples/production.plan.json
@@ -263,7 +264,9 @@ async def get_latest():
         except Exception:
             raise HTTPException(status_code=404, detail="No historical runs found.")
 
-# Mount static files (this serves public/index.html on /)
+# Mount assets before the catch-all public route so the branded UI works on the
+# same origin in local FastAPI and Vercel deployments.
+app.mount("/assets", StaticFiles(directory=ASSETS_DIR), name="assets")
 app.mount("/", StaticFiles(directory=PUBLIC_DIR, html=True), name="public")
 
 if __name__ == "__main__":

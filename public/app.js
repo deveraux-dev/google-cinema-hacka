@@ -5,6 +5,13 @@ let signedClears = new Set();
 let currentTab = "scenarios";
 window.currentRequiredClears = [];
 
+const OFFLINE_SCENARIOS = [
+    { id: "S1", title: "Night Stunt Jump & Flash Pot Explosion", heading: "EXT. LOADING DOCK - NIGHT", description: "High-risk action rewrite adding practical pyrotechnics, a 20-foot performer fall, and powered hydraulic lift resets.", expected_severity: "RED", original_text: "[Scene 1] EXT. LOADING DOCK - NIGHT\nThe loading dock is quiet. A security guard walks past holding a flashlight.", revised_text: "[Scene 1] EXT. LOADING DOCK - NIGHT\nThe loading dock is quiet. A security guard walks past holding a flashlight.\nSuddenly, a pyrotechnic flash pot explodes near the dumpster.\nA masked performer jumps from a 20-foot elevated platform down to the concrete, rolling to safety.\nThe crew resets the powered hydraulic lift between takes." },
+    { id: "S2", title: "Confined Space Prop Firearm Shootout", heading: "INT. CARGO HOLD - NIGHT", description: "Interior hull revision introducing blank firearm discharge and restricted egress atmospheric fog.", expected_severity: "STOP", original_text: "[Scene 2] INT. CARGO HOLD - NIGHT\nJohn and Sarah search through the storage crates under low emergency lighting.", revised_text: "[Scene 2] INT. CARGO HOLD - NIGHT\nJohn and Sarah search through the storage crates under low emergency lighting.\nHeavy atmospheric smoke fills the sealed watertight compartment.\nJohn draws a prop revolver loaded with quarter-load blanks and fires two shots toward the hatch." },
+    { id: "S3", title: "Aerial High-Wind Crane Rigging", heading: "EXT. ROOFTOP - NIGHT", description: "Exterior rooftop stunt featuring a 60-foot condor crane flying rig in gusty night weather.", expected_severity: "RED", original_text: "[Scene 3] EXT. ROOFTOP - NIGHT\nElena looks out over the city skyline from behind the perimeter railing.", revised_text: "[Scene 3] EXT. ROOFTOP - NIGHT\nElena steps past the perimeter railing onto an exterior scaffold.\nA 60-foot telescopic condor crane hoists a stunt performer into high-altitude wind gusts over the edge." },
+    { id: "S4", title: "Routine Office Dialogue Revision", heading: "INT. PRODUCTION OFFICE - DAY", description: "Standard character and dialogue adjustments with zero physical risk or hazardous machinery.", expected_severity: "GREEN", original_text: "[Scene 4] INT. PRODUCTION OFFICE - DAY\nDavid reviews the schedule on his laptop while drinking coffee.", revised_text: "[Scene 4] INT. PRODUCTION OFFICE - DAY\nDavid reviews the revised call sheet on his tablet.\nSARAH walks in holding two coffees, setting one on the desk with a smile." }
+];
+
 // 1. Terminal Log Animation
 async function animateTerminalLogs(scenarioName) {
     const termBody = document.getElementById('term-logs');
@@ -53,7 +60,7 @@ function renderAnalysisReceipt(data) {
     const mode = data?.analysis?.mode || 'unknown';
     const severity = data?.safety?.severity || 'UNKNOWN';
     const grafana = data?.grafana || {};
-    const delivery = data?.runtime?.delivery || 'unknown';
+    const delivery = data?.runtime?.delivery || (mode === 'embedded_static_fallback' ? 'embedded_snapshot' : 'unknown');
     const isLiveRequest = delivery === 'live_request';
     const isSnapshot = ['history_snapshot', 'static_snapshot', 'embedded_snapshot'].includes(delivery);
 
@@ -84,7 +91,7 @@ function setChainStep(id, value, state) {
     if (!el) return;
     const strong = el.querySelector('strong');
     if (strong) strong.textContent = value;
-    el.classList.remove('live', 'fallback', 'skipped', 'stop', 'red');
+    el.classList.remove('live', 'fallback', 'skipped', 'stop', 'red', 'review');
     if (state) el.classList.add(state);
 }
 
@@ -92,7 +99,7 @@ function updateChainStatus(data) {
     const mode = data?.analysis?.mode || 'unknown';
     const severity = data?.safety?.severity || 'UNKNOWN';
     const grafana = data?.grafana || {};
-    const delivery = data?.runtime?.delivery || 'unknown';
+    const delivery = data?.runtime?.delivery || (mode === 'embedded_static_fallback' ? 'embedded_snapshot' : 'unknown');
     const isLiveRequest = delivery === 'live_request';
     const isSnapshot = ['history_snapshot', 'static_snapshot', 'embedded_snapshot'].includes(delivery);
 
@@ -171,20 +178,19 @@ async function loadProductionContext() {
 
 // 4. Load Scenarios Deck
 async function loadScenarios() {
+    currentScenarios = OFFLINE_SCENARIOS;
     try {
         const resp = await fetch('/api/scenarios');
         if (resp.ok) {
             currentScenarios = await resp.json();
-            renderScenarioDeck(currentScenarios);
-            
-            // Set initial custom editor text from first scenario
-            if (currentScenarios.length > 0) {
-                document.getElementById('custom-orig-text').value = currentScenarios[0].original_text;
-                document.getElementById('custom-rev-text').value = currentScenarios[0].revised_text;
-            }
         }
     } catch(e) {
-        console.warn("Could not load scenarios:", e);
+        console.warn("Using offline scenario deck:", e);
+    }
+    renderScenarioDeck(currentScenarios);
+    if (currentScenarios.length > 0) {
+        document.getElementById('custom-orig-text').value = currentScenarios[0].original_text;
+        document.getElementById('custom-rev-text').value = currentScenarios[0].revised_text;
     }
 }
 
