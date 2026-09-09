@@ -647,6 +647,8 @@ async function initializeResults() {
         const health = await fetch('/api/health');
         if (!health.ok) throw new Error(`Health check returned ${health.status}`);
         setNetworkStatus(true);
+        const termBody = document.getElementById('term-logs');
+        if (termBody) termBody.innerHTML = '';
         appendTerminalLine('System ready. Select a revision to begin.', 'normal');
     } catch (error) {
         console.warn('Live API unavailable; loading the latest verified snapshot.', error);
