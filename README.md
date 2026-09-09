@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/ucs-logo.jpg" width="200" alt="UCS Logo">
+  <img src="public/assets/ucs-logo.jpg" width="200" alt="UCS Logo">
   <h1>Universal CallSheet (UCS)</h1>
   <p><b>AI-powered Safety Governance for Film Production</b></p>
   
@@ -23,42 +23,33 @@ It uses Google Gemini to read screenplay diffs, instantly extracts physical haza
 
 ## ⚙️ How It Works (The Pipeline)
 
-1. 📝 **LLM Extraction:** Google ADK and Gemini `3.7-flash` extract structured `DiffOutput`, `CascadeOutput`, and `HazardTagOutput` from raw script revisions.
-2. 🛑 **Deterministic Gate:** The Python safety engine enforces Alberta OHS Code AR 191/2021 to set a final `GREEN`, `STOP`, or `RED` severity. *The LLM does NOT make the final safety decision.*
-3. 📊 **Immutable Logging:** Verified hazard tags and severities are routed to the Grafana MCP server for permanent annotation and monitoring.
-4. 🖥️ **Production HUD:** The frontend displays the raw JSON payload, the deterministic safety reasoning, required department clearances, and the Grafana receipt in one single, un-falsifiable view.
+```mermaid
+graph TD
+    A[Writer Submits Revised Script] -->|Diff Detected| B(LLM Hazard Extraction)
+    B -->|Proposes Tags| C{Deterministic Python Gate}
+    C -->|Rules Passed| D[🟢 GREEN: Ready to Shoot]
+    C -->|Rules Failed| E[🔴 RED: Requires Clearance]
+    D --> F[(Grafana Ledger)]
+    E --> F
+    F -->|Immutable Receipt| G[Production HUD]
+```
+
+1. 📝 **LLM Extraction:** Google ADK and Gemini `3.7-flash` extract structured elements from raw script revisions.
+2. 🛑 **Deterministic Gate:** The Python safety engine enforces Alberta OHS Code AR 191/2021 to set a final severity.
+3. 📊 **Immutable Logging:** Verified hazard tags are routed to Grafana MCP for permanent annotation.
+4. 🖥️ **Production HUD:** The frontend displays the un-falsifiable stage decision and receipt.
 
 ---
 
-## 🚀 Quick Start (Local Development)
+## 🚀 Deployment & Demo
 
-### Prerequisites
-- Python 3.12+
-- Node.js 22+ (for UI testing)
+For this hackathon, we have deployed the fully functional portal to Vercel and recorded a complete technical demo of the pipeline in action. 
 
-### Installation
-```powershell
-# 1. Install Python dependencies
-python -m pip install -e .
-
-# 2. Run the UCS Backend
-python src/main.py
-```
-*The HUD will be available at `http://localhost:8000`.*
-
----
-
-## ☁️ Cloud Deployment (Vercel)
-The live project is hosted on Vercel at [universal-callsheet.vercel.app](https://universal-callsheet.vercel.app). 
-
-To deploy your own instance, ensure the following environment variables are set:
-```env
-GEMINI_API_KEY=<your-key>
-GEMINI_MODEL=gemini-3.7-flash
-GRAFANA_MCP_SERVER_TOKEN=<server-auth-token>
-GRAFANA_PUBLIC_URL=https://<grafana-host>
-GRAFANA_MCP_URL=https://<hosted-mcp-service>/mcp
-```
+<div align="center">
+  <a href="https://universal-callsheet.vercel.app"><img src="https://img.shields.io/badge/Live_Portal-Vercel-000000?style=for-the-badge&logo=vercel" alt="Live Portal"></a>
+  &nbsp;&nbsp;
+  <a href="https://youtube.com/watch?v=demo_placeholder"><img src="https://img.shields.io/badge/Watch_Demo-YouTube-FF0000?style=for-the-badge&logo=youtube" alt="Watch Demo"></a>
+</div>
 
 ---
 
