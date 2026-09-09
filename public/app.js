@@ -67,6 +67,27 @@ function renderAnalysisReceipt(data) {
     const delivery = data?.runtime?.delivery || (mode === 'embedded_static_fallback' ? 'embedded_snapshot' : 'unknown');
     const isLiveRequest = delivery === 'live_request';
     const isSnapshot = ['history_snapshot', 'static_snapshot', 'embedded_snapshot'].includes(delivery);
+    const claimAnalysis = document.getElementById('claim-analysis');
+    const claimSafety = document.getElementById('claim-safety');
+    const claimGrafana = document.getElementById('claim-grafana');
+    if (claimAnalysis) {
+        claimAnalysis.classList.toggle('is-ready', isLiveRequest && mode === 'google_adk_gemini');
+        claimAnalysis.querySelector('span').textContent = isLiveRequest
+            ? (mode === 'google_adk_gemini' ? 'Fresh Gemini request returned structured analysis.' : 'Fresh request returned the schema-compatible fallback.')
+            : 'Cached or embedded receipt; not a fresh service request.';
+    }
+    if (claimSafety) {
+        claimSafety.classList.add('is-ready');
+        claimSafety.querySelector('span').textContent = `Deterministic Python rules returned ${severity}; the model does not own this decision.`;
+    }
+    if (claimGrafana) {
+        claimGrafana.classList.toggle('is-ready', Boolean(grafana.published && isLiveRequest));
+        claimGrafana.querySelector('span').textContent = grafana.published && isLiveRequest
+            ? `Fresh backend receipt returned${grafana.annotation_id ? `: annotation ${grafana.annotation_id}.` : '.'}`
+            : grafana.published && isSnapshot
+                ? 'Historical receipt loaded; this is not a new publish.'
+                : 'No publish receipt returned for this analysis.';
+    }
     const provenance = document.getElementById('provenance-badge');
     if (provenance) {
         provenance.textContent = isLiveRequest
@@ -440,10 +461,10 @@ function renderClearances(data) {
     // Pass the index instead of the string to avoid single quote escaping issues in onclick!
     window.currentRequiredClears = requiredClears; 
     container.innerHTML = requiredClears.map((c, idx) => `
-        <div class="clear-row ${signedClears.has(c) ? 'signed' : ''}" onclick="toggleClearIdx(${idx})">
-            <input type="checkbox" class="clear-checkbox" ${signedClears.has(c) ? 'checked' : ''} onclick="event.stopPropagation(); toggleClearIdx(${idx})">
+        <label class="clear-row ${signedClears.has(c) ? 'signed' : ''}">
+            <input type="checkbox" class="clear-checkbox" ${signedClears.has(c) ? 'checked' : ''} onchange="toggleClearIdx(${idx})">
             <span class="clear-text">${escapeHtml(c)}</span>
-        </div>
+        </label>
     `).join('');
 }
 

@@ -128,12 +128,25 @@
                 <summary><span><b>Statutory basis</b><small>Applicable safety references</small></span><span class="summary-state">DETAIL</span></summary>
                 <div class="evidence-body"><div class="statutory-grid" id="statutory-container"><p class="empty-state">Citations will appear after analysis.</p></div></div>
             </details>
-            <div class="technical-panel">
+            <div class="technical-panel" id="technical-proof">
                 <div class="technical-head"><div><p class="eyebrow">TECHNICAL PROOF</p><h3>Receipt and chain</h3></div><button class="json-trace-btn" onclick="showRawJsonConnection()" aria-label="Raw backend JSON">{ } JSON</button></div>
                 <div class="telemetry-body" id="term-logs" role="log" aria-live="polite"><div class="term-line">System ready. Select a revision to begin.</div></div>
                 <div class="telemetry-status" id="telemetry-status-text">WAITING FOR REVISION</div>
             </div>
         </aside>
+    </section>
+    <section class="claim-panel" aria-labelledby="claim-heading">
+        <div class="claim-panel-head"><div><p class="eyebrow">TRUST AND DELIVERY</p><h3 id="claim-heading">What this screen can prove</h3></div><p>Every label follows the backend receipt.</p></div>
+        <div class="claim-grid">
+            <div class="claim-item" id="claim-analysis"><strong>Analysis source</strong><span>Waiting for a fresh revision request.</span></div>
+            <div class="claim-item" id="claim-safety"><strong>Safety decision</strong><span>Deterministic Python rules own the stage decision.</span></div>
+            <div class="claim-item" id="claim-grafana"><strong>Grafana receipt</strong><span>Only shown as published when the backend returns a receipt.</span></div>
+        </div>
+        <nav class="proof-links" aria-label="Proof shortcuts">
+            <a class="proof-link" href="#review-heading">Review a revision</a>
+            <a class="proof-link" href="#verdict-heading">Jump to decision</a>
+            <a class="proof-link" href="#technical-proof">Open technical proof</a>
+        </nav>
     </section>
 </main>
 

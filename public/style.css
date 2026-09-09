@@ -69,19 +69,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Scroll Reveal Animations */
-.reveal-on-scroll {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform;
-}
-
-.reveal-on-scroll.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
 /* 1. Top Navigation Bar */
 .top-nav {
     display: flex;
@@ -1368,6 +1355,20 @@ button, a, summary { min-height: 44px; }
 .telemetry-body { max-height: 230px; min-height: 110px; padding: 14px 16px; background: #0d0e11; color: var(--green); font-size: .68rem; }
 .telemetry-status { padding: 9px 16px; border-top: 1px solid var(--line); color: var(--amber); font: 600 .62rem var(--font-mono); }
 .term-line { overflow-wrap: anywhere; }
+.claim-panel { margin-top: 12px; padding: 18px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); }
+.claim-panel-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+.claim-panel-head h3 { margin: 0; font-size: 1rem; }
+.claim-panel-head p { margin: 0; color: var(--muted); font-size: .74rem; }
+.claim-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.claim-item { min-width: 0; padding: 12px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface-quiet); }
+.claim-item strong, .claim-item span { display: block; }
+.claim-item strong { margin-bottom: 4px; color: var(--ink); font-size: .76rem; }
+.claim-item span { color: var(--muted); font-size: .7rem; line-height: 1.4; }
+.claim-item.is-ready { border-color: rgba(86,229,169,.45); }
+.claim-item.is-ready strong { color: var(--green); }
+.proof-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.proof-link { color: var(--blue); font-size: .72rem; font-weight: 700; text-decoration: none; }
+.proof-link:hover, .proof-link:focus-visible { text-decoration: underline; }
 footer { margin-top: 0; padding: 24px 16px; background: var(--surface-quiet); border-top-color: var(--line); text-align: left; }
 .footer-content { max-width: 1440px; flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; margin: auto; font-size: .72rem; }
 .footer-disclaimer { flex-basis: 100%; margin-top: 4px; }
@@ -1399,6 +1400,8 @@ footer { margin-top: 0; padding: 24px 16px; background: var(--surface-quiet); bo
     .evidence-layout { grid-template-columns: 1fr; }
     .evidence-rail { display: contents; }
     .dept-grid, .statutory-grid { grid-template-columns: 1fr; }
+    .claim-grid { grid-template-columns: 1fr; }
+    .claim-panel-head { align-items: flex-start; flex-direction: column; gap: 4px; }
     .footer-content { flex-direction: column; }
 }
 @media (max-width: 420px) {
