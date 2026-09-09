@@ -33,6 +33,17 @@
     </div>
 </header>
 
+<nav class="quick-nav" aria-label="UCS workspace navigation">
+    <div class="quick-nav-inner">
+        <span class="quick-nav-label">WORKSPACE</span>
+        <a href="#review-heading" class="quick-nav-link is-active" data-section-link="review-heading">Review <span>01</span></a>
+        <a href="#verdict-heading" class="quick-nav-link" data-section-link="verdict-heading">Decision <span>02</span></a>
+        <a href="#evidence-heading" class="quick-nav-link" data-section-link="evidence-heading">Evidence <span>03</span></a>
+        <a href="#technical-proof" class="quick-nav-link" data-section-link="technical-proof">Proof <span>04</span></a>
+        <span class="quick-nav-state" id="quick-nav-state">READY TO REVIEW</span>
+    </div>
+</nav>
+
 <main class="main-container" id="main-content">
     <section class="hero-strip" aria-labelledby="page-title">
         <div>
@@ -105,7 +116,8 @@
         <div class="chain-step" id="chain-frontend"><span class="chain-index">04</span><span class="chain-label">Frontend receipt</span><strong>Waiting</strong></div>
     </section>
 
-    <section class="evidence-layout" aria-label="Analysis evidence">
+    <section class="evidence-layout" aria-labelledby="evidence-heading">
+        <h2 class="visually-hidden" id="evidence-heading">Analysis evidence</h2>
         <div class="evidence-main">
             <details class="evidence-panel scroll-reveal" open>
                 <summary><span><b>Revision impact</b><small>What changed in the screenplay</small></span><span class="summary-state">OPEN</span></summary>

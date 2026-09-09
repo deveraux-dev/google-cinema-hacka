@@ -8,10 +8,10 @@ let autoReviewTimer = null;
 window.currentRequiredClears = [];
 
 const OFFLINE_SCENARIOS = [
-    { id: "S1", title: "Night Stunt Jump & Flash Pot Explosion", heading: "EXT. LOADING DOCK - NIGHT", description: "High-risk action rewrite adding practical pyrotechnics, a 20-foot performer fall, and powered hydraulic lift resets.", expected_severity: "RED", original_text: "[Scene 1] EXT. LOADING DOCK - NIGHT\nThe loading dock is quiet. A security guard walks past holding a flashlight.", revised_text: "[Scene 1] EXT. LOADING DOCK - NIGHT\nThe loading dock is quiet. A security guard walks past holding a flashlight.\nSuddenly, a pyrotechnic flash pot explodes near the dumpster.\nA masked performer jumps from a 20-foot elevated platform down to the concrete, rolling to safety.\nThe crew resets the powered hydraulic lift between takes." },
-    { id: "S2", title: "Confined Space Prop Firearm Shootout", heading: "INT. CARGO HOLD - NIGHT", description: "Interior hull revision introducing blank firearm discharge and restricted egress atmospheric fog.", expected_severity: "STOP", original_text: "[Scene 2] INT. CARGO HOLD - NIGHT\nJohn and Sarah search through the storage crates under low emergency lighting.", revised_text: "[Scene 2] INT. CARGO HOLD - NIGHT\nJohn and Sarah search through the storage crates under low emergency lighting.\nHeavy atmospheric smoke fills the sealed watertight compartment.\nJohn draws a prop revolver loaded with quarter-load blanks and fires two shots toward the hatch." },
-    { id: "S3", title: "Aerial High-Wind Crane Rigging", heading: "EXT. ROOFTOP - NIGHT", description: "Exterior rooftop stunt featuring a 60-foot condor crane flying rig in gusty night weather.", expected_severity: "RED", original_text: "[Scene 3] EXT. ROOFTOP - NIGHT\nElena looks out over the city skyline from behind the perimeter railing.", revised_text: "[Scene 3] EXT. ROOFTOP - NIGHT\nElena steps past the perimeter railing onto an exterior scaffold.\nA 60-foot telescopic condor crane hoists a stunt performer into high-altitude wind gusts over the edge." },
-    { id: "S4", title: "Routine Office Dialogue Revision", heading: "INT. PRODUCTION OFFICE - DAY", description: "Standard character and dialogue adjustments with zero physical risk or hazardous machinery.", expected_severity: "GREEN", original_text: "[Scene 4] INT. PRODUCTION OFFICE - DAY\nDavid reviews the schedule on his laptop while drinking coffee.", revised_text: "[Scene 4] INT. PRODUCTION OFFICE - DAY\nDavid reviews the revised call sheet on his tablet.\nSARAH walks in holding two coffees, setting one on the desk with a smile." }
+    { id: "S1", title: "Night Stunt Jump & Flash Pot Explosion", heading: "EXT. LOADING DOCK - NIGHT", description: "High-risk action rewrite adding practical pyrotechnics, a 20-foot performer fall, and powered hydraulic lift resets.", expected_severity: "RED", risk_tags: ["PYRO", "HEIGHTS", "HYDRAULIC"], original_text: "[Scene 1] EXT. LOADING DOCK - NIGHT\nThe loading dock is quiet. A security guard walks past holding a flashlight.", revised_text: "[Scene 1] EXT. LOADING DOCK - NIGHT\nThe loading dock is quiet. A security guard walks past holding a flashlight.\nSuddenly, a pyrotechnic flash pot explodes near the dumpster.\nA masked performer jumps from a 20-foot elevated platform down to the concrete, rolling to safety.\nThe crew resets the powered hydraulic lift between takes." },
+    { id: "S2", title: "Confined Space Prop Firearm Shootout", heading: "INT. CARGO HOLD - NIGHT", description: "Interior hull revision introducing blank firearm discharge and restricted egress atmospheric fog.", expected_severity: "STOP", risk_tags: ["FIREARMS", "CONFINED SPACE", "ATMOSPHERICS"], original_text: "[Scene 2] INT. CARGO HOLD - NIGHT\nJohn and Sarah search through the storage crates under low emergency lighting.", revised_text: "[Scene 2] INT. CARGO HOLD - NIGHT\nJohn and Sarah search through the storage crates under low emergency lighting.\nHeavy atmospheric smoke fills the sealed watertight compartment.\nJohn draws a prop revolver loaded with quarter-load blanks and fires two shots toward the hatch." },
+    { id: "S3", title: "Aerial High-Wind Crane Rigging", heading: "EXT. ROOFTOP - NIGHT", description: "Exterior rooftop stunt featuring a 60-foot condor crane flying rig in gusty night weather.", expected_severity: "RED", risk_tags: ["HEIGHTS", "RIGGING", "WIND"], original_text: "[Scene 3] EXT. ROOFTOP - NIGHT\nElena looks out over the city skyline from behind the perimeter railing.", revised_text: "[Scene 3] EXT. ROOFTOP - NIGHT\nElena steps past the perimeter railing onto an exterior scaffold.\nA 60-foot telescopic condor crane hoists a stunt performer into high-altitude wind gusts over the edge." },
+    { id: "S4", title: "Routine Office Dialogue Revision", heading: "INT. PRODUCTION OFFICE - DAY", description: "Standard character and dialogue adjustments with zero physical risk or hazardous machinery.", expected_severity: "GREEN", risk_tags: ["DIALOGUE", "LOW PHYSICAL RISK"], original_text: "[Scene 4] INT. PRODUCTION OFFICE - DAY\nDavid reviews the schedule on his laptop while drinking coffee.", revised_text: "[Scene 4] INT. PRODUCTION OFFICE - DAY\nDavid reviews the revised call sheet on his tablet.\nSARAH walks in holding two coffees, setting one on the desk with a smile." }
 ];
 
 // 1. Terminal Log Animation
@@ -250,6 +250,7 @@ function renderScenarioDeck(scenarios) {
                     <span class="${badgeClass}">${escapeHtml(sc.expected_severity)}</span>
                 </div>
                 <div class="scenario-card-title">${escapeHtml(sc.title)}</div>
+                <div class="scenario-risk-tags" aria-label="Scene signals">${(sc.risk_tags || []).map(tag => `<span>${escapeHtml(tag)}</span>`).join('')}</div>
                 <div class="scenario-card-desc">${escapeHtml(sc.description)}</div>
             </button>
         `;
@@ -757,9 +758,23 @@ function getEmbeddedFallbackData() {
     };
 }
 
+function initQuickNavigation() {
+    const links = [...document.querySelectorAll('[data-section-link]')];
+    const targets = links.map(link => document.getElementById(link.dataset.sectionLink)).filter(Boolean);
+    const state = document.getElementById('quick-nav-state');
+    const observer = new IntersectionObserver(entries => {
+        const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visible) return;
+        links.forEach(link => link.classList.toggle('is-active', link.dataset.sectionLink === visible.target.id));
+        if (state) state.textContent = visible.target.id === 'verdict-heading' ? 'DECISION IN VIEW' : visible.target.id === 'technical-proof' ? 'PROOF IN VIEW' : visible.target.id === 'evidence-heading' ? 'EVIDENCE IN VIEW' : 'READY TO REVIEW';
+    }, { rootMargin: '-18% 0px -62% 0px', threshold: [0.1, 0.45] });
+    targets.forEach(target => observer.observe(target));
+}
+
 // App Initialization
 document.addEventListener('DOMContentLoaded', async () => {
     initScrollAnimations();
+    initQuickNavigation();
     await loadProductionContext();
     await loadScenarios();
     switchTab('scenarios');

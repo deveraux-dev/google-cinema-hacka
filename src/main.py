@@ -64,6 +64,7 @@ PRELOADED_SCENARIOS = {
         "heading": "EXT. LOADING DOCK - NIGHT",
         "description": "High-risk action rewrite adding practical pyrotechnics, a 20-foot performer fall, and powered hydraulic lift resets.",
         "expected_severity": "RED",
+        "risk_tags": ["PYRO", "HEIGHTS", "HYDRAULIC"],
         "original_text": """[Scene 1] EXT. LOADING DOCK - NIGHT
 The loading dock is quiet. A security guard walks past holding a flashlight.""",
         "revised_text": """[Scene 1] EXT. LOADING DOCK - NIGHT
@@ -78,6 +79,7 @@ The crew resets the powered hydraulic lift between takes."""
         "heading": "INT. CARGO HOLD - NIGHT",
         "description": "Interior hull revision introducing blank firearm discharge and restricted egress atmospheric fog.",
         "expected_severity": "STOP",
+        "risk_tags": ["FIREARMS", "CONFINED SPACE", "ATMOSPHERICS"],
         "original_text": """[Scene 2] INT. CARGO HOLD - NIGHT
 John and Sarah search through the storage crates under low emergency lighting.""",
         "revised_text": """[Scene 2] INT. CARGO HOLD - NIGHT
@@ -91,6 +93,7 @@ John draws a prop revolver loaded with quarter-load blanks and fires two shots t
         "heading": "EXT. ROOFTOP - NIGHT",
         "description": "Exterior rooftop stunt featuring a 60-foot condor crane flying rig in gusty night weather.",
         "expected_severity": "RED",
+        "risk_tags": ["HEIGHTS", "RIGGING", "WIND"],
         "original_text": """[Scene 3] EXT. ROOFTOP - NIGHT
 Elena looks out over the city skyline from behind the perimeter railing.""",
         "revised_text": """[Scene 3] EXT. ROOFTOP - NIGHT
@@ -103,6 +106,7 @@ A 60-foot telescopic condor crane hoists a stunt performer into high-altitude wi
         "heading": "INT. PRODUCTION OFFICE - DAY",
         "description": "Standard character and dialogue adjustments with zero physical risk or hazardous machinery.",
         "expected_severity": "GREEN",
+        "risk_tags": ["DIALOGUE", "LOW PHYSICAL RISK"],
         "original_text": """[Scene 4] INT. PRODUCTION OFFICE - DAY
 David reviews the schedule on his laptop while drinking coffee.""",
         "revised_text": """[Scene 4] INT. PRODUCTION OFFICE - DAY
