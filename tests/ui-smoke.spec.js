@@ -26,10 +26,10 @@ for (const viewport of [
 
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
     await page.goto(baseUrl, { waitUntil: "networkidle" });
-    await page.getByRole("button", { name: /execute/i }).click();
+    await page.getByRole("button", { name: /run revision safety analysis/i }).click();
     await expect(page.locator("#verdict-badge")).toContainText(/RED|STOP|GREEN|REVIEW/);
     await expect(page.locator("#telemetry-status-text")).toContainText(/COMPLETE/);
-    await expect(page.locator("#chain-frontend")).toContainText(/Rendered JSON/);
+    await expect(page.locator("#chain-frontend")).toContainText(/Rendered .*JSON/);
     await expect(page.locator("#chain-safety")).toContainText(/RED|STOP|GREEN|REVIEW/);
     await expect(page.getByRole("button", { name: /raw backend json/i })).toBeVisible();
 

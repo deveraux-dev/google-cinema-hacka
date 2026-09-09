@@ -53,24 +53,30 @@ function renderAnalysisReceipt(data) {
     const mode = data?.analysis?.mode || 'unknown';
     const severity = data?.safety?.severity || 'UNKNOWN';
     const grafana = data?.grafana || {};
+    const delivery = data?.runtime?.delivery || 'unknown';
+    const isLiveRequest = delivery === 'live_request';
+    const isSnapshot = ['history_snapshot', 'static_snapshot', 'embedded_snapshot'].includes(delivery);
 
-    appendTerminalLine(`> [ANALYSIS] Mode: ${mode}.`, mode === 'google_adk_gemini' ? 'success' : 'warning');
+    appendTerminalLine(`> [ANALYSIS] Mode: ${mode}; delivery: ${delivery}.`, mode === 'google_adk_gemini' && isLiveRequest ? 'success' : 'warning');
     appendTerminalLine(`> [SAFETY_ENGINE] Severity returned by backend: ${severity}.`, severity === 'GREEN' ? 'success' : 'warning');
 
-    if (grafana.published) {
+    if (grafana.published && isLiveRequest) {
         appendTerminalLine(`> [GRAFANA] MCP publish verified by backend. Annotation: ${grafana.annotation_id || 'created'}.`, 'success');
+    } else if (grafana.published && isSnapshot) {
+        appendTerminalLine(`> [GRAFANA] Historical MCP receipt loaded. Annotation: ${grafana.annotation_id || 'created'}.`, 'warning');
     } else {
         appendTerminalLine(`> [GRAFANA] Not published: ${grafana.error || 'No Grafana receipt returned.'}`, 'warning');
     }
 
     if (statusText) {
-        statusText.textContent = mode === 'google_adk_gemini'
+        statusText.textContent = mode === 'google_adk_gemini' && isLiveRequest
             ? 'LIVE ADK ANALYSIS COMPLETE'
-            : 'OFFLINE STRUCTURED FALLBACK COMPLETE';
-        statusText.style.color = mode === 'google_adk_gemini' ? 'var(--green)' : 'var(--gold)';
+            : isSnapshot ? 'DEMO RECEIPT LOADED' : 'OFFLINE STRUCTURED FALLBACK COMPLETE';
+        statusText.style.color = mode === 'google_adk_gemini' && isLiveRequest ? 'var(--green)' : 'var(--gold)';
     }
 
     updateChainStatus(data);
+    updateGrafanaLink(data);
 }
 
 function setChainStep(id, value, state) {
@@ -86,11 +92,14 @@ function updateChainStatus(data) {
     const mode = data?.analysis?.mode || 'unknown';
     const severity = data?.safety?.severity || 'UNKNOWN';
     const grafana = data?.grafana || {};
+    const delivery = data?.runtime?.delivery || 'unknown';
+    const isLiveRequest = delivery === 'live_request';
+    const isSnapshot = ['history_snapshot', 'static_snapshot', 'embedded_snapshot'].includes(delivery);
 
     setChainStep(
         'chain-analysis',
-        mode === 'google_adk_gemini' ? 'Live Gemini' : mode.replaceAll('_', ' '),
-        mode === 'google_adk_gemini' ? 'live' : 'fallback'
+        mode === 'google_adk_gemini' && isLiveRequest ? 'Live Gemini' : isSnapshot ? 'Analysis receipt' : mode.replaceAll('_', ' '),
+        mode === 'google_adk_gemini' && isLiveRequest ? 'live' : 'fallback'
     );
     setChainStep(
         'chain-safety',
@@ -99,10 +108,38 @@ function updateChainStatus(data) {
     );
     setChainStep(
         'chain-grafana',
-        grafana.published ? 'Published' : 'Skipped',
-        grafana.published ? 'live' : 'skipped'
+        grafana.published && isLiveRequest ? 'Published' : grafana.published && isSnapshot ? 'Receipt snapshot' : 'Skipped',
+        grafana.published && isLiveRequest ? 'live' : 'skipped'
     );
-    setChainStep('chain-frontend', 'Rendered JSON', 'live');
+    setChainStep('chain-frontend', isLiveRequest ? 'Rendered live JSON' : 'Rendered snapshot JSON', isLiveRequest ? 'live' : 'fallback');
+}
+
+function updateGrafanaLink(data) {
+    const link = document.getElementById('grafana-nav-link');
+    if (!link) return;
+    const dashboardUrl = data?.grafana?.dashboard_url || '';
+    let usableUrl = '';
+    try {
+        const parsed = new URL(dashboardUrl);
+        const isLocalTarget = ['localhost', '127.0.0.1', '::1'].includes(parsed.hostname);
+        const pageIsLocal = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+        if (!isLocalTarget || pageIsLocal) usableUrl = parsed.href;
+    } catch (_) {
+        usableUrl = '';
+    }
+
+    if (usableUrl) {
+        link.href = usableUrl;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.removeAttribute('aria-disabled');
+        link.classList.remove('is-disabled');
+    } else {
+        link.href = '#';
+        link.removeAttribute('target');
+        link.setAttribute('aria-disabled', 'true');
+        link.classList.add('is-disabled');
+    }
 }
 
 // 2. Tab Switcher
@@ -193,7 +230,7 @@ function selectScenario(id) {
 async function triggerCurrentAnalysis() {
     const btn = document.getElementById('main-run-btn');
     btn.disabled = true;
-    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> Analyzing with Gemini ADK...`;
+    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> Analyzing revision...`;
 
     let payload = {};
     if (currentTab === 'editor') {
@@ -236,7 +273,7 @@ async function triggerCurrentAnalysis() {
         loadLatestData();
     } finally {
         btn.disabled = false;
-        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Execute Gemini ADK Pipeline`;
+        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Run Revision Safety Analysis`;
     }
 }
 
@@ -277,7 +314,7 @@ function renderScreenplayDiff(data) {
         data.diff.forEach(c => {
             diffHtml += `
 <div style="margin-bottom: 16px;">
-    <div class="sp-heading">${data?.scene?.heading || 'SCENE'}</div>
+    <div class="sp-heading">${escapeHtml(data?.scene?.heading || 'SCENE')}</div>
     <div class="sp-action">
         ${c.old_text ? `<span class="diff-del">${escapeHtml(c.old_text)}</span><br><br>` : ''}
         ${c.new_text ? `<span class="diff-add">${escapeHtml(c.new_text)}</span>` : ''}
@@ -409,10 +446,10 @@ function renderHazardTags(data) {
     }
 
     container.innerHTML = data.hazard_tags.map((t, idx) => `
-        <div class="hazard-pill" onclick="showHazardModal(${idx})">
+        <button type="button" class="hazard-pill" onclick="showHazardModal(${idx})">
             <span class="hazard-pill-row">Row ${escapeHtml(String(t.row || '?'))}</span>
             <span>${escapeHtml(t.label || 'Unknown')}</span>
-        </div>
+        </button>
     `).join('');
 }
 
@@ -449,11 +486,11 @@ function renderStatutoryCitations(data) {
     }
 
     container.innerHTML = statutes.map((st, idx) => `
-        <div class="statute-card" onclick="showStatuteModal(${idx})">
+        <button type="button" class="statute-card" onclick="showStatuteModal(${idx})">
             <span class="statute-citation">${escapeHtml(st.citation || 'CITATION')}</span>
             <div class="statute-title">${escapeHtml(st.title || 'Unknown Statute')}</div>
             <div class="statute-excerpt">${escapeHtml(st.statute_text || '')}</div>
-        </div>
+        </button>
     `).join('');
 }
 
@@ -561,6 +598,7 @@ function getEmbeddedFallbackData() {
             structured_output_order: ["DiffOutput", "CascadeOutput", "HazardTagOutput"],
             deterministic_decision_owner: "engine.safety.evaluate_safety"
         },
+        runtime: { delivery: "embedded_snapshot", api: "none", json_contract: "v1" },
         scene: {
             id: "S1",
             heading: "EXT. LOADING DOCK - NIGHT",
@@ -610,6 +648,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadProductionContext();
     await loadScenarios();
     await loadLatestData();
+});
+
+document.getElementById('grafana-nav-link')?.addEventListener('click', (event) => {
+    if (event.currentTarget.getAttribute('aria-disabled') === 'true') event.preventDefault();
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeModal();
+});
+
+document.getElementById('detail-modal')?.addEventListener('click', (event) => {
+    if (event.target.id === 'detail-modal') closeModal();
 });
 
 // Scroll Reveal Animations

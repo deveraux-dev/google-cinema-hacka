@@ -2,17 +2,18 @@ import os
 import sys
 import json
 import asyncio
+import sqlite3
 from typing import Optional
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 
 # Ensure we can import from src
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from agent.pipeline import RevisionPipeline
+from agent.pipeline import MODEL_NAME, RevisionPipeline, has_gemini_credentials
 from engine.safety import evaluate_safety
 from engine.grafana_client import publish_to_grafana
 from engine.db import log_run, get_latest_run
@@ -22,6 +23,7 @@ load_dotenv()
 app = FastAPI(title="Universal CallSheet (UCS) - Production Safety Command Center")
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PUBLIC_DIR = os.path.join(REPO_ROOT, "public")
+WRITE_STATIC_OUTPUT = os.environ.get("UCS_WRITE_STATIC_OUTPUT", "0") == "1"
 
 # Production Metadata from samples/production.plan.json
 PRODUCTION_CONTEXT = {
@@ -108,11 +110,32 @@ SARAH walks in holding two coffees, setting one on the desk with a smile."""
 }
 
 class AnalyzeRequest(BaseModel):
-    scenario_id: Optional[str] = "S1"
-    scene_id: Optional[str] = "S1"
-    scene_heading: Optional[str] = "EXT. LOADING DOCK - NIGHT"
-    original_text: Optional[str] = None
-    revised_text: Optional[str] = None
+    scenario_id: Optional[str] = Field(default="S1", max_length=80)
+    scene_id: Optional[str] = Field(default="S1", max_length=80)
+    scene_heading: Optional[str] = Field(default="EXT. LOADING DOCK - NIGHT", max_length=200)
+    original_text: Optional[str] = Field(default=None, max_length=25_000)
+    revised_text: Optional[str] = Field(default=None, max_length=25_000)
+
+
+@app.get("/api/health")
+async def get_health():
+    grafana_remote = bool(os.environ.get("GRAFANA_MCP_URL"))
+    grafana_local = bool(os.environ.get("GRAFANA_URL"))
+    return {
+        "status": "ok",
+        "analysis": {
+            "provider": "google_adk_gemini",
+            "configured": has_gemini_credentials(),
+            "model": MODEL_NAME,
+            "fallback_available": True,
+        },
+        "safety": {"engine": "deterministic_python", "configured": True},
+        "grafana": {
+            "configured": grafana_remote or grafana_local,
+            "transport": "streamable_http" if grafana_remote else "stdio" if grafana_local else "disabled",
+        },
+        "frontend": {"json_contract": "v1", "same_origin_api": True},
+    }
 
 @app.get("/api/context")
 async def get_production_context():
@@ -166,16 +189,22 @@ async def analyze_scene(req: AnalyzeRequest):
     # Step 4: Compile Final Production Record
     final_output = {
         "project": "Universal CallSheet",
-        "tagline": "Deterministic script revision cascades and offline safety governance for film production.",
+        "tagline": "Structured script revision analysis and deterministic safety governance for film production.",
         "production_context": PRODUCTION_CONTEXT,
         "jurisdiction": "Alberta OHS Code (AR 191/2021) / Section 7(4)(c)",
-        "model_primary": os.environ.get("GEMINI_MODEL", "gemini-3.7-flash"),
-        "model_reviewer": "gemini-3.1-flash", 
+        "model_primary": MODEL_NAME,
         "analysis": {
             "mode": analysis_mode,
             "note": analysis_note,
+            "fallback_reason": adk_result.get("fallback_reason"),
+            "provider_attempted": adk_result.get("provider_attempted", False),
             "structured_output_order": ["DiffOutput", "CascadeOutput", "HazardTagOutput"],
             "deterministic_decision_owner": "engine.safety.evaluate_safety"
+        },
+        "runtime": {
+            "delivery": "live_request",
+            "api": "fastapi",
+            "json_contract": "v1",
         },
         "scene": {
             "id": scene_id,
@@ -190,27 +219,49 @@ async def analyze_scene(req: AnalyzeRequest):
         "grafana": grafana_result
     }
     
-    # Log to SQLite
-    log_run(final_output)
-    
-    # Write to output.json for static caching
-    os.makedirs(PUBLIC_DIR, exist_ok=True)
-    with open(os.path.join(PUBLIC_DIR, "output.json"), "w") as f:
-        json.dump(final_output, f, indent=2)
+    # Persistence is best effort. Vercel's deployed bundle is read-only and its /tmp
+    # filesystem is ephemeral, so the live response must never depend on either write.
+    try:
+        log_run(final_output)
+    except (OSError, sqlite3.Error) as exc:
+        print(f"Run history unavailable: {exc.__class__.__name__}")
+
+    if WRITE_STATIC_OUTPUT:
+        try:
+            os.makedirs(PUBLIC_DIR, exist_ok=True)
+            with open(os.path.join(PUBLIC_DIR, "output.json"), "w", encoding="utf-8") as output_file:
+                json.dump(final_output, output_file, indent=2)
+        except OSError as exc:
+            print(f"Static output cache unavailable: {exc.__class__.__name__}")
         
     return final_output
 
 @app.get("/api/latest")
 async def get_latest():
-    latest = get_latest_run()
+    try:
+        latest = get_latest_run()
+    except (OSError, sqlite3.Error):
+        latest = None
+    if latest:
+        latest["runtime"] = {
+            "delivery": "history_snapshot",
+            "api": "fastapi",
+            "json_contract": "v1",
+        }
+        return latest
     if not latest:
         # Fallback to output.json
         try:
-            with open(os.path.join(PUBLIC_DIR, "output.json"), "r") as f:
-                return json.load(f)
+            with open(os.path.join(PUBLIC_DIR, "output.json"), "r", encoding="utf-8") as f:
+                snapshot = json.load(f)
+                snapshot["runtime"] = {
+                    "delivery": "static_snapshot",
+                    "api": "fastapi",
+                    "json_contract": "v1",
+                }
+                return snapshot
         except Exception:
             raise HTTPException(status_code=404, detail="No historical runs found.")
-    return latest
 
 # Mount static files (this serves public/index.html on /)
 app.mount("/", StaticFiles(directory=PUBLIC_DIR, html=True), name="public")

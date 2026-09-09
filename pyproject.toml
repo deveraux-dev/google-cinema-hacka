@@ -18,6 +18,9 @@ filterwarnings = [
     "ignore:Using `httpx` with `starlette.testclient` is deprecated"
 ]
 
+[tool.vercel]
+entrypoint = "src.main:app"
+
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"

@@ -60,6 +60,12 @@ This prints a sanitized configuration and redacts secrets. A dashboard publish
 command should be documented only after it is verified against a running Grafana
 instance through the official MCP server.
 
+For Vercel, host the official `mcp-grafana` server separately with Streamable HTTP
+and configure `GRAFANA_MCP_URL`, `GRAFANA_MCP_SERVER_TOKEN` (when enabled),
+`GRAFANA_PUBLIC_URL`, and `GRAFANA_MCP_TIMEOUT_SECONDS` as server-side Vercel
+variables. The repository supports this transport but does not claim a hosted MCP
+receipt until one is supplied.
+
 Cognitive load rules for the setup itself:
 - one question per screen, one document named per question
 - upload the document, or type the one field, never both

@@ -28,7 +28,7 @@ One concrete workflow:
 | Backend API | Verified locally | `GET /api/context`, `GET /api/scenarios`, `POST /api/analyze`, and `GET /api/latest` import and run. |
 | Structured AI analysis | Supported, fallback-safe | `google-adk` imports after dependency install; no Gemini key was present in this shell, so runtime used `offline_structured_fallback`. |
 | Safety engine | Tested locally | `engine.safety.evaluate_safety` returns deterministic severity and required clears from hazard rows. |
-| Grafana MCP | Verified locally | Grafana OSS `13.0.2` was healthy on `localhost:3000`; `uvx mcp-grafana` `v1.3.0` created annotation ids `26-29` using local basic auth. |
+| Grafana MCP | Verified locally; hosted transport supported | Grafana OSS `13.0.2` was healthy on `localhost:3000`; official `uvx mcp-grafana` `v1.3.0` created local annotations, including ids `30-36`. Streamable HTTP is supported by the client but has no hosted endpoint in this repo. |
 | Frontend/backend/Grafana receipt | Verified locally | Browser loaded backend JSON and displayed `Analysis: offline structured fallback`, `Safety Engine: RED`, `Grafana MCP: Published`, `Frontend JSON: Rendered JSON`. |
 | Test suite | Passing | `python -m pytest -q` passes on this branch after the latest fixes. |
 
@@ -81,6 +81,27 @@ GRAFANA_SERVICE_ACCOUNT_TOKEN=<service account token>
 GRAFANA_MCP_COMMAND=uvx
 GRAFANA_MCP_ARGS=mcp-grafana
 ```
+
+For Vercel, run the official `mcp-grafana` server separately with Streamable HTTP
+and set these server-side variables. Never expose them as `NEXT_PUBLIC_*` or other
+browser variables:
+
+```text
+GRAFANA_MCP_URL=https://<hosted-mcp-service>/mcp
+GRAFANA_MCP_SERVER_TOKEN=<server-auth-token-if-enabled>
+GRAFANA_PUBLIC_URL=https://<grafana-host>
+GRAFANA_MCP_TIMEOUT_SECONDS=20
+```
+
+Vercel detects the FastAPI application through `src.main:app` in `pyproject.toml`
+and serves the HUD from `public/` under the same origin. Add `GEMINI_API_KEY` and
+the Grafana variables in Vercel Project Settings as encrypted server environment
+variables. `GRAFANA_MCP_URL` is supported, but no hosted MCP service is claimed as
+live until its URL and receipt are supplied.
+
+The deployed function does not write the repository's `public/output.json`; the
+live POST response is the source of truth. SQLite history is best-effort and
+ephemeral in serverless execution. The UI labels cached data as a snapshot.
 
 Local Grafana basic auth is also supported by `mcp-grafana`:
 

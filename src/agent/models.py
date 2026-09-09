@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 class Change(BaseModel):
     scene_id: str = Field(description="The ID of the scene that changed, e.g., 'S1'")
@@ -18,9 +18,17 @@ class CascadeOutput(BaseModel):
     deltas: list[DepartmentDelta] = Field(description="List of departmental impacts caused by the script changes")
 
 class HazardTag(BaseModel):
-    row: int = Field(description="The jurisdiction hazard row number (1-13) from the hazard ladder")
+    row: int = Field(ge=1, le=13, description="The jurisdiction hazard row number (1-13) from the hazard ladder")
     label: str = Field(description="Short label of the hazard, e.g., 'pyro', 'heights', 'loto'")
     detail: str = Field(description="Specific detail about the hazard as written in the script")
+
+    @field_validator("label", "detail")
+    @classmethod
+    def reject_blank_text(cls, value: str) -> str:
+        value = value.strip()
+        if not value:
+            raise ValueError("hazard label and detail must not be blank")
+        return value
 
 class HazardTagOutput(BaseModel):
     scene_id: str = Field(description="The ID of the scene evaluated")

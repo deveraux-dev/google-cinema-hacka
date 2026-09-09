@@ -207,6 +207,17 @@ body {
     border-color: var(--ink);
 }
 
+.grafana-nav-btn.is-disabled {
+    color: var(--muted);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.grafana-nav-btn.is-disabled:hover {
+    background: transparent;
+    border-color: var(--line-strong);
+}
+
 .grafana-nav-btn:focus-visible,
 .tab-btn:focus-visible,
 .run-pipeline-btn:focus-visible,
@@ -630,6 +641,11 @@ body {
     background: var(--red-soft);
 }
 
+.chain-step.review {
+    border-color: var(--amber);
+    background: var(--amber-soft);
+}
+
 /* Results Layout Grid */
 .results-layout {
     display: grid;
@@ -952,6 +968,8 @@ body {
     align-items: center;
     gap: 8px;
     min-height: 44px;
+    font-family: inherit;
+    text-align: left;
 }
 
 .hazard-pill:hover {
@@ -985,6 +1003,9 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
+    font-family: inherit;
+    text-align: left;
 }
 
 .statute-card:hover {

@@ -1,13 +1,21 @@
 import sqlite3
 import json
 import os
-from datetime import datetime
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+DEFAULT_DB_PATH = (
+    os.path.join(os.environ.get("TEMP", "/tmp"), "ucs_history.db")
+    if os.environ.get("VERCEL")
+    else os.path.join(REPO_ROOT, "data", "ucs_history.db")
+)
 
-DB_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data", "ucs_history.db")
+
+def get_db_path() -> str:
+    return os.environ.get("UCS_DB_PATH", DEFAULT_DB_PATH)
 
 def get_connection():
-    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
-    conn = sqlite3.connect(DB_PATH)
+    db_path = get_db_path()
+    os.makedirs(os.path.dirname(db_path), exist_ok=True)
+    conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     return conn
 

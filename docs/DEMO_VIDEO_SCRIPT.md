@@ -37,11 +37,10 @@
 
 ---
 
-### Segment 4: Live Grafana MCP Wall (1:40 - 2:20)
+### Segment 4: Grafana MCP Wall (1:40 - 2:20)
 * **Visual on Screen:** Switching browser tab to Grafana dashboard (`http://localhost:3000/d/ucs-safety-wall`). Show the newly added annotation badge appearing on the timeline, detailing the incident and required clears.
 * **Voiceover:**
-  > "Now, the Grafana integration. Through the official Grafana Model Context Protocol (MCP) server, our agent writes this incident live to the stage's Grafana Incident Wall.
-  > Stage managers and safety supervisors see the real-time annotation instantly on their production monitoring board, ensuring nobody calls 'Action!' until every mandatory clear is verified."
+  > "Now, the Grafana integration. Through the official Grafana Model Context Protocol (MCP) server, the backend publishes this safety result as an annotation. This local receipt proves the write path; a hosted deployment uses the same server over authenticated Streamable HTTP."
 
 ---
 
