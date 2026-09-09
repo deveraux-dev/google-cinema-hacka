@@ -617,6 +617,16 @@ async function loadLatestData() {
             const data = await staticResp.json();
             renderDashboard(data);
             renderAnalysisReceipt(data);
+            
+            // We loaded static data, but is the API alive? Let's check health.
+            try {
+                const health = await fetch('/api/health');
+                if (health.ok) {
+                    setNetworkStatus(true);
+                    return;
+                }
+            } catch (he) {}
+            
             setNetworkStatus(false);
         } catch(err) {
             console.error("Total failure loading static fallback data", err);
