@@ -1307,7 +1307,14 @@ button, a, summary { min-height: 44px; }
 .grafana-nav-btn { min-height: 36px; padding: 6px 10px; border-color: var(--line-strong); border-radius: 4px; font-size: .72rem; }
 .nav-icon { color: var(--blue); font-size: 1rem; }
 
-.main-container { max-width: 1440px; padding: 32px clamp(16px, 4vw, 48px) 56px; }
+.main-container { position: relative; isolation: isolate; max-width: 1440px; padding: 32px clamp(16px, 4vw, 48px) 56px; }
+.main-container > section { position: relative; z-index: 1; }
+.stage-backdrop { position: absolute; inset: 0 0 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.stage-plate { position: absolute; display: block; width: clamp(260px, 31vw, 470px); height: clamp(210px, 24vw, 360px); border: 1px solid rgba(142, 213, 255, .13); border-radius: 18px; background: rgba(32, 35, 41, .26); box-shadow: 20px 24px 0 rgba(32, 35, 41, .16), inset 0 0 0 1px rgba(255,255,255,.025); will-change: transform; transition: transform .12s linear; }
+.stage-plate::after { position: absolute; inset: 14px; border: 1px solid rgba(86, 229, 169, .08); border-radius: 12px; content: ''; }
+.stage-plate-one { top: 280px; right: -110px; transform: translate3d(0, var(--plate-y, 0), 0) rotate(7deg); }
+.stage-plate-two { top: 960px; right: 7%; transform: translate3d(0, var(--plate-y, 0), 0) rotate(-5deg); }
+.stage-plate-three { top: 1780px; left: -130px; transform: translate3d(0, var(--plate-y, 0), 0) rotate(4deg); }
 .hero-strip { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; padding: 10px 0 30px; }
 .eyebrow, .context-label, .meta-label { margin: 0 0 7px; color: var(--muted); font: 600 .65rem var(--font-mono); letter-spacing: .09em; text-transform: uppercase; }
 .hero-strip h1 { max-width: 700px; margin: 0; font-size: clamp(2rem, 4vw, 3.3rem); line-height: 1.05; letter-spacing: 0; }
@@ -1472,6 +1479,7 @@ footer { margin-top: 0; padding: 24px 16px; background: var(--surface-quiet); bo
     .quick-nav { top: 104px; }
     .quick-nav-state { display: none; }
     .evidence-rail { position: static; }
+    .stage-backdrop { display: none; }
     .nav-controls { width: 100%; justify-content: flex-start; }
     .hero-strip, .section-heading, .review-action-row { align-items: stretch; flex-direction: column; }
     .hero-strip { gap: 18px; padding-top: 4px; }

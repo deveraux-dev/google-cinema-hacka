@@ -778,18 +778,30 @@ function updateScrollProgress() {
     progress.style.transform = `scaleX(${scrollable > 0 ? Math.min(1, window.scrollY / scrollable) : 0})`;
 }
 
+function updateStagePlates() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.querySelectorAll('[data-parallax]').forEach(plate => {
+        const depth = Number(plate.dataset.parallax || 0);
+        plate.style.setProperty('--plate-y', `${window.scrollY * depth}px`);
+    });
+}
+
 // App Initialization
 document.addEventListener('DOMContentLoaded', async () => {
     initScrollAnimations();
     initQuickNavigation();
     updateScrollProgress();
+    updateStagePlates();
     await loadProductionContext();
     await loadScenarios();
     switchTab('scenarios');
     await initializeResults();
 });
 
-window.addEventListener('scroll', updateScrollProgress, { passive: true });
+window.addEventListener('scroll', () => {
+    updateScrollProgress();
+    updateStagePlates();
+}, { passive: true });
 window.addEventListener('resize', updateScrollProgress);
 
 document.getElementById('grafana-nav-link')?.addEventListener('click', (event) => {
