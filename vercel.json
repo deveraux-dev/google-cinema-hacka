@@ -1,4 +1,5 @@
 {
+  "name": "universal-callsheet",
   "version": 2,
   "builds": [
     {

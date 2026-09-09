@@ -23,3 +23,4 @@ test-results/
 CLAUDE.md
 .claude/
 *.db
+.vercel
