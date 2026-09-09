@@ -72,3 +72,17 @@ test("auto-review analyzes a newly selected scenario", async ({ page }) => {
   await expect(page.locator("#verdict-badge")).toContainText(/STOP/);
   await expect(page.locator("#term-logs")).toContainText(/Auto-review selected this revision/);
 });
+
+test("workspace navigation and stage depth remain usable", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(baseUrl, { waitUntil: "networkidle" });
+  await expect(page.locator(".quick-nav-link")).toHaveCount(4);
+  await expect(page.locator(".stage-plate")).toHaveCount(3);
+  await page.locator('[data-section-link="technical-proof"]').click();
+  await expect(page.locator("#technical-proof")).toBeInViewport();
+  await page.evaluate(() => window.scrollTo(0, 0));
+  const plateY = await page.locator(".stage-plate-one").evaluate((node) => getComputedStyle(node).getPropertyValue("--plate-y"));
+  expect(plateY).toBeTruthy();
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  expect(overflow).toBeLessThanOrEqual(1);
+});
