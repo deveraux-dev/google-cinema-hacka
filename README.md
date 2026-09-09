@@ -21,10 +21,14 @@ For evaluators and safety professionals: watch the short 3-minute demo to see ex
 
 <div align="center">
   <a href="#">
-    <img src="https://via.placeholder.com/800x450/1a1a1a/ffffff?text=Universal+CallSheet+Demo+Video" alt="Watch the UCS live tech demo" width="80%">
+    <picture>
+      <img src="./assets/ucs-logo.jpg" width="120" alt="UCS Logo">
+    </picture>
+    <br>
+    <b>▶ Watch the 3-Minute Demo Video</b>
   </a>
   <br>
-  <b>Universal CallSheet Demo Video</b>
+  <i>Click above to see UCS detect a dangerous script revision and halt the entire stage in real time.</i>
 </div>
 <br/>
 
