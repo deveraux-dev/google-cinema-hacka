@@ -1,64 +1,114 @@
 # Universal CallSheet (UCS)
 
-## What it does
-AI extracts script changes into hazard rows, deterministic Python rules decide if camera can roll, and Grafana publishes the receipt—all visible in a single-screen production HUD.
+> **AI can identify what changed in a screenplay; deterministic safety rules decide whether the camera may roll; Grafana receives the receipt only after that gate.**
+
+UCS is a proof-first production safety workflow for 1st ADs and safety leads. It turns a last-minute scene revision into a clear decision, required sign-offs, and an auditable result.
 
 ## Why it matters
-Film script rewrites happen faster than safety paperwork can keep up. When high-risk hazards (pyrotechnics, heights, weapons) are added at the last minute without clearing the proper departments, people get hurt. A manual safety gap on a busy set is a critical liability.
+
+Film revisions can change physical work faster than safety paperwork changes. UCS makes the change visible before the next take and keeps final safety authority in deterministic rules and designated personnel.
+
+## The Judge Path
+
+1. Select the dangerous S1 or S2 revision, or paste a custom scene.
+2. Auto-review can submit the selected revision without another click.
+3. Google ADK/Gemini produces structured analysis in the order `DiffOutput -> CascadeOutput -> HazardTagOutput`.
+4. The deterministic Python safety engine owns `GREEN`, `RED`, or `STOP`.
+5. Only the post-gate result is sent to Grafana MCP, with a visible annotation receipt when configured.
+6. The HUD shows changed text, decision, next action, evidence, JSON, and provenance.
+
+The important demo behavior is the refusal: a firearm or other critical hazard reaches `STOP` before a camera-roll decision can be treated as clear.
+
+## What is autonomous
+
+Auto-review is bounded automation, not unrestricted agent authority. With the toggle on, selecting a scenario triggers the existing `/api/analyze` workflow. The backend still validates the structured result, runs deterministic safety rules, and publishes Grafana only after the gate. Users can turn Auto-review off and run a review manually.
 
 ## How it works
-1. **LLM Extraction:** Google ADK and Gemini extract structured `DiffOutput`, `CascadeOutput`, and `HazardTagOutput` from the script revision.
-2. **Deterministic Gate:** The Python safety engine enforces Alberta OHS Code AR 191/2021 to set a final `GREEN`, `STOP`, or `RED` severity. The LLM does *not* make the safety decision.
-3. **Sponsor Integration:** Only verified hazard tags and severities are routed to the Grafana MCP server for annotation.
-4. **Reader Output:** The production HUD displays the raw JSON payload, the determinisic reason, required clearances, and the Grafana receipt in one path.
+
+1. **Structured AI analysis:** Google ADK and Gemini extract `DiffOutput`, `CascadeOutput`, and `HazardTagOutput`.
+2. **Deterministic gate:** Python safety rules enforce the encoded Alberta OHS hazard matrix. The model does not decide whether camera may roll.
+3. **Sponsor integration:** Only verified hazard tags and severity are routed to the Grafana MCP adapter.
+4. **Proof reader:** The HUD displays the revision diff, hazards, clearances, statutory basis, JSON, chain, and receipt state.
+
+## Claim Ledger
+
+| Claim | Status | Evidence |
+| --- | --- | --- |
+| Structured screenplay analysis | Tested / fallback-safe | Google ADK pipeline and schema tests; offline fallback is labeled in the HUD. |
+| Safety decision | Tested | `engine.safety.evaluate_safety` is the decision owner; refusal paths are covered by tests. |
+| Auto-review | Tested | UI and API tests verify `trigger: auto_review` and the automatic S2 `STOP` path. |
+| Local Grafana MCP | Verified locally | Official `mcp-grafana` stdio transport created real annotations during local verification. |
+| Hosted Grafana MCP | Supported / unverified | Streamable HTTP configuration exists, but no hosted MCP receipt is claimed here. |
+| Vercel runtime | Supported / environment-dependent | FastAPI import and Vercel-safe paths are implemented; hosted MCP remains an external dependency. |
 
 ## Built with
-- **Google ADK & Gemini 3.7 Flash:** For structured data extraction.
-- **Python & FastAPI:** For the deterministic safety gate and backend API.
-- **Grafana MCP:** For publishing safety annotations.
-- **HTML/CSS/JS:** Vanilla frontend for the HUD.
-- **Vercel:** Live serverless deployment.
 
-## How to run
+- Google ADK and Gemini for structured extraction.
+- Python, FastAPI, Pydantic, and deterministic safety rules.
+- Official Grafana MCP over local stdio or hosted Streamable HTTP.
+- Vanilla HTML/CSS/JavaScript proof reader.
+- Vercel-compatible FastAPI routing.
 
-### Cloud Deployment
-The live project is hosted on Vercel at [https://universal-callsheet.vercel.app](https://universal-callsheet.vercel.app). 
-The Vercel environment requires these exact variables:
-```text
-GEMINI_API_KEY=<your key>
-GEMINI_MODEL=gemini-3.7-flash
-GRAFANA_MCP_SERVER_TOKEN=<server-auth-token>
-GRAFANA_PUBLIC_URL=https://<grafana-host>
-GRAFANA_MCP_URL=https://<hosted-mcp-service>/mcp
-```
+## Run locally
 
-### Local Development
 ```powershell
 python -m pip install -e .
-python src/main.py
+python -m uvicorn src.main:app --host 127.0.0.1 --port 8003
 ```
-Open `http://localhost:8000`.
 
-To run the UI test suite:
+Open `http://127.0.0.1:8003/`.
+
+Run backend tests:
+
+```powershell
+python -m pytest -q
+```
+
+Run browser tests with installed Chrome:
+
 ```powershell
 npm install
 $env:PLAYWRIGHT_CHROME_PATH='C:\Program Files\Google\Chrome\Application\chrome.exe'
-$env:BASE_URL='http://127.0.0.1:8000/'
+$env:BASE_URL='http://127.0.0.1:8003/'
 npm run test:ui
 ```
 
-## Proof/receipts
-- **Hosted URL:** [https://universal-callsheet.vercel.app](https://universal-callsheet.vercel.app)
-- **JSON Payload:** The raw ADK extraction and deterministic gate output is viewable directly in the live HUD by clicking `<> RAW JSON`.
-- **Test Results:** `python -m pytest -q` passes locally.
+## Two-Minute Demo
+
+1. Open the scenario deck and leave **Auto-review ON**.
+2. Select S2, the confined-space firearm revision.
+3. Show the automatic chain: structured analysis, safety engine, Grafana status, frontend receipt.
+4. Point to `STOP`, the reason, and pending clearances.
+5. Open revision evidence and raw JSON.
+6. Explain the boundary: Gemini interprets the revision; Python decides the safety state; Grafana records the post-gate receipt.
+
+## Environment
+
+Gemini:
+
+```text
+GEMINI_API_KEY=<server-side key>
+GEMINI_MODEL=gemini-3.7-flash
+```
+
+Hosted Grafana MCP:
+
+```text
+GRAFANA_MCP_URL=https://<hosted-mcp-service>/mcp
+GRAFANA_MCP_SERVER_TOKEN=<server-side token>
+GRAFANA_PUBLIC_URL=https://<grafana-host>
+GRAFANA_MCP_TIMEOUT_SECONDS=20
+```
+
+Never expose these variables as browser or `NEXT_PUBLIC_*` variables.
 
 ## Limitations
-- **Grafana Endpoint:** The live Vercel environment uses a placeholder URL for the Grafana MCP endpoint until a real public Grafana instance is provisioned. The backend acknowledges the configuration but cannot successfully publish annotations to the placeholder.
-- **Persistence:** Vercel serverless execution is ephemeral. Local SQLite history is not maintained between API calls in production; the live POST response is the source of truth.
-- **Jurisdiction:** Only Alberta OHS Code (AR 191/2021) rules are encoded.
 
-## Compliance
-- **Net-new:** The frontend UI, FastAPI backend, deterministic rules engine, and ADK pipeline integration were created for this hackathon.
-- **Dependencies:** Google ADK, Gemini, Grafana MCP, FastAPI, Playwright.
-- **Excluded:** User authentication, historical database retrieval in production, and actual external messaging routing.
-- **Claims:** UCS is a hackathon prototype for safety workflow assistance. It is not legal advice and does not replace production safety leadership, qualified workers, or regulators.
+- Local stdio Grafana MCP is verified. Hosted MCP is supported but remains unverified until a real hosted endpoint returns a receipt.
+- Vercel serverless SQLite history is ephemeral; the live POST response is the source of truth.
+- Only the encoded Alberta OHS hazard rules are covered.
+- UCS is an assistive hackathon prototype, not legal advice or a replacement for qualified safety leadership or regulators.
+
+## Compliance and provenance
+
+This repository contains new UCS implementation work. It does not copy private implementation code, credentials, receipts, or assets from other projects. The transferable pattern is the proof architecture: AI proposes or extracts, deterministic code gates, the external tool receives only cleared output, and the UI shows the receipt.
