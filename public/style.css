@@ -36,15 +36,23 @@
     --gold: var(--amber);
     --gold-bg: var(--amber-soft);
     --gold-glow: transparent;
+    --green-bg: var(--green-soft);
+    --red-bg: var(--red-soft);
+    --surface-subtle: var(--surface-quiet);
 
-    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-mono: 'Courier Prime', 'Courier New', Courier, monospace;
+    --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: "Courier New", Courier, monospace;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+html,
 body {
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    max-width: 100%;
+}
+
+body {
+    font-family: var(--font-sans);
     background-color: var(--canvas);
     color: var(--ink);
     line-height: 1.5;
@@ -90,6 +98,26 @@ body {
     display: flex;
     align-items: center;
     gap: 14px;
+    min-width: 0;
+}
+
+.brand-title,
+.brand-sub,
+.banner-value,
+.scenario-id-tag,
+.scenario-card-title,
+.scenario-card-desc,
+.telemetry-status,
+.term-line,
+.card-title,
+.card-sub,
+.verdict-reason,
+#gate-title,
+#gate-desc,
+.clear-text,
+.statute-title,
+.statute-excerpt {
+    overflow-wrap: anywhere;
 }
 
 .brand-badge {
@@ -106,7 +134,7 @@ body {
 .brand-title {
     font-size: 1.25rem;
     font-weight: 900;
-    letter-spacing: -0.5px;
+    letter-spacing: 0;
     display: block;
     background: linear-gradient(to right, #ffffff, #a1a1aa);
     -webkit-background-clip: text;
@@ -123,6 +151,8 @@ body {
     display: flex;
     align-items: center;
     gap: 16px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
 .status-pill {
@@ -169,11 +199,25 @@ body {
     font-size: 0.85rem;
     font-weight: 750;
     transition: background 0.2s;
+    min-height: 44px;
 }
 
 .grafana-nav-btn:hover {
     background: var(--surface);
     border-color: var(--ink);
+}
+
+.grafana-nav-btn:focus-visible,
+.tab-btn:focus-visible,
+.run-pipeline-btn:focus-visible,
+.scenario-card:focus-visible,
+.json-trace-btn:focus-visible,
+.clear-row:focus-visible,
+.hazard-pill:focus-visible,
+.statute-card:focus-visible,
+.modal-close:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 3px;
 }
 
 /* 2. Callsheet Production Telemetry Ribbon */
@@ -185,6 +229,8 @@ body {
     background: var(--surface-quiet);
     border-bottom: 1px solid var(--border);
     font-size: 0.82rem;
+    width: 100%;
+    min-width: 0;
 }
 
 .banner-item {
@@ -197,6 +243,8 @@ body {
     border: 1px solid var(--border);
     border-left: 3px solid var(--line-strong);
     box-shadow: 2px 2px 0 var(--line);
+    min-width: 0;
+    max-width: 100%;
 }
 
 /* Psychological Color Coding for Banner Items */
@@ -267,6 +315,7 @@ body {
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.2s;
+    min-height: 44px;
 }
 
 .tab-btn.active {
@@ -292,6 +341,7 @@ body {
     border-radius: 4px;
     cursor: pointer;
     transition: opacity 0.2s;
+    min-height: 44px;
 }
 
 .run-pipeline-btn:hover {
@@ -325,12 +375,16 @@ body {
     flex-direction: column;
     gap: 8px;
     box-shadow: var(--shadow);
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    width: 100%;
+    min-height: 150px;
 }
 
 .scenario-card:hover {
     border-color: #525266;
     background: var(--surface-hover);
-    transform: translateY(-2px);
 }
 
 .scenario-card.active {
@@ -442,6 +496,7 @@ body {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--line);
+    gap: 12px;
 }
 
 .telemetry-title {
@@ -475,6 +530,7 @@ body {
     font-weight: 700;
     color: var(--text-dim);
     letter-spacing: 1px;
+    min-width: 0;
 }
 
 .json-trace-btn {
@@ -513,11 +569,26 @@ body {
     line-height: 1.5;
 }
 
+.term-success {
+    color: var(--green);
+}
+
+.term-warning {
+    color: var(--gold);
+}
+
 /* Results Layout Grid */
 .results-layout {
     display: grid;
     grid-template-columns: 1.15fr 0.85fr;
     gap: 24px;
+    min-width: 0;
+}
+
+.col-left,
+.col-right,
+.hud-card {
+    min-width: 0;
 }
 
 /* Generic HUD Card */
@@ -547,6 +618,21 @@ body {
 
 .card-icon {
     font-size: 1.4rem;
+}
+
+.card-icon-text {
+    min-width: 44px;
+    min-height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    background: var(--surface-quiet);
+    color: var(--blue);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 800;
 }
 
 .card-title {
@@ -583,6 +669,7 @@ body {
     color: #e4e4e7;
     white-space: pre-wrap;
     overflow-x: auto;
+    overflow-wrap: anywhere;
 }
 
 .sp-heading {
@@ -711,7 +798,18 @@ body {
 }
 
 .gate-icon {
-    font-size: 1.8rem;
+    min-width: 56px;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: var(--ink);
+    background: var(--surface);
 }
 
 #gate-title {
@@ -800,6 +898,7 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    min-height: 44px;
 }
 
 .hazard-pill:hover {
@@ -838,7 +937,6 @@ body {
 .statute-card:hover {
     border-color: #4a4a60;
     background: #121218;
-    transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
@@ -964,11 +1062,55 @@ footer {
         gap: 12px;
         padding: 14px 20px;
     }
+    .nav-brand {
+        width: 100%;
+    }
     .callsheet-banner {
         padding: 12px 20px;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
     .main-container {
         padding: 16px;
+    }
+    .deck-controls,
+    .tab-group,
+    .run-pipeline-btn,
+    .nav-controls,
+    .grafana-nav-btn {
+        width: 100%;
+    }
+    .tab-group {
+        flex-direction: column;
+    }
+    .tab-btn,
+    .run-pipeline-btn,
+    .grafana-nav-btn {
+        justify-content: center;
+    }
+    .card-header,
+    .verdict-header,
+    .telemetry-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .telemetry-header > div {
+        width: 100%;
+        min-width: 0;
+        flex-wrap: wrap;
+    }
+    .dept-card {
+        flex-direction: column;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
     }
 }

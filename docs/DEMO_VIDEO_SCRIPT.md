@@ -19,7 +19,7 @@
 * **Visual on Screen:** Terminal / IDE showing the script diff: Scene 1 changes from a quiet loading dock to adding a pyrotechnic flash pot, a 20-foot jump, and a hydraulic lift. Running `python src/main.py` or clicking "Run New Analysis Pipeline" in the web UI.
 * **Voiceover:**
   > "Watch what happens when a revision is introduced. In Scene 1, a script rewrite adds an explosion near a dumpster, a 20-foot platform jump, and a hydraulic lift reset between takes.
-  > We feed this into our Google ADK pipeline powered by Gemini 3.7 Flash. 
+  > We feed this into our Google ADK pipeline powered by the configured Gemini model. 
   > Gemini breaks this down into strict, structured schemas:
   > First, a narrative diff.
   > Second, department deltas for SPFX, Stunts, Grip, and Wardrobe.

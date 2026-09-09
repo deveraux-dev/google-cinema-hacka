@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universal CallSheet — Film Production Safety Command Center</title>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Universal CallSheet - Film Production Safety Command Center</title>
+    <link rel="icon" href="data:,">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
         <div class="brand-badge">PROD HUD</div>
         <div class="brand-text">
             <span class="brand-title">UNIVERSAL CALLSHEET</span>
-            <span class="brand-sub">Sovereign OHS Safety Governance & Script Revision Cascades</span>
+            <span class="brand-sub">OHS safety governance and script revision cascades</span>
         </div>
     </div>
     <div class="nav-controls">
@@ -60,16 +60,16 @@
     <!-- Scenario Switcher & Live Editor Tabs -->
     <div class="deck-controls">
         <div class="tab-group">
-            <button class="tab-btn active" id="tab-scenarios-btn" onclick="switchTab('scenarios')">
+            <button class="tab-btn active" id="tab-scenarios-btn" onclick="switchTab('scenarios')" aria-controls="scenario-deck-panel">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>
                 Production Scenario Deck
             </button>
-            <button class="tab-btn" id="tab-editor-btn" onclick="switchTab('editor')">
+            <button class="tab-btn" id="tab-editor-btn" onclick="switchTab('editor')" aria-controls="custom-editor-panel">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
                 Live Custom Screenplay Editor
             </button>
         </div>
-        <button class="run-pipeline-btn" id="main-run-btn" onclick="triggerCurrentAnalysis()">
+        <button class="run-pipeline-btn" id="main-run-btn" onclick="triggerCurrentAnalysis()" aria-live="polite">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
             Execute Gemini ADK Pipeline
         </button>
@@ -109,7 +109,7 @@
             </div>
             <div style="display: flex; gap: 16px; align-items: center;">
                 <div class="telemetry-status" id="telemetry-status-text">WAITING FOR REVISION...</div>
-                <button class="json-trace-btn" onclick="showRawJsonConnection()">
+                <button class="json-trace-btn" onclick="showRawJsonConnection()" aria-label="Raw backend JSON">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
                     Raw JSON
                 </button>
@@ -130,10 +130,10 @@
             <div class="hud-card reveal-on-scroll">
                 <div class="card-header">
                     <div class="card-title-group">
-                        <span class="card-icon">📜</span>
+                        <span class="card-icon card-icon-text" aria-hidden="true">DIFF</span>
                         <div>
                             <h3 class="card-title">Screenplay Revision Redline Diff</h3>
-                            <p class="card-sub">Extracted by Gemini ADK Diff Agent (Courier Prime Format)</p>
+                            <p class="card-sub">Structured revision changes from the analysis pipeline</p>
                         </div>
                     </div>
                     <span class="scene-tag" id="display-scene-id">SCENE S1</span>
@@ -148,7 +148,7 @@
             <div class="hud-card reveal-on-scroll">
                 <div class="card-header">
                     <div class="card-title-group">
-                        <span class="card-icon">⚡</span>
+                        <span class="card-icon card-icon-text" aria-hidden="true">OPS</span>
                         <div>
                             <h3 class="card-title">Department Work Cascades</h3>
                             <p class="card-sub">Automated operational deltas per production guild</p>
@@ -177,7 +177,7 @@
 
                 <div class="camera-gate" id="camera-gate-box">
                     <div class="gate-status">
-                        <span class="gate-icon" id="gate-icon">🔒</span>
+                        <span class="gate-icon" id="gate-icon">LOCK</span>
                         <div>
                             <strong id="gate-title">STAGE LOCKED // CAMERA CANNOT ROLL</strong>
                             <p id="gate-desc">Mandatory safety clearances must be signed off by designated leads before 1st AD calls action.</p>
@@ -190,7 +190,7 @@
             <div class="hud-card reveal-on-scroll">
                 <div class="card-header">
                     <div class="card-title-group">
-                        <span class="card-icon">🛡️</span>
+                        <span class="card-icon card-icon-text" aria-hidden="true">LOCK</span>
                         <div>
                             <h3 class="card-title">Required Safety Clearances</h3>
                             <p class="card-sub">Mandatory lead sign-offs before roll</p>
@@ -207,7 +207,7 @@
             <div class="hud-card reveal-on-scroll">
                 <div class="card-header">
                     <div class="card-title-group">
-                        <span class="card-icon">⚠️</span>
+                        <span class="card-icon card-icon-text" aria-hidden="true">HAZ</span>
                         <div>
                             <h3 class="card-title">Jurisdiction Hazard Ladder</h3>
                             <p class="card-sub">Mapped against Alberta OHS Code Part 2 Ladder (1-13)</p>
@@ -226,7 +226,7 @@
     <div class="hud-card statutory-card reveal-on-scroll" style="margin-top: 24px;">
         <div class="card-header">
             <div class="card-title-group">
-                <span class="card-icon">⚖️</span>
+                <span class="card-icon card-icon-text" aria-hidden="true">LAW</span>
                 <div>
                     <h3 class="card-title">Statutory Legal Citations</h3>
                     <p class="card-sub">Official Alberta Occupational Health & Safety Code Statutes</p>
@@ -245,7 +245,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <h3 id="modal-title">Regulatory Detail</h3>
-            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <button class="modal-close" onclick="closeModal()" aria-label="Close detail modal">&times;</button>
         </div>
         <div id="modal-body">
             <!-- Injected via JS -->
@@ -255,8 +255,8 @@
 
 <footer>
     <div class="footer-content">
-        <p><strong>Universal CallSheet (UCS)</strong> — Sovereign Script Revision & OHS Safety Governance Platform</p>
-        <p>Built for the <strong>Agentic Cinema Hackathon (Grafana Labs Track)</strong> using Google Cloud Gemini 3.7 Flash & Google ADK</p>
+        <p><strong>Universal CallSheet (UCS)</strong> - Script revision and OHS safety governance platform</p>
+        <p>Built for the <strong>Agentic Cinema Hackathon (Grafana Labs Track)</strong> using Google Cloud Gemini and Google ADK</p>
         <p class="footer-disclaimer">Notice: This system operates as an assistive safety governance framework under Alberta OHS Act SA 2020 cO-2.2 and AR 191/2021. Final authority remains with designated safety personnel and applicable regulatory bodies.</p>
     </div>
 </footer>

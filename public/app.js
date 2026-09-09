@@ -3,33 +3,27 @@ let activeScenarioId = "S1";
 let currentData = null;
 let signedClears = new Set();
 let currentTab = "scenarios";
+window.currentRequiredClears = [];
 
 // 1. Terminal Log Animation
 async function animateTerminalLogs(scenarioName) {
     const termBody = document.getElementById('term-logs');
     const statusText = document.getElementById('telemetry-status-text');
     termBody.innerHTML = '';
-    if(statusText) statusText.textContent = 'AGENT ACTIVE // ANALYZING...';
-    statusText.style.color = 'var(--accent)';
+    if (statusText) {
+        statusText.textContent = 'ANALYSIS REQUEST SENT...';
+        statusText.style.color = 'var(--accent)';
+    }
     
     const logs = [
-        `> [ADK_CORE] Connecting to Gemini 3.7 Flash Engine via Google ADK...`,
-        `> [SESSION] Initializing schema runner for scenario [${scenarioName}]...`,
-        `> [DIFF_AGENT] Comparing original baseline against revised scene...`,
-        `> [DIFF_AGENT] Extracted structured DiffOutput in 420ms.`,
-        `> [CASCADE_AGENT] Evaluating guild deltas: SPFX, Stunts, Grip, Wardrobe...`,
-        `> [CASCADE_AGENT] Extracted structured CascadeOutput in 610ms.`,
-        `> [HAZARD_AGENT] Parsing text against Alberta OHS Code Hazard Ladder (1-13)...`,
-        `> [HAZARD_AGENT] Extracted HazardTagOutput.`,
-        `> [SAFETY_ENGINE] Engaging pure-Python deterministic compliance gate...`,
-        `> [SAFETY_ENGINE] Evaluating statutory requirements (AR 191/2021 s.7(4)(c))...`,
-        `> [MCP_CLIENT] Connecting to Grafana MCP Stdio Server (uvx mcp-grafana)...`,
-        `> [MCP_CLIENT] Writing annotation to /d/ucs-safety-wall... SUCCESS.`,
-        `> [STATE] Syncing sovereign run to SQLite database... DONE.`
+        `> [REQUEST] Scenario ${scenarioName} queued for structured analysis.`,
+        `> [SCHEMA] Expected order: DiffOutput -> CascadeOutput -> HazardTagOutput.`,
+        `> [SAFETY_ENGINE] Python safety gate owns the final severity decision.`,
+        `> [GRAFANA] Publish status will be reported from the backend response.`
     ];
 
     for (let log of logs) {
-        await new Promise(r => setTimeout(r, 120 + Math.random() * 120));
+        await new Promise(r => setTimeout(r, 70));
         const line = document.createElement('div');
         line.className = 'term-line';
         line.textContent = log;
@@ -39,8 +33,41 @@ async function animateTerminalLogs(scenarioName) {
 
     await new Promise(r => setTimeout(r, 300));
     if(statusText) {
-        statusText.textContent = 'ANALYSIS COMPLETE // AWAITING NEXT REVISION';
-        statusText.style.color = 'var(--green)';
+        statusText.textContent = 'WAITING FOR BACKEND RECEIPT...';
+        statusText.style.color = 'var(--gold)';
+    }
+}
+
+function appendTerminalLine(text, tone = 'normal') {
+    const termBody = document.getElementById('term-logs');
+    if (!termBody) return;
+    const line = document.createElement('div');
+    line.className = `term-line term-${tone}`;
+    line.textContent = text;
+    termBody.appendChild(line);
+    termBody.scrollTop = termBody.scrollHeight;
+}
+
+function renderAnalysisReceipt(data) {
+    const statusText = document.getElementById('telemetry-status-text');
+    const mode = data?.analysis?.mode || 'unknown';
+    const severity = data?.safety?.severity || 'UNKNOWN';
+    const grafana = data?.grafana || {};
+
+    appendTerminalLine(`> [ANALYSIS] Mode: ${mode}.`, mode === 'google_adk_gemini' ? 'success' : 'warning');
+    appendTerminalLine(`> [SAFETY_ENGINE] Severity returned by backend: ${severity}.`, severity === 'GREEN' ? 'success' : 'warning');
+
+    if (grafana.published) {
+        appendTerminalLine(`> [GRAFANA] MCP publish verified by backend. Annotation: ${grafana.annotation_id || 'created'}.`, 'success');
+    } else {
+        appendTerminalLine(`> [GRAFANA] Not published: ${grafana.error || 'No Grafana receipt returned.'}`, 'warning');
+    }
+
+    if (statusText) {
+        statusText.textContent = mode === 'google_adk_gemini'
+            ? 'LIVE ADK ANALYSIS COMPLETE'
+            : 'OFFLINE STRUCTURED FALLBACK COMPLETE';
+        statusText.style.color = mode === 'google_adk_gemini' ? 'var(--green)' : 'var(--gold)';
     }
 }
 
@@ -101,16 +128,20 @@ function renderScenarioDeck(scenarios) {
         const isActive = sc.id === activeScenarioId;
 
         return `
-            <div class="scenario-card ${isActive ? 'active' : ''}" onclick="selectScenario('${sc.id}')">
+            <button type="button" class="scenario-card ${isActive ? 'active' : ''}" data-scenario-id="${escapeHtml(sc.id)}">
                 <div class="scenario-card-top">
-                    <span class="scenario-id-tag">${sc.id} // ${sc.heading}</span>
-                    <span class="${badgeClass}">${sc.expected_severity}</span>
+                    <span class="scenario-id-tag">${escapeHtml(sc.id)} // ${escapeHtml(sc.heading)}</span>
+                    <span class="${badgeClass}">${escapeHtml(sc.expected_severity)}</span>
                 </div>
-                <div class="scenario-card-title">${sc.title}</div>
-                <div class="scenario-card-desc">${sc.description}</div>
-            </div>
+                <div class="scenario-card-title">${escapeHtml(sc.title)}</div>
+                <div class="scenario-card-desc">${escapeHtml(sc.description)}</div>
+            </button>
         `;
     }).join('');
+
+    deck.querySelectorAll('.scenario-card').forEach(card => {
+        card.addEventListener('click', () => selectScenario(card.dataset.scenarioId));
+    });
 }
 
 function selectScenario(id) {
@@ -162,9 +193,11 @@ async function triggerCurrentAnalysis() {
         if (!resp.ok) throw new Error(`Analysis server returned ${resp.status}`);
         const data = await resp.json();
         renderDashboard(data);
+        renderAnalysisReceipt(data);
         setNetworkStatus(true);
     } catch(e) {
         console.error("Analysis Error:", e);
+        appendTerminalLine(`> [ERROR] ${e.message}. Loading latest cached JSON.`, 'warning');
         // Fallback to latest
         loadLatestData();
     } finally {
@@ -266,14 +299,14 @@ function updateGateState() {
     if (severity === 'GREEN' || allSigned) {
         gateBox.style.borderColor = 'var(--green)';
         gateBox.style.background = 'rgba(16, 185, 129, 0.08)';
-        gateIcon.textContent = '🟢';
+        gateIcon.textContent = 'CLEAR';
         gateTitle.style.color = 'var(--green)';
         gateTitle.textContent = 'STAGE CLEAR // CAMERA AUTHORIZED TO ROLL';
         gateDesc.textContent = 'All mandatory clearances signed and verified. 1st AD authorized to call camera roll.';
     } else {
         gateBox.style.borderColor = severity === 'STOP' ? 'var(--red)' : '#3f3f50';
         gateBox.style.background = '#0e0e13';
-        gateIcon.textContent = severity === 'STOP' ? '🛑' : '🔒';
+        gateIcon.textContent = severity === 'STOP' ? 'STOP' : 'LOCK';
         gateTitle.style.color = 'var(--red)';
         gateTitle.textContent = severity === 'STOP' ? 'MANDATORY STOP // SET FROZEN' : 'STAGE LOCKED // CAMERA CANNOT ROLL';
         gateDesc.textContent = `${requiredClears.length - signedClears.size} required clearance(s) pending sign-off before rehearsal or camera roll.`;
@@ -437,6 +470,7 @@ async function loadLatestData() {
         if (resp.ok) {
             const data = await resp.json();
             renderDashboard(data);
+            renderAnalysisReceipt(data);
             setNetworkStatus(true);
         } else {
             throw new Error("API not okay");
@@ -447,9 +481,14 @@ async function loadLatestData() {
             const staticResp = await fetch('output.json');
             const data = await staticResp.json();
             renderDashboard(data);
+            renderAnalysisReceipt(data);
             setNetworkStatus(false);
         } catch(err) {
             console.error("Total failure loading static fallback data", err);
+            const data = getEmbeddedFallbackData();
+            renderDashboard(data);
+            renderAnalysisReceipt(data);
+            setNetworkStatus(false);
         }
     }
 }
@@ -469,13 +508,66 @@ function setNetworkStatus(isOnline) {
 }
 
 function escapeHtml(text) {
-    if (!text) return '';
-    return text
+    if (text === null || text === undefined) return '';
+    return String(text)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+}
+
+function getEmbeddedFallbackData() {
+    return {
+        project: "Universal CallSheet",
+        tagline: "Structured revision analysis with deterministic safety gating for film production.",
+        analysis: {
+            mode: "embedded_static_fallback",
+            note: "API and output.json were unavailable; the page rendered its bundled demo receipt.",
+            structured_output_order: ["DiffOutput", "CascadeOutput", "HazardTagOutput"],
+            deterministic_decision_owner: "engine.safety.evaluate_safety"
+        },
+        scene: {
+            id: "S1",
+            heading: "EXT. LOADING DOCK - NIGHT",
+            original_script: "[Scene 1] EXT. LOADING DOCK - NIGHT\nThe loading dock is quiet.",
+            revised_script: "[Scene 1] EXT. LOADING DOCK - NIGHT\nA pyrotechnic flash pot explodes near the dumpster.\nA performer jumps from a 20-foot platform."
+        },
+        diff: [
+            {
+                scene_id: "S1",
+                element: "action",
+                old_text: "The loading dock is quiet.",
+                new_text: "A pyrotechnic flash pot explodes near the dumpster. A performer jumps from a 20-foot platform."
+            }
+        ],
+        department_deltas: [
+            { department: "SPFX", impact: "Requires practical pyrotechnics setup and perimeter clearance." },
+            { department: "Stunts", impact: "Requires coordinator walk-through and fall protection planning." }
+        ],
+        hazard_tags: [
+            { row: 2, label: "pyro", detail: "Practical pyrotechnic device introduced." },
+            { row: 9, label: "heights", detail: "Elevated fall hazard at or above 3 metres." }
+        ],
+        safety: {
+            severity: "RED",
+            reason: "High-risk hazards introduced: pyro and working at heights. Mandatory clearances required before camera roll.",
+            required_clears: ["SPFX Lead Clear", "Key Rigger / Fall Protection Clear", "Safety Officer Clear"],
+            statutory_citations: [
+                {
+                    citation: "Alberta OHS Code Part 2, s.7(4)(c)",
+                    title: "Mandatory Hazard Assessment Revision",
+                    statute_text: "Hazard assessment must be repeated when a work process or operation changes."
+                }
+            ]
+        },
+        grafana: {
+            published: false,
+            annotation_id: "",
+            dashboard_url: "",
+            error: "Embedded fallback has no live Grafana connection."
+        }
+    };
 }
 
 // App Initialization

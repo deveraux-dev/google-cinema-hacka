@@ -1,16 +1,27 @@
 import os
 import time
-from google.adk import Agent
-from google.genai import types
-from google.adk.runners import Runner
-from google.adk.sessions import InMemorySessionService
 from dotenv import load_dotenv
 from agent.models import DiffOutput, CascadeOutput, HazardTagOutput, Change, DepartmentDelta, HazardTag
 
 load_dotenv()
 
 MODEL_NAME = os.environ.get("GEMINI_MODEL", "gemini-3.7-flash")
-GENERATION_CONFIG = types.GenerateContentConfig(temperature=0.0)
+ADK_IMPORT_ERROR: Exception | None = None
+
+try:
+    from google.adk import Agent
+    from google.genai import types
+    from google.adk.runners import Runner
+    from google.adk.sessions import InMemorySessionService
+
+    GENERATION_CONFIG = types.GenerateContentConfig(temperature=0.0)
+except Exception as exc:  # pragma: no cover - exercised in environments without ADK.
+    Agent = None
+    Runner = None
+    InMemorySessionService = None
+    types = None
+    GENERATION_CONFIG = None
+    ADK_IMPORT_ERROR = exc
 
 # 1. Diff Agent
 diff_instruction = """
@@ -19,12 +30,16 @@ Identify all material changes (added, removed, or modified elements) such as hea
 Return a structured list of changes.
 """
 
-diff_agent = Agent(
-    name="diff_agent",
-    model=MODEL_NAME,
-    instruction=diff_instruction,
-    output_schema=DiffOutput,
-    generate_content_config=GENERATION_CONFIG
+diff_agent = (
+    Agent(
+        name="diff_agent",
+        model=MODEL_NAME,
+        instruction=diff_instruction,
+        output_schema=DiffOutput,
+        generate_content_config=GENERATION_CONFIG
+    )
+    if Agent
+    else None
 )
 
 # 2. Cascade Agent
@@ -35,12 +50,16 @@ Determine how these changes impact the workload or requirements of various produ
 Return a structured list of department deltas.
 """
 
-cascade_agent = Agent(
-    name="cascade_agent",
-    model=MODEL_NAME,
-    instruction=cascade_instruction,
-    output_schema=CascadeOutput,
-    generate_content_config=GENERATION_CONFIG
+cascade_agent = (
+    Agent(
+        name="cascade_agent",
+        model=MODEL_NAME,
+        instruction=cascade_instruction,
+        output_schema=CascadeOutput,
+        generate_content_config=GENERATION_CONFIG
+    )
+    if Agent
+    else None
 )
 
 # 3. Hazard Tag Agent
@@ -64,20 +83,30 @@ Identify any hazards present in the scene and map them to the following Jurisdic
 Only apply a tag if the hazard is clearly introduced or present in the scene based on the text and deltas.
 """
 
-hazard_agent = Agent(
-    name="hazard_agent",
-    model=MODEL_NAME,
-    instruction=hazard_instruction,
-    output_schema=HazardTagOutput,
-    generate_content_config=GENERATION_CONFIG
+hazard_agent = (
+    Agent(
+        name="hazard_agent",
+        model=MODEL_NAME,
+        instruction=hazard_instruction,
+        output_schema=HazardTagOutput,
+        generate_content_config=GENERATION_CONFIG
+    )
+    if Agent
+    else None
 )
 
 class RevisionPipeline:
     def __init__(self):
+        self.using_adk = ADK_IMPORT_ERROR is None
+        if not self.using_adk:
+            self.adk_error = str(ADK_IMPORT_ERROR)
+            return
+
         self.session_service = InMemorySessionService()
         self.diff_runner = Runner(agent=diff_agent, app_name="ucs_pipeline", session_service=self.session_service, auto_create_session=True)
         self.cascade_runner = Runner(agent=cascade_agent, app_name="ucs_pipeline", session_service=self.session_service, auto_create_session=True)
         self.hazard_runner = Runner(agent=hazard_agent, app_name="ucs_pipeline", session_service=self.session_service, auto_create_session=True)
+        self.adk_error = None
 
     def _run_agent(self, runner: Runner, prompt: str, session_id: str) -> any:
         max_retries = 2
@@ -153,10 +182,16 @@ class RevisionPipeline:
         return {
             "diff": DiffOutput(changes=changes),
             "cascade": CascadeOutput(scene_id=scene_id, deltas=deltas),
-            "hazard_tags": HazardTagOutput(scene_id=scene_id, tags=tags)
+            "hazard_tags": HazardTagOutput(scene_id=scene_id, tags=tags),
+            "analysis_mode": "offline_structured_fallback",
+            "analysis_note": "Google ADK/Gemini was unavailable or returned an error; local keyword extraction produced schema-compatible output."
         }
 
     def analyze_revision(self, scene_id: str, original_text: str, revised_text: str):
+        if not self.using_adk:
+            print(f"Google ADK unavailable ({self.adk_error}). Engaging offline structured fallback.")
+            return self._offline_fallback(scene_id, original_text, revised_text)
+
         print(f"Starting analysis for Scene {scene_id} with Gemini Model: {MODEL_NAME}...")
         
         try:
@@ -175,7 +210,9 @@ class RevisionPipeline:
             return {
                 "diff": diff_output,
                 "cascade": cascade_output,
-                "hazard_tags": hazard_output
+                "hazard_tags": hazard_output,
+                "analysis_mode": "google_adk_gemini",
+                "analysis_note": "Google ADK/Gemini returned schema-compatible structured output."
             }
         except Exception as e:
             print(f"Remote API warning ({e}). Engaging offline deterministic governance fallback...")

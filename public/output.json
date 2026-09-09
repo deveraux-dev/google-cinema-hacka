@@ -32,49 +32,85 @@
   "jurisdiction": "Alberta OHS Code (AR 191/2021) / Section 7(4)(c)",
   "model_primary": "gemini-3.7-flash",
   "model_reviewer": "gemini-3.1-flash",
+  "analysis": {
+    "mode": "offline_structured_fallback",
+    "note": "Google ADK/Gemini was unavailable or returned an error; local keyword extraction produced schema-compatible output.",
+    "structured_output_order": [
+      "DiffOutput",
+      "CascadeOutput",
+      "HazardTagOutput"
+    ],
+    "deterministic_decision_owner": "engine.safety.evaluate_safety"
+  },
   "scene": {
-    "id": "S2",
-    "heading": "INT. CARGO HOLD - NIGHT",
-    "original_script": "[Scene 2] INT. CARGO HOLD - NIGHT\nJohn and Sarah search through the storage crates under low emergency lighting.",
-    "revised_script": "[Scene 2] INT. CARGO HOLD - NIGHT\nJohn and Sarah search through the storage crates under low emergency lighting.\nHeavy atmospheric smoke fills the sealed watertight compartment.\nJohn draws a prop revolver loaded with quarter-load blanks and fires two shots toward the hatch."
+    "id": "S1",
+    "heading": "EXT. LOADING DOCK - NIGHT",
+    "original_script": "[Scene 1] EXT. LOADING DOCK - NIGHT\nThe loading dock is quiet. A security guard walks past holding a flashlight.",
+    "revised_script": "[Scene 1] EXT. LOADING DOCK - NIGHT\nThe loading dock is quiet. A security guard walks past holding a flashlight.\nSuddenly, a pyrotechnic flash pot explodes near the dumpster.\nA masked performer jumps from a 20-foot elevated platform down to the concrete, rolling to safety.\nThe crew resets the powered hydraulic lift between takes."
   },
   "diff": [
     {
-      "scene_id": "S2",
+      "scene_id": "S1",
       "element": "action",
-      "old_text": "[Scene 2] INT. CARGO HOLD - NIGHT\nJohn and Sarah search through the storage crates under low emergency lighting.",
-      "new_text": "[Scene 2] INT. CARGO HOLD - NIGHT\nJohn and Sarah search through the storage crates under low emergency lighting.\nHeavy atmospheric smoke fills the sealed watertight compartment.\nJohn draws a prop revolver loaded with quarter-load blanks and fires two shots toward the hatch."
+      "old_text": "[Scene 1] EXT. LOADING DOCK - NIGHT\nThe loading dock is quiet. A security guard walks past holding a flashlight.",
+      "new_text": "[Scene 1] EXT. LOADING DOCK - NIGHT\nThe loading dock is quiet. A security guard walks past holding a flashlight.\nSuddenly, a pyrotechnic flash pot explodes near the dumpster.\nA masked performer jumps from a 20-foot elevated platform down to the concrete, rolling to safety.\nThe crew resets the powered hydraulic lift between takes."
     }
   ],
   "department_deltas": [
     {
-      "department": "Props / Armory",
-      "impact": "Certified armorer required on set for blank-firing prop weapon."
+      "department": "SPFX",
+      "impact": "Requires setup, perimeter clearance, and execution of practical pyrotechnics."
     },
     {
-      "department": "SPFX / Safety",
-      "impact": "Atmospheric fog in enclosed space requiring air quality monitoring."
+      "department": "Stunts",
+      "impact": "Stunt performer required for physical fall/jump action and deceleration mats."
+    },
+    {
+      "department": "Grip / Rigging",
+      "impact": "Fall protection and elevated platform rigging required."
+    },
+    {
+      "department": "Grip",
+      "impact": "Powered mobile equipment / hydraulic lift operation."
     }
   ],
   "hazard_tags": [
     {
-      "row": 1,
-      "label": "firearms",
-      "detail": "Blank firearm discharge requiring direct armorer line-of-sight."
+      "row": 2,
+      "label": "pyro",
+      "detail": "Practical pyrotechnic device / flash pot explosion introduced."
     },
     {
-      "row": 7,
-      "label": "confined_space",
-      "detail": "Enclosed compartment / restricted egress space."
+      "row": 8,
+      "label": "stunts",
+      "detail": "Physical stunt action requiring coordinator walk-through."
+    },
+    {
+      "row": 9,
+      "label": "heights",
+      "detail": "Elevated platform or fall hazard >= 3 metres requiring fall protection."
+    },
+    {
+      "row": 11,
+      "label": "motion_pme",
+      "detail": "Powered mobile equipment / hydraulic lift."
+    },
+    {
+      "row": 13,
+      "label": "loto",
+      "detail": "Hazardous energy isolation required before resetting equipment between takes."
     }
   ],
   "safety": {
-    "severity": "STOP",
-    "reason": "MANDATORY STOP: Life-safety regulated activity introduced (Row 1 (Firearms & Explosive Devices), Row 7 (Confined Spaces & Enclosed Tanks)). Cannot roll camera without dedicated certified safety master sign-off.",
+    "severity": "RED",
+    "reason": "High-risk safety hazards introduced: Row 2 (Pyrotechnic Devices & Flash Pots), Row 8 (High-Risk Physical Stunts & Acrobatics), Row 9 (Working at Heights (>= 3 Metres)), Row 13 (Lockout / Tagout & Hydraulic Energy Isolation). Mandatory pre-take clearances required per Alberta OHS Code.",
     "required_clears": [
-      "Armorer Clear (Al Arms)",
-      "On-Site Medic Standby",
-      "Safety Officer Clear (Sam Officer)"
+      "Equipment Owner Lockout Clear",
+      "Key Grip Clear",
+      "Key Rigger / Fall Protection Clear (Dana Rigger)",
+      "SPFX Lead Clear",
+      "Safety Officer Clear (Sam Officer)",
+      "Stunt Coordinator Clear"
     ],
     "statutory_citations": [
       {
@@ -84,22 +120,51 @@
         "mandatory": true
       },
       {
-        "citation": "Alberta OHS Code Part 28, s.498 & Firearms Act",
-        "title": "Firearms & Explosive Devices",
-        "statute_text": "Special effects firearms, blank ammunition, and explosive props must be handled exclusively by a certified armorer with direct line-of-sight and verified clear zones.",
+        "citation": "Alberta OHS Code Part 28, s.498 (Pyrotechnics & Special Effects)",
+        "title": "Pyrotechnic Devices & Flash Pots",
+        "statute_text": "Pyrotechnic special effects require an authorized special effects pyrotechnician, local fire jurisdiction permit, and an enforced 50-foot safety exclusion perimeter.",
         "clears": [
-          "Armorer Clear (Al Arms)",
+          "SPFX Lead Clear",
           "Safety Officer Clear (Sam Officer)"
         ],
-        "severity": "STOP"
+        "severity": "RED"
       },
       {
-        "citation": "Alberta OHS Code Part 5, s.44 (Confined Space Entry & Rescue)",
-        "title": "Confined Spaces & Enclosed Tanks",
-        "statute_text": "Entry into water tanks, sealed vehicles, or subterranean sets requires pre-entry gas testing, ventilation, and a dedicated rescue plan.",
+        "citation": "Alberta OHS Code Part 2, s.9 (Hazard Assessment & Stunt Coordination)",
+        "title": "High-Risk Physical Stunts & Acrobatics",
+        "statute_text": "High-velocity falls, vehicle stunts, and performer combat require a stunt coordinator walk-through, rehearsal inspection, and crash deceleration zones.",
         "clears": [
-          "Safety Officer Clear (Sam Officer)",
-          "On-Site Medic Standby"
+          "Stunt Coordinator Clear",
+          "Safety Officer Clear (Sam Officer)"
+        ],
+        "severity": "RED"
+      },
+      {
+        "citation": "Alberta OHS Code Part 9, s.139 (Fall Protection Systems)",
+        "title": "Working at Heights (>= 3 Metres)",
+        "statute_text": "An employer must ensure that a fall protection system is used where a worker or performer may fall 3 metres (approx 10 feet) or more.",
+        "clears": [
+          "Key Rigger / Fall Protection Clear (Dana Rigger)",
+          "Safety Officer Clear (Sam Officer)"
+        ],
+        "severity": "RED"
+      },
+      {
+        "citation": "Alberta OHS Code Part 19, s.256 (Powered Mobile Equipment)",
+        "title": "Powered Mobile Equipment & Lifts",
+        "statute_text": "Powered hydraulic lifts, telescopic handlers, and condor cranes require certified operators, visual spotters, and cleared travel lanes.",
+        "clears": [
+          "Key Grip Clear"
+        ],
+        "severity": "REVIEW"
+      },
+      {
+        "citation": "Alberta OHS Code Part 13, s.212 (Hazardous Energy Control / LOTO)",
+        "title": "Lockout / Tagout & Hydraulic Energy Isolation",
+        "statute_text": "Before servicing, resetting, or reloading powered mechanical lifts or hydraulic rigs between takes, all energy sources must be isolated and verified zero-state.",
+        "clears": [
+          "Equipment Owner Lockout Clear",
+          "Safety Officer Clear (Sam Officer)"
         ],
         "severity": "RED"
       }
@@ -109,6 +174,6 @@
     "published": false,
     "annotation_id": "",
     "dashboard_url": "",
-    "error": "Failed to connect to Grafana MCP: unhandled errors in a TaskGroup (1 sub-exception)"
+    "error": "GRAFANA_URL and GRAFANA_SERVICE_ACCOUNT_TOKEN are required. Skipping Grafana publish."
   }
 }

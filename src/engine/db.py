@@ -47,7 +47,7 @@ def get_latest_run():
     """Retrieve the most recent run from the database."""
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT full_output_json FROM runs ORDER BY timestamp DESC LIMIT 1')
+    cursor.execute('SELECT full_output_json FROM runs ORDER BY id DESC LIMIT 1')
     row = cursor.fetchone()
     conn.close()
     

@@ -1,7 +1,4 @@
 import os
-import json
-from mcp import ClientSession, StdioServerParameters
-from mcp.client.stdio import stdio_client
 
 async def publish_to_grafana(scene_id: str, severity: str, hazard_labels: list, required_clears: list) -> dict:
     """
@@ -15,7 +12,18 @@ async def publish_to_grafana(scene_id: str, severity: str, hazard_labels: list, 
             "published": False,
             "annotation_id": "",
             "dashboard_url": "",
-            "error": "GRAFANA_URL or GRAFANA_API_KEY missing from environment. Skipping Grafana publish."
+            "error": "GRAFANA_URL and GRAFANA_SERVICE_ACCOUNT_TOKEN are required. Skipping Grafana publish."
+        }
+
+    try:
+        from mcp import ClientSession, StdioServerParameters
+        from mcp.client.stdio import stdio_client
+    except Exception as exc:
+        return {
+            "published": False,
+            "annotation_id": "",
+            "dashboard_url": "",
+            "error": f"Python MCP package unavailable. Skipping Grafana publish: {exc}"
         }
     
     if severity not in ["RED", "STOP", "REVIEW"]:
@@ -43,8 +51,8 @@ async def publish_to_grafana(scene_id: str, severity: str, hazard_labels: list, 
 
     # Setup MCP Client to run `uvx mcp-grafana`
     server_params = StdioServerParameters(
-        command="uvx",
-        args=["mcp-grafana"],
+        command=os.environ.get("GRAFANA_MCP_COMMAND", "uvx"),
+        args=os.environ.get("GRAFANA_MCP_ARGS", "mcp-grafana").split(),
         env={**os.environ} # pass the current env which includes GRAFANA_URL etc.
     )
 

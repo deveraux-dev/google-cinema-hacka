@@ -20,6 +20,8 @@ from engine.db import log_run, get_latest_run
 load_dotenv()
 
 app = FastAPI(title="Universal CallSheet (UCS) - Production Safety Command Center")
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PUBLIC_DIR = os.path.join(REPO_ROOT, "public")
 
 # Production Metadata from samples/production.plan.json
 PRODUCTION_CONTEXT = {
@@ -144,6 +146,8 @@ async def analyze_scene(req: AnalyzeRequest):
     diff_output = adk_result["diff"].model_dump()
     cascade_output = adk_result["cascade"].model_dump()
     hazard_output = adk_result["hazard_tags"].model_dump()
+    analysis_mode = adk_result.get("analysis_mode", "google_adk_gemini")
+    analysis_note = adk_result.get("analysis_note", "Structured analysis completed.")
     
     hazard_tags = hazard_output.get("tags", [])
     
@@ -167,6 +171,12 @@ async def analyze_scene(req: AnalyzeRequest):
         "jurisdiction": "Alberta OHS Code (AR 191/2021) / Section 7(4)(c)",
         "model_primary": os.environ.get("GEMINI_MODEL", "gemini-3.7-flash"),
         "model_reviewer": "gemini-3.1-flash", 
+        "analysis": {
+            "mode": analysis_mode,
+            "note": analysis_note,
+            "structured_output_order": ["DiffOutput", "CascadeOutput", "HazardTagOutput"],
+            "deterministic_decision_owner": "engine.safety.evaluate_safety"
+        },
         "scene": {
             "id": scene_id,
             "heading": scene_heading,
@@ -184,8 +194,8 @@ async def analyze_scene(req: AnalyzeRequest):
     log_run(final_output)
     
     # Write to output.json for static caching
-    os.makedirs("public", exist_ok=True)
-    with open(os.path.join("public", "output.json"), "w") as f:
+    os.makedirs(PUBLIC_DIR, exist_ok=True)
+    with open(os.path.join(PUBLIC_DIR, "output.json"), "w") as f:
         json.dump(final_output, f, indent=2)
         
     return final_output
@@ -196,15 +206,15 @@ async def get_latest():
     if not latest:
         # Fallback to output.json
         try:
-            with open(os.path.join("public", "output.json"), "r") as f:
+            with open(os.path.join(PUBLIC_DIR, "output.json"), "r") as f:
                 return json.load(f)
         except Exception:
             raise HTTPException(status_code=404, detail="No historical runs found.")
     return latest
 
 # Mount static files (this serves public/index.html on /)
-app.mount("/", StaticFiles(directory="public", html=True), name="public")
+app.mount("/", StaticFiles(directory=PUBLIC_DIR, html=True), name="public")
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=False)

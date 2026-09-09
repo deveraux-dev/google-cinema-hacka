@@ -41,7 +41,7 @@ Universal CallSheet (UCS) is an intelligent, deterministic safety governance sys
 ---
 
 ## How We Built It
-- **AI & Agent Orchestration:** Built with the official **`google-adk`** and **`google-genai`** SDKs powered by **Gemini 3.7 Flash** for high-precision, schema-constrained structured output generation.
+- **AI & Agent Orchestration:** Built with the official **`google-adk`** and **`google-genai`** SDKs powered by the configured Gemini model for schema-constrained structured output generation.
 - **Deterministic Rules Engine:** Pure Python module with zero LLM dependency to ensure 100% deterministic, rule-bound safety evaluation.
 - **Grafana MCP Integration:** Implemented using the official Model Context Protocol (MCP) to publish real-time alerts and annotations to Grafana OSS dashboards.
 - **Backend & Persistence:** **FastAPI** asynchronous server with **SQLite** persistent run logging.
