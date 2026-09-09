@@ -619,6 +619,18 @@ function setNetworkStatus(isOnline) {
     }
 }
 
+async function initializeResults() {
+    try {
+        const health = await fetch('/api/health');
+        if (!health.ok) throw new Error(`Health check returned ${health.status}`);
+        setNetworkStatus(true);
+        appendTerminalLine('System ready. Select a revision to begin.', 'normal');
+    } catch (error) {
+        console.warn('Live API unavailable; loading the latest verified snapshot.', error);
+        await loadLatestData();
+    }
+}
+
 function escapeHtml(text) {
     if (text === null || text === undefined) return '';
     return String(text)
@@ -689,7 +701,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadProductionContext();
     await loadScenarios();
     switchTab('scenarios');
-    await loadLatestData();
+    await initializeResults();
 });
 
 document.getElementById('grafana-nav-link')?.addEventListener('click', (event) => {

@@ -28,6 +28,8 @@ for (const viewport of [
 
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
     await page.goto(baseUrl, { waitUntil: "networkidle" });
+    await expect(page.locator("#verdict-badge")).toHaveText("—");
+    await expect(page.locator("#telemetry-status-text")).toContainText(/WAITING FOR REVISION/);
     await page.getByRole("button", { name: /analyze revision/i }).click();
     await expect(page.locator("#verdict-badge")).toContainText(/RED|STOP|GREEN|REVIEW/);
     await expect(page.locator("#telemetry-status-text")).toContainText(/COMPLETE/);
