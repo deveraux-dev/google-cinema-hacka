@@ -771,15 +771,26 @@ function initQuickNavigation() {
     targets.forEach(target => observer.observe(target));
 }
 
+function updateScrollProgress() {
+    const progress = document.getElementById('scroll-progress');
+    if (!progress) return;
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.transform = `scaleX(${scrollable > 0 ? Math.min(1, window.scrollY / scrollable) : 0})`;
+}
+
 // App Initialization
 document.addEventListener('DOMContentLoaded', async () => {
     initScrollAnimations();
     initQuickNavigation();
+    updateScrollProgress();
     await loadProductionContext();
     await loadScenarios();
     switchTab('scenarios');
     await initializeResults();
 });
+
+window.addEventListener('scroll', updateScrollProgress, { passive: true });
+window.addEventListener('resize', updateScrollProgress);
 
 document.getElementById('grafana-nav-link')?.addEventListener('click', (event) => {
     if (event.currentTarget.getAttribute('aria-disabled') === 'true') event.preventDefault();
