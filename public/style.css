@@ -489,6 +489,12 @@ body {
     line-height: 1.4;
 }
 
+.status-connecting {
+    background: rgba(161, 161, 170, .1);
+    color: var(--muted);
+    border: 1px solid var(--line-strong);
+}
+
 .scenario-risk-tags {
     display: flex;
     flex-wrap: wrap;

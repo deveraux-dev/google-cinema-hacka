@@ -19,6 +19,16 @@ Film revisions can change physical work faster than safety paperwork changes. UC
 
 The important demo behavior is the refusal: a firearm or other critical hazard reaches `STOP` before a camera-roll decision can be treated as clear.
 
+### What a judge can verify in one pass
+
+- **Problem:** a screenplay revision can introduce physical risk after a call sheet is already in motion.
+- **Action:** select S2 and leave Auto-review on; the review submits automatically.
+- **Decision:** the deterministic safety engine returns `STOP` and names the required clearances.
+- **Proof:** the HUD renders the changed text, hazard tags, JSON contract, runtime chain, and Grafana receipt state.
+- **Boundary:** Gemini structures the revision; Python owns the safety decision; Grafana receives only the post-gate event.
+
+The interface labels live requests, history receipts, static snapshots, and embedded fallback data separately. A fallback is a usable demo state, not evidence of a live Gemini or Grafana call.
+
 ## What is autonomous
 
 Auto-review is bounded automation, not unrestricted agent authority. With the toggle on, selecting a scenario triggers the existing `/api/analyze` workflow. The backend still validates the structured result, runs deterministic safety rules, and publishes Grafana only after the gate. Users can turn Auto-review off and run a review manually.
@@ -84,6 +94,8 @@ npm run test:ui
 
 ## Environment
 
+Keep all values server-side. The browser reads only the JSON response; it never receives these credentials.
+
 Gemini:
 
 ```text
@@ -101,6 +113,8 @@ GRAFANA_MCP_TIMEOUT_SECONDS=20
 ```
 
 Never expose these variables as browser or `NEXT_PUBLIC_*` variables.
+
+For Vercel, configure the same variables in the project environment settings and deploy the `frontend-deploy` branch. A hosted `GRAFANA_MCP_URL` is required for production MCP publishing; local stdio is not available inside Vercel serverless functions.
 
 ## Limitations
 

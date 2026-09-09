@@ -672,10 +672,14 @@ function setNetworkStatus(isOnline) {
     if (liveBadge && offBadge) {
         if (isOnline) {
             liveBadge.style.display = 'inline-flex';
+            liveBadge.classList.remove('status-connecting');
+            liveBadge.classList.add('status-live');
+            liveBadge.innerHTML = '<span class="dot-pulse" aria-hidden="true"></span> API CONNECTED';
             offBadge.style.display = 'none';
         } else {
             liveBadge.style.display = 'none';
             offBadge.style.display = 'inline-flex';
+            offBadge.innerHTML = '<span class="dot-pulse-offline" aria-hidden="true"></span> SNAPSHOT MODE';
         }
     }
 }
