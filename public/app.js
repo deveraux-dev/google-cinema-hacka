@@ -3,6 +3,8 @@ let activeScenarioId = "S1";
 let currentData = null;
 let signedClears = new Set();
 let currentTab = "scenarios";
+let autoReviewEnabled = true;
+let autoReviewTimer = null;
 window.currentRequiredClears = [];
 
 const OFFLINE_SCENARIOS = [
@@ -97,6 +99,7 @@ function renderAnalysisReceipt(data) {
     }
 
     appendTerminalLine(`> [ANALYSIS] Mode: ${mode}; delivery: ${delivery}.`, mode === 'google_adk_gemini' && isLiveRequest ? 'success' : 'warning');
+    appendTerminalLine(`> [AUTOMATION] ${data?.runtime?.trigger === 'auto_review' ? 'Auto-review selected this revision and submitted it.' : 'User requested this revision review.'}`, 'normal');
     appendTerminalLine(`> [SAFETY_ENGINE] Severity returned by backend: ${severity}.`, severity === 'GREEN' ? 'success' : 'warning');
 
     if (grafana.published && isLiveRequest) {
@@ -267,6 +270,20 @@ function selectScenario(id) {
     }
     renderScenarioDeck(currentScenarios);
     updateSelectionSummary();
+    if (autoReviewEnabled && currentTab === 'scenarios') {
+        clearTimeout(autoReviewTimer);
+        autoReviewTimer = setTimeout(() => triggerCurrentAnalysis('auto_review'), 450);
+    }
+}
+
+function toggleAutoReview() {
+    autoReviewEnabled = !autoReviewEnabled;
+    const toggle = document.getElementById('auto-review-toggle');
+    const status = document.getElementById('auto-review-status');
+    toggle?.classList.toggle('is-on', autoReviewEnabled);
+    toggle?.setAttribute('aria-pressed', String(autoReviewEnabled));
+    if (status) status.textContent = autoReviewEnabled ? 'ON' : 'OFF';
+    if (!autoReviewEnabled) clearTimeout(autoReviewTimer);
 }
 
 function updateSelectionSummary() {
@@ -276,7 +293,7 @@ function updateSelectionSummary() {
 }
 
 // 5. Trigger Analysis (Live API Call)
-async function triggerCurrentAnalysis() {
+async function triggerCurrentAnalysis(trigger = 'manual') {
     const btn = document.getElementById('main-run-btn');
     btn.disabled = true;
     btn.setAttribute('aria-busy', 'true');
@@ -290,7 +307,8 @@ async function triggerCurrentAnalysis() {
             scene_id: "REV_CUSTOM",
             scene_heading: "CUSTOM SCREENPLAY REVISION",
             original_text: document.getElementById('custom-orig-text').value,
-            revised_text: document.getElementById('custom-rev-text').value
+            revised_text: document.getElementById('custom-rev-text').value,
+            trigger
         };
     } else {
         const sc = currentScenarios.find(s => s.id === activeScenarioId) || { id: "S1", title: "Scene 1" };
@@ -299,13 +317,15 @@ async function triggerCurrentAnalysis() {
             scene_id: sc.id,
             scene_heading: sc.heading,
             original_text: sc.original_text,
-            revised_text: sc.revised_text
+            revised_text: sc.revised_text,
+            trigger
         };
         scenarioName = sc.title;
     }
 
     try {
         const logPromise = animateTerminalLogs(scenarioName);
+        if (trigger === 'auto_review') appendTerminalLine('> [AUTOMATION] Auto-review selected this revision and submitted it.', 'normal');
         const responsePromise = fetch('/api/analyze', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

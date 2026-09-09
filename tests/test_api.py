@@ -67,6 +67,17 @@ def test_custom_revision_uses_supplied_json_fields():
     assert payload["safety"]["severity"] == "RED"
 
 
+def test_auto_review_trigger_is_recorded_in_runtime_receipt(monkeypatch):
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    monkeypatch.delenv("GRAFANA_MCP_URL", raising=False)
+    monkeypatch.delenv("GRAFANA_URL", raising=False)
+    response = TestClient(app).post("/api/analyze", json={"scenario_id": "S4", "trigger": "auto_review"})
+
+    assert response.status_code == 200
+    assert response.json()["runtime"]["trigger"] == "auto_review"
+    assert response.json()["runtime"]["automation"] == "auto_review"
+
+
 def test_script_payload_is_bounded():
     response = TestClient(app).post(
         "/api/analyze",

@@ -1286,6 +1286,12 @@ button, a, summary { min-height: 44px; }
 .review-action-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 14px; border: 1px solid var(--line); background: var(--surface-quiet); }
 .selection-summary { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: .78rem; }
 .selection-dot { width: 8px; height: 8px; flex: 0 0 auto; border-radius: 50%; background: var(--amber); }
+.auto-review-toggle { display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 7px 10px; border: 1px solid var(--line-strong); border-radius: 4px; background: var(--surface); color: var(--muted); font: 700 .68rem var(--font-sans); cursor: pointer; }
+.auto-review-toggle.is-on { border-color: rgba(86,229,169,.5); color: var(--green); background: var(--green-soft); }
+.auto-review-toggle small { color: inherit; font: 700 .58rem var(--font-mono); }
+.toggle-indicator { width: 22px; height: 12px; position: relative; border-radius: 999px; background: var(--line-strong); }
+.toggle-indicator::after { position: absolute; top: 2px; left: 2px; width: 8px; height: 8px; border-radius: 50%; background: var(--muted); content: ''; transition: transform .18s ease, background .18s ease; }
+.auto-review-toggle.is-on .toggle-indicator::after { transform: translateX(10px); background: var(--green); }
 .run-pipeline-btn { min-height: 44px; padding: 10px 18px; border: 0; border-radius: 4px; background: linear-gradient(105deg, #8ed5ff 0%, #b8e6ff 48%, #56e5a9 100%); color: #00354a; box-shadow: none; font-size: .8rem; position: relative; overflow: hidden; transition: transform .18s ease, box-shadow .18s ease, filter .18s ease; }
 .run-pipeline-btn::after { position: absolute; inset: 0 auto 0 -45%; width: 35%; content: ''; background: rgba(255,255,255,.38); transform: skewX(-20deg); transition: left .45s ease; }
 .run-pipeline-btn:hover { transform: translateY(-1px); box-shadow: 0 7px 18px rgba(86,229,169,.18); filter: saturate(1.08); }
@@ -1413,6 +1419,7 @@ footer { margin-top: 0; padding: 24px 16px; background: var(--surface-quiet); bo
     .mode-switch { width: 100%; }
     .mode-switch .tab-btn { flex: 1; }
     .review-action-row .run-pipeline-btn { width: 100%; justify-content: center; }
+    .review-action-row .auto-review-toggle { width: 100%; justify-content: center; }
     .verdict-card { grid-template-columns: 1fr; padding: 16px; }
     .verdict-reason { -webkit-line-clamp: 5; font-size: 1.05rem; }
     .verdict-meta { grid-template-columns: 1fr; }

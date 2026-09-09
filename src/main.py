@@ -117,6 +117,7 @@ class AnalyzeRequest(BaseModel):
     scene_heading: Optional[str] = Field(default="EXT. LOADING DOCK - NIGHT", max_length=200)
     original_text: Optional[str] = Field(default=None, max_length=25_000)
     revised_text: Optional[str] = Field(default=None, max_length=25_000)
+    trigger: str = Field(default="manual", max_length=40)
 
 
 @app.get("/api/health")
@@ -209,6 +210,8 @@ async def analyze_scene(req: AnalyzeRequest):
             "delivery": "live_request",
             "api": "fastapi",
             "json_contract": "v1",
+            "trigger": req.trigger if req.trigger in {"manual", "auto_review"} else "manual",
+            "automation": "auto_review" if req.trigger == "auto_review" else "user_requested",
         },
         "scene": {
             "id": scene_id,

@@ -63,3 +63,12 @@ test("custom revision editor reaches the same verdict flow", async ({ page }) =>
   await expect(page.locator("#verdict-badge")).toContainText(/RED|STOP|GREEN|REVIEW/);
   await expect(page.locator("#chain-frontend")).toContainText(/Rendered .*JSON/);
 });
+
+test("auto-review analyzes a newly selected scenario", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto(baseUrl, { waitUntil: "networkidle" });
+  await expect(page.locator("#auto-review-toggle")).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: /confined space prop firearm shootout/i }).click();
+  await expect(page.locator("#verdict-badge")).toContainText(/STOP/);
+  await expect(page.locator("#term-logs")).toContainText(/Auto-review selected this revision/);
+});

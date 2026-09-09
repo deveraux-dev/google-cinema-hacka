@@ -74,6 +74,7 @@
         </section>
         <div class="review-action-row">
             <div class="selection-summary"><span class="selection-dot" aria-hidden="true"></span><span id="selection-summary-text">Select a scenario to review its revision.</span></div>
+            <button type="button" class="auto-review-toggle is-on" id="auto-review-toggle" aria-pressed="true" onclick="toggleAutoReview()"><span class="toggle-indicator" aria-hidden="true"></span><span>Auto-review</span><small id="auto-review-status">ON</small></button>
             <button class="run-pipeline-btn" id="main-run-btn" onclick="triggerCurrentAnalysis()" aria-live="polite">
                 <span aria-hidden="true">▶</span> Analyze revision
             </button>
