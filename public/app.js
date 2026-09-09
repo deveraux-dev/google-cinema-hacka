@@ -283,6 +283,7 @@ async function triggerCurrentAnalysis() {
     btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> Analyzing revision...`;
 
     let payload = {};
+    let scenarioName = 'CUSTOM SCREENPLAY';
     if (currentTab === 'editor') {
         payload = {
             scenario_id: "CUSTOM",
@@ -291,7 +292,6 @@ async function triggerCurrentAnalysis() {
             original_text: document.getElementById('custom-orig-text').value,
             revised_text: document.getElementById('custom-rev-text').value
         };
-        await animateTerminalLogs("CUSTOM SCREENPLAY");
     } else {
         const sc = currentScenarios.find(s => s.id === activeScenarioId) || { id: "S1", title: "Scene 1" };
         payload = {
@@ -301,21 +301,23 @@ async function triggerCurrentAnalysis() {
             original_text: sc.original_text,
             revised_text: sc.revised_text
         };
-        await animateTerminalLogs(sc.title);
+        scenarioName = sc.title;
     }
 
     try {
-        const resp = await fetch('/api/analyze', {
+        const logPromise = animateTerminalLogs(scenarioName);
+        const responsePromise = fetch('/api/analyze', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
-
+        const [resp] = await Promise.all([responsePromise, logPromise]);
         if (!resp.ok) throw new Error(`Analysis server returned ${resp.status}`);
         const data = await resp.json();
         renderDashboard(data);
         renderAnalysisReceipt(data);
         setNetworkStatus(true);
+        document.getElementById('verdict-heading')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } catch(e) {
         console.error("Analysis Error:", e);
         appendTerminalLine(`> [ERROR] ${e.message}. Loading latest cached JSON.`, 'warning');
@@ -743,14 +745,13 @@ function initScrollAnimations() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('is-visible');
-                // Optional: Stop observing once revealed if you only want it to animate once
-                // observer.unobserve(entry.target);
+                observer.unobserve(entry.target);
             }
         });
     }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
     // Observe static elements
-    document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
     
     // Store observer on window to re-trigger dynamically injected content if needed
     window.scrollObserver = observer;

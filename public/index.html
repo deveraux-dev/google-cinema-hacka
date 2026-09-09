@@ -106,36 +106,36 @@
 
     <section class="evidence-layout" aria-label="Analysis evidence">
         <div class="evidence-main">
-            <details class="evidence-panel" open>
+            <details class="evidence-panel scroll-reveal" open>
                 <summary><span><b>Revision impact</b><small>What changed in the screenplay</small></span><span class="summary-state">OPEN</span></summary>
                 <div class="evidence-body"><div class="screenplay-viewer" id="screenplay-diff-content"><p class="empty-state">Run an analysis to render the revision diff.</p></div></div>
             </details>
-            <details class="evidence-panel" open>
+            <details class="evidence-panel scroll-reveal" open>
                 <summary><span><b>Required clearances</b><small>Who must sign off before roll</small></span><span class="clears-counter" id="clears-counter-badge">0 / 0</span></summary>
                 <div class="evidence-body"><div class="clears-list" id="clears-container"><p class="empty-state">Clearances will appear after analysis.</p></div></div>
             </details>
-            <details class="evidence-panel">
+            <details class="evidence-panel scroll-reveal">
                 <summary><span><b>Department cascade</b><small>Operational work created by this revision</small></span><span class="summary-state">DETAIL</span></summary>
                 <div class="evidence-body"><div class="dept-grid" id="department-deltas-container"><p class="empty-state">Department impacts will appear after analysis.</p></div></div>
             </details>
         </div>
         <aside class="evidence-rail">
-            <details class="evidence-panel" open>
+            <details class="evidence-panel scroll-reveal" open>
                 <summary><span><b>Hazard evidence</b><small>Rules-triggering signals</small></span><span class="summary-state">DETAIL</span></summary>
                 <div class="evidence-body"><div class="hazard-tag-deck" id="hazards-container"><p class="empty-state">Hazards will appear after analysis.</p></div></div>
             </details>
-            <details class="evidence-panel">
+            <details class="evidence-panel scroll-reveal">
                 <summary><span><b>Statutory basis</b><small>Applicable safety references</small></span><span class="summary-state">DETAIL</span></summary>
                 <div class="evidence-body"><div class="statutory-grid" id="statutory-container"><p class="empty-state">Citations will appear after analysis.</p></div></div>
             </details>
-            <div class="technical-panel" id="technical-proof">
+            <div class="technical-panel scroll-reveal" id="technical-proof">
                 <div class="technical-head"><div><p class="eyebrow">TECHNICAL PROOF</p><h3>Receipt and chain</h3></div><button class="json-trace-btn" onclick="showRawJsonConnection()" aria-label="Raw backend JSON">{ } JSON</button></div>
                 <div class="telemetry-body" id="term-logs" role="log" aria-live="polite"><div class="term-line">System ready. Select a revision to begin.</div></div>
                 <div class="telemetry-status" id="telemetry-status-text">WAITING FOR REVISION</div>
             </div>
         </aside>
     </section>
-    <section class="claim-panel" aria-labelledby="claim-heading">
+    <section class="claim-panel scroll-reveal" aria-labelledby="claim-heading">
         <div class="claim-panel-head"><div><p class="eyebrow">TRUST AND DELIVERY</p><h3 id="claim-heading">What this screen can prove</h3></div><p>Every label follows the backend receipt.</p></div>
         <div class="claim-grid">
             <div class="claim-item" id="claim-analysis"><strong>Analysis source</strong><span>Waiting for a fresh revision request.</span></div>
