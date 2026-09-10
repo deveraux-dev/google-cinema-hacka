@@ -1,6 +1,31 @@
-# Universal CallSheet
+<p align="center">
+  <img src="assets/ucs-logo.jpg" alt="Universal CallSheet logo" width="112" />
+</p>
 
-> **AI can identify what changed in a screenplay. Deterministic safety rules decide whether the camera may roll. Grafana receives the receipt after that gate.**
+<h1 align="center">Universal CallSheet</h1>
+
+<p align="center">
+  <strong>AI reads the screenplay revision. Deterministic safety rules decide whether the camera can roll.</strong>
+</p>
+
+<p align="center">
+  <a href="https://universal-callsheet.vercel.app">Live App</a>
+  &nbsp;|&nbsp;
+  <a href="https://youtu.be/XzUXE0kLOAs">Demo Video</a>
+  &nbsp;|&nbsp;
+  <a href="docs/DEVPOST_SUBMISSION.md">Devpost Copy</a>
+  &nbsp;|&nbsp;
+  <a href="docs/ARCHITECTURE.md">Architecture</a>
+</p>
+
+<p align="center">
+  <code>Google ADK</code>
+  <code>Gemini</code>
+  <code>FastAPI</code>
+  <code>Deterministic Safety Engine</code>
+  <code>Grafana MCP</code>
+  <code>Vercel</code>
+</p>
 
 Universal CallSheet is a proof-first production safety agent for film crews. It turns a last-minute screenplay revision into a stage decision, required sign-offs, and an auditable evidence trail.
 
@@ -19,14 +44,36 @@ For judges: watch the 99-second demo first for the story, then use the live app 
 
 ```mermaid
 flowchart LR
-    A[Scene S2 changes] --> B[Gemini / fallback structures the revision]
-    B --> C[Python safety engine evaluates hazards]
-    C -->|Confined space + firearm + smoke| D[STOP]
-    D --> E[Camera cannot roll until clearances are complete]
-    D --> F[Receipt state shown in HUD / Grafana adapter]
+    A["Scene S2 revision<br/>confined space + firearm + smoke"] --> B["Gemini / fallback<br/>structures the change"]
+    B --> C["Python safety engine<br/>applies deterministic rules"]
+    C -->|critical hazard mix| D["STOP<br/>camera cannot roll"]
+    D --> E["Required clearances<br/>1st AD, safety, armorer, ventilation"]
+    D --> F["Receipt trail<br/>HUD JSON + Grafana state"]
+
+    classDef input fill:#17212b,stroke:#8ed5ff,color:#ffffff,stroke-width:2px;
+    classDef ai fill:#1d2a33,stroke:#8ed5ff,color:#ffffff,stroke-width:2px;
+    classDef gate fill:#1f2f27,stroke:#56e5a9,color:#ffffff,stroke-width:2px;
+    classDef stop fill:#8f2d35,stroke:#ff7b74,color:#ffffff,stroke-width:3px;
+    classDef proof fill:#241f18,stroke:#ffb95f,color:#ffffff,stroke-width:2px;
+
+    class A input;
+    class B ai;
+    class C gate;
+    class D stop;
+    class E,F proof;
 ```
 
 The product in one sentence: creative AI is allowed upstream; deterministic permission is required downstream.
+
+## What A Judge Sees In 60 Seconds
+
+| Signal | Where it appears | What it proves |
+| --- | --- | --- |
+| Product identity | Logo, title, live app, demo video | The submission has a clear front door |
+| Concrete outcome | S2 reaches `STOP` | The system refuses unsafe production work |
+| Technical boundary | AI extraction before Python decision | The model does not own final safety authority |
+| Operational value | Required clearances and affected departments | The result is useful to a real production team |
+| Trust layer | JSON, fallback labels, Grafana state | Claims are visible and auditable |
 
 ## Why Universal CallSheet?
 
@@ -54,15 +101,29 @@ Universal CallSheet gives the model a narrow job and gives the safety decision a
 
 ```mermaid
 flowchart TD
-    A[Screenplay revision] --> B[Google ADK / Gemini structured analysis]
-    B --> C[Pydantic contract validation]
-    C --> D[Deterministic Python safety engine]
-    D -->|GREEN| E[Proceed with standard checks]
-    D -->|RED / STOP| F[Hold camera and require clearances]
-    D --> G[Grafana MCP adapter]
-    D --> H[Frontend proof HUD]
-    G --> I[Annotation receipt when configured]
-    H --> J[Diff, hazards, citations, clearances, JSON]
+    A["Screenplay revision"] --> B["Google ADK / Gemini<br/>structured analysis"]
+    B --> C["Pydantic contract<br/>validation"]
+    C --> D{"Deterministic<br/>safety engine"}
+    D -->|GREEN| E["Proceed with<br/>standard checks"]
+    D -->|RED / STOP| F["Hold camera<br/>require clearances"]
+    D --> G["Grafana MCP<br/>adapter"]
+    D --> H["Frontend<br/>proof HUD"]
+    G --> I["Annotation receipt<br/>when configured"]
+    H --> J["Diff, hazards,<br/>citations, JSON"]
+
+    classDef source fill:#17212b,stroke:#8ed5ff,color:#ffffff;
+    classDef contract fill:#202329,stroke:#a1a1aa,color:#ffffff;
+    classDef decision fill:#1f2f27,stroke:#56e5a9,color:#ffffff,stroke-width:3px;
+    classDef clear fill:#153326,stroke:#56e5a9,color:#ffffff;
+    classDef hold fill:#8f2d35,stroke:#ff7b74,color:#ffffff;
+    classDef receipt fill:#241f18,stroke:#ffb95f,color:#ffffff;
+
+    class A,B source;
+    class C contract;
+    class D decision;
+    class E clear;
+    class F hold;
+    class G,H,I,J receipt;
 ```
 
 ## Claim-Proof Ledger
