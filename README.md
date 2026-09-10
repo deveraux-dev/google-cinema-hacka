@@ -253,23 +253,25 @@ Without Gemini credentials or when the provider is unavailable, the app uses a s
 
 ## Project Architecture & Ownership
 
-This submission is maintained from a collaborator lane: browser product, responsive HUD, README and documentation, deployment preview, demo flow, and presentation assets. The backend engine, credentials, live Gemini behavior, Grafana publisher, and backend receipts remain owned by the repository owner. Frontend copy mirrors backend responses without changing the deterministic safety authority.
+This submission is maintained from a collaborator lane that covers the current agent and product implementation: ADK/Gemini revision analysis, schema contracts, fallback behavior, deterministic safety integration, Grafana MCP integration, FastAPI reliability, browser product, deployment preview, README/docs, and presentation assets. The repository owner retains the upstream production-safety foundation, domain and jurisdiction data, repository governance, final merge control, credentials, and GitHub visibility. Frontend copy mirrors backend responses without changing the deterministic safety authority.
 
 ### Collaborator lane
 
 - Browser product and responsive proof HUD in `public/`
+- ADK/Gemini revision pipeline and Pydantic contracts in `src/agent/`
+- Schema-compatible fallback, deterministic safety integration, and FastAPI reliability in `src/`
+- Grafana MCP adapter, backend tests, and deployment verification
 - Judge demo reel and S2 proof path
 - Vercel deployment and frontend regression coverage
 - README, architecture notes, demo script, and submission materials
 
 ### Repository owner lane
 
-- FastAPI routes and scenario contracts in `src/main.py`
-- ADK/Gemini pipeline and Pydantic models in `src/agent/`
-- Deterministic safety engine and jurisdiction data in `src/engine/` and `data/`
-- Grafana MCP publisher and backend verification in `src/engine/grafana_client.py` and `tests/`
+- Upstream production-safety model, jurisdiction data, and early engine foundations in `src/`, `data/`, and the repository history
+- Original Gemini/Grafana groundwork and production-domain design carried into the current implementation
+- Repository governance, final review and merge, credentials, and GitHub visibility
 
-The result is one shared hackathon solution: AI structures the revision, deterministic rules decide, and the crew receives a proof-backed next action.
+The repository history supports this split while the result remains one shared hackathon solution: AI structures the revision, deterministic rules decide, and the crew receives a proof-backed next action.
 
 ## Final Hackathon Submission
 

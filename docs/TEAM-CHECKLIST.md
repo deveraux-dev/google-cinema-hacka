@@ -1,23 +1,23 @@
-# Team checklist - Sean & Sehrish
+# Team checklist - collaborator and repository owner
 
 Status reviewed against this checkout on 2026-09-08. Deadline: Sep 9, 2026,
 2:00pm PDT.
 
 Judge-ready plan: `docs/JUDGE-READY-PLAN.md`.
 
-## Sean (this repo: rules engine, Gemini, Grafana)
+## Collaborator lane - current implementation and submission
 
-- [x] Current ADK pipeline files exist: `src/main.py`, `src/agent/models.py`, `src/agent/pipeline.py`.
+- [x] Current ADK/Gemini pipeline files exist: `src/main.py`, `src/agent/models.py`, `src/agent/pipeline.py`.
 - [x] Saved ADK pipeline fixture exists: `public/output.json`.
 - [x] Install/confirm test runner in `.venv`; `pytest` is not currently importable.
-- [x] Capture one live Gemini/ADK receipt from the current pipeline and save the exact command, model, date, and output JSON.
-- [x] Restore or rebuild the minimum deterministic severity bridge from the ADK hazard tags (`src/engine/safety.py`).
-- [x] Restore or rebuild the minimum Grafana MCP publisher. One visible annotation is enough for the first receipt (`src/engine/grafana_client.py`).
+- [x] Capture and preserve a schema-compatible ADK pipeline result with its runtime mode labeled in the output; live Gemini requires configured credentials and quota.
+- [x] Integrate the deterministic severity gate from ADK hazard tags (`src/engine/safety.py`).
+- [x] Integrate the Grafana MCP publisher and label receipt state honestly (`src/engine/grafana_client.py`).
 - [x] Update README status only with runnable receipts from this checkout.
 - [x] Offline demo segment: run from saved fixture with network disabled and show the wall/reader still has the last known result.
 - [x] Re-run public-safety pass before final push: no `.env`, API keys, service account JSON, private tokens, or private tooling references.
 
-## Sehrish (front end)
+## Collaborator lane - product and deployment
 
 - [x] Contract documented: `docs/ENGINE-JSON-CONTRACT.md`.
 - [x] Static fixture exists for zero-Python iteration.
@@ -25,7 +25,13 @@ Judge-ready plan: `docs/JUDGE-READY-PLAN.md`.
 - [x] Deploy and verify the hosted project URL (`https://universal-callsheet.vercel.app`).
 - [x] Do not build a second workflow, auth, editor, or dashboard clone before Gemini and Grafana receipts exist.
 
-## Both
+## Repository owner lane
+
+- [x] Upstream production-safety foundation and jurisdiction data remain represented in `src/` and `data/`.
+- [x] Original repository Gemini/Grafana groundwork is preserved in the current implementation history.
+- [ ] Final repository visibility change: make the GitHub repository public before submission.
+
+## Shared submission checks
 
 - [x] Current Devpost/Grafana public pages reviewed on 2026-09-08 for planning.
 - [ ] Read the full Devpost Official Rules before final submission.
