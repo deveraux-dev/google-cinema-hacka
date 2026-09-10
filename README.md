@@ -39,9 +39,7 @@ The memorable outcome is intentionally simple: when a critical hazard is present
 
 ## Start Here
 
-1. [Watch the demo video](https://youtu.be/XzUXE0kLOAs) for the plain-English story.
-2. [Open the live app](https://universal-callsheet.vercel.app) and replay the S2 refusal path.
-3. Read the [architecture notes](docs/ARCHITECTURE.md) and inspect the source files behind each step.
+Use the header links in this order: demo video for the plain-English story, live app for the S2 refusal path, then architecture notes for the source-level explanation.
 
 For judges: watch the demo first, then use the live app to verify the same refusal outcome.
 
@@ -70,13 +68,7 @@ This is the product in one sentence: AI may interpret the revision, but determin
 
 ## See The Proof First
 
-| Start here | What it proves |
-| --- | --- |
-| [Open the live app](https://universal-callsheet.vercel.app) | The deployed review cockpit and S2 proof path |
-| [Watch the 99-second demo](https://youtu.be/XzUXE0kLOAs) | The product story and end-to-end interaction |
-| Select `S2` in the scenario deck | A confined-space firearm revision reaches `STOP` |
-| Open `Raw backend JSON` | The visible result comes from the FastAPI contract |
-| Open `Receipt and chain` | Runtime mode, safety ownership, and Grafana status are explicit |
+Use the live app from the header and select `S2` in the scenario deck. The proof surface is the same in the demo and in the deployed product: a concrete revision, a deterministic `STOP`, required clearances, and an inspectable receipt.
 
 ### Replay the proof
 
@@ -94,7 +86,7 @@ This is the product in one sentence: AI may interpret the revision, but determin
 | Required armorer, safety, and rescue clearances | The result creates an operational next step |
 | Raw JSON and receipt state | The visible story maps back to a backend response |
 
-## The Core Flow
+## The System Flow
 
 ```mermaid
 flowchart LR
@@ -186,8 +178,8 @@ The local Grafana path was verified with a Backlot Safety Wall showing scene sev
 
 | Capability | Status | Source of truth |
 | --- | --- | --- |
-| Vercel deployment | Verified | [universal-callsheet.vercel.app](https://universal-callsheet.vercel.app) |
-| Public demo video | Verified | [YouTube demo](https://youtu.be/XzUXE0kLOAs) |
+| Vercel deployment | Verified | `Live app` link in the header |
+| Public demo video | Verified | `Demo video` link in the header |
 | S2 refusal path | Tested | `tests/ui-smoke.spec.js` |
 | Deterministic safety decision | Tested | `tests/test_safety_engine.py`, `src/engine/safety.py` |
 | Structured analysis path | Tested and fallback-safe | `tests/test_agent_pipeline.py`, `src/agent/pipeline.py` |
@@ -252,39 +244,41 @@ GRAFANA_MCP_TIMEOUT_SECONDS=20
 
 Without Gemini credentials or when the provider is unavailable, the app uses a schema-compatible local fallback and labels that mode in the HUD. Without Grafana configuration, the safety decision still returns, while publishing is reported as skipped.
 
-## Repository Map
-
-```text
-src/main.py                    FastAPI routes and production scenarios
-src/agent/                     ADK/Gemini extraction pipeline and contracts
-src/engine/safety.py           Deterministic hazard-to-severity rules
-src/engine/grafana_client.py   MCP annotation publisher
-public/                        Browser HUD and static assets
-tests/                         Backend and browser regression tests
-docs/ARCHITECTURE.md           Detailed system boundaries
-docs/DEMO_VIDEO_SCRIPT.md      Recording plan and truthful narration
-```
-
-## Project Ownership Map
-
-| Area | Current implementation |
-| --- | --- |
-| Backend API and scenario contracts | `src/main.py` |
-| ADK/Gemini pipeline and Pydantic models | `src/agent/` |
-| Deterministic safety and jurisdiction data | `src/engine/safety.py`, `data/` |
-| Grafana MCP integration | `src/engine/grafana_client.py` |
-| Browser product and responsive HUD | `public/` |
-| Tests and judge-facing documentation | `tests/`, `docs/`, `README.md` |
-
-The documentation describes the current checkout. A capability is marked verified only when the repository or a runtime receipt supports it.
-
 ## Scope And Limitations
 
 - This is an assistive hackathon prototype, not legal advice and not a replacement for qualified safety leadership or regulators.
 - The governed hazard mapping currently targets the Alberta OHS model encoded in `src/engine/safety.py` and its supporting data files.
 - SQLite history on Vercel is best-effort and ephemeral; the live POST response is the source of truth.
 - Hosted Grafana publishing is not claimed until a configured endpoint returns a verified MCP receipt.
-- Final hackathon submission compliance still depends on the repository owner making the GitHub repository public.
+
+## Final Hackathon Solution
+
+Universal CallSheet is presented as one complete vertical slice for the hackathon:
+
+`late script change -> structured agent analysis -> deterministic safety gate -> Grafana receipt -> crew-facing proof`
+
+The submission focuses on one memorable result rather than a feature list: a dangerous revision is refused, the reason is visible, the required people are named, and the system shows the evidence behind the decision.
+
+### Contribution proof
+
+| Contributor | Completed work | Repository evidence |
+| --- | --- | --- |
+| Sehrish | Browser product, responsive HUD, judge demo reel, Vercel deployment, README/docs, video/submission assets, and UI regression coverage | `public/`, `README.md`, `docs/`, `tests/ui-smoke.spec.js` |
+| Sean, repository owner | FastAPI backend, ADK/Gemini pipeline, Pydantic contracts, deterministic safety engine, jurisdiction data, Grafana MCP publisher, and backend tests | `src/`, `data/`, `tests/test_*.py`, `public/output.json` |
+| Shared submission work | Scenario design, proof path, demo narrative, claim review, and final validation | `docs/DEMO_VIDEO_SCRIPT.md`, `docs/JUDGE-READY-PLAN.md`, `docs/TEAM-CHECKLIST.md` |
+
+### Competition readiness
+
+| Submission signal | Current state |
+| --- | --- |
+| Clear problem and memorable outcome | S2 revision reaches deterministic `STOP` |
+| Hosted project | Vercel deployment is verified |
+| Demo proof | Public demo video is linked in the header |
+| Technical credibility | Code flow, tests, contracts, and evidence status are documented |
+| Partner integration | Local Grafana MCP path is verified; hosted publishing remains honestly labeled |
+| Repository submission | Owner must make the GitHub repository public before final submission |
+
+The contribution split is documented for clarity, while the judging story remains one product: AI proposes structure, deterministic rules decide, and production stays in control.
 
 ## License
 
