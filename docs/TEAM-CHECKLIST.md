@@ -22,7 +22,7 @@ Judge-ready plan: `docs/JUDGE-READY-PLAN.md`.
 - [x] Contract documented: `docs/ENGINE-JSON-CONTRACT.md`.
 - [x] Static fixture exists for zero-Python iteration.
 - [x] Build only a hosted reader against the fixture/live JSON: severity badges, department deltas, hazard tags, and Grafana link (`public/index.html`).
-- [ ] Deploy the hosted project URL.
+- [x] Deploy and verify the hosted project URL (`https://universal-callsheet.vercel.app`).
 - [x] Do not build a second workflow, auth, editor, or dashboard clone before Gemini and Grafana receipts exist.
 
 ## Both

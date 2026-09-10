@@ -3,6 +3,42 @@
 UCS is a FastAPI application with a static browser HUD. The browser and API are
 served from one origin so the frontend calls relative `/api/*` routes.
 
+## Code Flow
+
+```mermaid
+flowchart TD
+    A["POST /api/analyze<br/>src/main.py"] --> B["RevisionPipeline<br/>src/agent/pipeline.py"]
+    B --> C["DiffOutput"]
+    C --> D["CascadeOutput"]
+    D --> E["HazardTagOutput"]
+    E --> F["evaluate_safety<br/>src/engine/safety.py"]
+    F -->|GREEN| G["Standard checks"]
+    F -->|REVIEW / RED / STOP| H["Required clearances"]
+    F --> I["publish_to_grafana<br/>src/engine/grafana_client.py"]
+    G --> J["final_output JSON"]
+    H --> J
+    I --> J
+    J --> K["public/app.js<br/>renderDashboard"]
+
+    classDef api fill:#17212b,stroke:#8ed5ff,color:#ffffff,stroke-width:2px;
+    classDef analysis fill:#202a33,stroke:#8ed5ff,color:#ffffff,stroke-width:2px;
+    classDef gate fill:#1d3027,stroke:#56e5a9,color:#ffffff,stroke-width:3px;
+    classDef hold fill:#8f2d35,stroke:#ff7b74,color:#ffffff,stroke-width:3px;
+    classDef output fill:#2b2419,stroke:#ffb95f,color:#ffffff,stroke-width:2px;
+
+    class A api;
+    class B,C,D,E analysis;
+    class F gate;
+    class G,H hold;
+    class I,J,K output;
+```
+
+The API accepts either a preloaded scenario or a custom original/revised scene.
+The pipeline then emits three typed artifacts in order: `DiffOutput`,
+`CascadeOutput`, and `HazardTagOutput`. The safety engine consumes only the
+validated hazard rows and owns the final severity. Grafana publication and HUD
+rendering consume the resulting record; neither can change the safety verdict.
+
 ```text
 screenplay revision
         |

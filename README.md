@@ -37,6 +37,37 @@ A late screenplay revision can introduce a firearm, smoke, a confined space, a s
 
 The memorable outcome is intentionally simple: when a critical hazard is present, the system says `STOP`, explains why, and shows what must happen next.
 
+## Start Here
+
+1. [Watch the demo video](https://youtu.be/XzUXE0kLOAs) for the plain-English story.
+2. [Open the live app](https://universal-callsheet.vercel.app) and replay the S2 refusal path.
+3. Read the [architecture notes](docs/ARCHITECTURE.md) and inspect the source files behind each step.
+
+For judges: watch the demo first, then use the live app to verify the same refusal outcome.
+
+## The Moment That Matters
+
+```mermaid
+flowchart LR
+    A["S2 screenplay revision<br/>firearm + smoke + confined space"] --> B["UCS structures<br/>what changed"]
+    B --> C["Python safety engine<br/>checks governed hazards"]
+    C -->|critical hazard| D["STOP<br/>set frozen"]
+    D --> E["Required clearances<br/>before rehearsal or roll"]
+    D --> F["Receipt<br/>JSON + Grafana state"]
+
+    classDef input fill:#17212b,stroke:#8ed5ff,color:#ffffff,stroke-width:2px;
+    classDef process fill:#202a33,stroke:#8ed5ff,color:#ffffff,stroke-width:2px;
+    classDef stop fill:#8f2d35,stroke:#ff7b74,color:#ffffff,stroke-width:3px;
+    classDef proof fill:#2b2419,stroke:#ffb95f,color:#ffffff,stroke-width:2px;
+
+    class A input;
+    class B,C process;
+    class D stop;
+    class E,F proof;
+```
+
+This is the product in one sentence: AI may interpret the revision, but deterministic permission is required before the camera can roll.
+
 ## See The Proof First
 
 | Start here | What it proves |
@@ -47,7 +78,7 @@ The memorable outcome is intentionally simple: when a critical hazard is present
 | Open `Raw backend JSON` | The visible result comes from the FastAPI contract |
 | Open `Receipt and chain` | Runtime mode, safety ownership, and Grafana status are explicit |
 
-### The 60-second judge path
+### Replay the proof
 
 1. Open the live app and keep `Auto-review` enabled.
 2. Select `S2: Confined Space Prop Firearm Shootout`.
@@ -55,17 +86,25 @@ The memorable outcome is intentionally simple: when a critical hazard is present
 4. Read the `STOP` decision, affected teams, and required clearances.
 5. Open the evidence panels and raw JSON to verify the result instead of trusting a claim.
 
+| What you will see | Why it matters |
+| --- | --- |
+| S2 adds a blank firearm discharge and atmospheric smoke | A concrete production change, not an abstract AI demo |
+| `DiffOutput`, `CascadeOutput`, and `HazardTagOutput` | The model work is structured and inspectable |
+| `STOP` from the Python safety engine | Final authority is deterministic and testable |
+| Required armorer, safety, and rescue clearances | The result creates an operational next step |
+| Raw JSON and receipt state | The visible story maps back to a backend response |
+
 ## The Core Flow
 
 ```mermaid
 flowchart LR
-    A["Screenplay revision"] --> B["ADK / Gemini\nstructured extraction"]
-    B --> C["Pydantic\ncontract validation"]
-    C --> D["Deterministic\nPython safety engine"]
-    D -->|GREEN| E["Standard checks\nmay continue"]
-    D -->|RED / STOP| F["Hold camera\nrequire clearances"]
-    D --> G["Grafana MCP\nreceipt when configured"]
-    F --> H["Frontend proof HUD\nJSON, evidence, next action"]
+    A["Screenplay revision"] --> B["ADK / Gemini<br/>structured extraction"]
+    B --> C["Pydantic<br/>contract validation"]
+    C --> D["Deterministic<br/>Python safety engine"]
+    D -->|GREEN| E["Standard checks<br/>may continue"]
+    D -->|RED / STOP| F["Hold camera<br/>require clearances"]
+    D --> G["Grafana MCP<br/>receipt when configured"]
+    F --> H["Frontend proof HUD<br/>JSON, evidence, next action"]
     G --> H
 
     classDef input fill:#17212b,stroke:#8ed5ff,color:#ffffff,stroke-width:2px;
@@ -94,6 +133,46 @@ The model is useful for interpreting ambiguous screenplay language. It is not tr
 | Frontend HUD | Show the decision, evidence, provenance, and next action | `public/index.html`, `public/app.js` |
 
 The frontend checklist records sign-off progress; it cannot override a backend `STOP` verdict. That rule is covered by a browser regression test.
+
+## Code Flow
+
+```mermaid
+flowchart TD
+    A["POST /api/analyze<br/>src/main.py"] --> B["RevisionPipeline<br/>src/agent/pipeline.py"]
+    B --> C["1. DiffOutput<br/>changed screenplay text"]
+    C --> D["2. CascadeOutput<br/>affected departments"]
+    D --> E["3. HazardTagOutput<br/>governed hazard rows"]
+    E --> F["evaluate_safety<br/>src/engine/safety.py"]
+    F -->|GREEN| G["Proceed with standard checks"]
+    F -->|REVIEW / RED / STOP| H["Hold camera<br/>required clearances"]
+    F --> I["publish_to_grafana<br/>src/engine/grafana_client.py"]
+    G --> J["final_output JSON"]
+    H --> J
+    I --> J
+    J --> K["renderDashboard<br/>public/app.js"]
+
+    classDef api fill:#17212b,stroke:#8ed5ff,color:#ffffff,stroke-width:2px;
+    classDef analysis fill:#202a33,stroke:#8ed5ff,color:#ffffff,stroke-width:2px;
+    classDef gate fill:#1d3027,stroke:#56e5a9,color:#ffffff,stroke-width:3px;
+    classDef hold fill:#8f2d35,stroke:#ff7b74,color:#ffffff,stroke-width:3px;
+    classDef output fill:#2b2419,stroke:#ffb95f,color:#ffffff,stroke-width:2px;
+
+    class A api;
+    class B,C,D,E analysis;
+    class F gate;
+    class G,H hold;
+    class I,J,K output;
+```
+
+| Stage | Runtime responsibility | Source |
+| --- | --- | --- |
+| 01 | Resolve a preloaded or custom scene and accept the revision request | `src/main.py` |
+| 02 | Produce schema-constrained diff, cascade, and hazard outputs | `src/agent/pipeline.py` |
+| 03 | Apply hazard-row rules without an LLM in the decision loop | `src/engine/safety.py` |
+| 04 | Attempt the official Grafana MCP annotation for significant outcomes | `src/engine/grafana_client.py` |
+| 05 | Return one JSON record and render the proof HUD | `src/main.py`, `public/app.js` |
+
+The same path is available in live Gemini mode and in the clearly labeled local fallback. Fallback keeps the demo reviewable; it does not pretend to be a Gemini receipt.
 
 ## Verified Visual Receipt
 
@@ -185,6 +264,19 @@ tests/                         Backend and browser regression tests
 docs/ARCHITECTURE.md           Detailed system boundaries
 docs/DEMO_VIDEO_SCRIPT.md      Recording plan and truthful narration
 ```
+
+## Project Ownership Map
+
+| Area | Current implementation |
+| --- | --- |
+| Backend API and scenario contracts | `src/main.py` |
+| ADK/Gemini pipeline and Pydantic models | `src/agent/` |
+| Deterministic safety and jurisdiction data | `src/engine/safety.py`, `data/` |
+| Grafana MCP integration | `src/engine/grafana_client.py` |
+| Browser product and responsive HUD | `public/` |
+| Tests and judge-facing documentation | `tests/`, `docs/`, `README.md` |
+
+The documentation describes the current checkout. A capability is marked verified only when the repository or a runtime receipt supports it.
 
 ## Scope And Limitations
 

@@ -15,11 +15,11 @@ https://youtu.be/XzUXE0kLOAs
 ---
 
 ## Inspiration
-Ninety-five percent of produced films undergo three or more rewrites before principal photography. A revision arrives as colored pages, distributed by hand through the script supervisor. In fast-paced production environments, changes cascade haphazardly across departments: props, wardrobe, stunts, pyrotechnics, and safety officers rarely receive synchronized updates in time.
+Film productions often work through multiple rewrites before principal photography. A revision arrives as colored pages, distributed by hand through the script supervisor. In fast-paced production environments, changes cascade across departments: props, wardrobe, stunts, pyrotechnics, and safety officers may not receive synchronized updates in time.
 
 The tragedy across a decade of film set accidents and fatalities is consistently identical: **the work changed, but the hazard assessment did not.**
 
-Alberta's Occupational Health and Safety (OHS) Code states it explicitly (s.7(4)(c)): a hazard assessment must be repeated *"when a work process or operation changes."* Yet until now, nobody on a film set had an automated, verifiable tool to identify changes, recalculate department work deltas, and enforce safety compliance across teams in real time.
+Alberta's Occupational Health and Safety (OHS) Code states it explicitly (s.7(4)(c)): a hazard assessment must be repeated *"when a work process or operation changes."* UCS provides a focused, verifiable workflow to identify changes, recalculate department work deltas, and surface the safety action before the next take.
 
 ---
 
@@ -33,41 +33,41 @@ Universal CallSheet (UCS) is an agentic safety governance system for film produc
    - **Hazard Tag Extraction:** Identification of regulated hazards (e.g., Pyrotechnics, Heights > 3m, Lockout/Tagout, Powered Mobile Equipment).
 
 2. **Deterministic Safety Engine (No-Hallucination Gate):**
-   *LLMs must not make final legal safety decisions.* UCS passes the structured hazard tags into a pure, auditable Python rules engine implementing jurisdiction-specific OHS regulations (Alberta OHS Code). If critical hazards are introduced (e.g., Row 2 Pyro + Row 9 Heights), the engine immediately flags a **`RED / STOP`** severity and mandates required safety clearances (e.g., *SPFX Lead Clear, Stunt Coordinator Clear, Rigger Fall Protection Clear, Equipment Lockout Clear*).
+   *LLMs must not make final legal safety decisions.* UCS passes the structured hazard tags into a pure, auditable Python rules engine implementing the governed Alberta OHS model. A firearm hazard is mapped to **`STOP`** in the current rule table; other governed hazards can produce **`REVIEW`** or **`RED`** and mandate the corresponding safety clearances.
 
 3. **Grafana Annotation via MCP Server:**
    Significant safety results can be published through the official `mcp` Python client and `grafana/mcp-grafana`. The verified local path creates real annotations; hosted MCP is supported but requires a separately deployed endpoint.
 
 4. **Production HUD (Hosted Reader):**
-   A sleek, cinematic dark-mode web HUD gives crew members an instant, responsive breakdown of the scene's safety status, required clears, and clickable hazard details, complete with full offline fallback cache capabilities.
+   A responsive dark-mode web HUD gives crew members a clear breakdown of the scene's safety status, required clearances, and clickable hazard details. When the provider is unavailable, the app uses a clearly labeled schema-compatible fallback.
 
 ---
 
 ## How We Built It
-- **AI & Agent Orchestration:** Built with the official **`google-adk`** and **`google-genai`** SDKs powered by the configured Gemini model for schema-constrained structured output generation.
+- **AI & Agent Orchestration:** Built with the official **`google-adk`** and **`google-genai`** SDKs for schema-constrained structured output when Gemini credentials and quota are available.
 - **Deterministic Rules Engine:** Pure Python module with zero LLM dependency to ensure 100% deterministic, rule-bound safety evaluation.
 - **Grafana MCP Integration:** Implemented using the official Model Context Protocol (MCP) to publish safety annotations to Grafana OSS dashboards. The local stdio path is verified; hosted Streamable HTTP is supported but requires a separately deployed MCP endpoint.
 - **Backend & Persistence:** **FastAPI** asynchronous server with best-effort local SQLite run logging; serverless history is ephemeral.
-- **Frontend HUD:** Zero-dependency, responsive HTML/CSS/JavaScript interface styled with a cinematic dark-mode HUD theme and interactive hazard analysis modals.
+- **Frontend HUD:** Zero-dependency, responsive HTML/CSS/JavaScript interface styled as a production review cockpit with interactive hazard and statutory evidence panels.
 
 ---
 
 ## Challenges We Ran Into
 - **Enforcing a deterministic safety boundary:** Generative AI is inherently probabilistic. We solved this with an architectural split: AI handles unstructured natural language extraction into strict Pydantic schemas, while a deterministic rules engine handles all compliance and severity calculations.
-- **Sovereign Provenance & Tool Compliance:** Aligning strictly with hackathon tool invariants required eliminating unauthorized tooling dependencies and rebuilding pure Google ADK pipelines from scratch with verifiable test receipts.
+- **Truthful provenance:** Live requests, structured fallback, static snapshots, and Grafana receipt state are labeled separately so the interface does not turn a supported path into an unverified claim.
 
 ---
 
 ## Accomplishments We're Proud Of
 - **End-to-End Auditable Chain:** A verified local path runs from script revision input through schema-compatible structured analysis or marked fallback, deterministic safety gate, Grafana MCP annotation, and HUD JSON rendering. Live Gemini requires configured credentials and available quota and is reported separately from fallback mode.
-- **100% Pass on Automated Test Suite:** Unit and integration tests verify every step of the agent, engine, and MCP client with automated pytest test passes.
+- **Automated regression coverage:** Backend tests cover the API, agent pipeline, safety engine, database, and Grafana client. The browser suite covers responsive rendering, S2 auto-review, custom revisions, navigation, and the non-overridable `STOP` gate.
 - **Credential Boundary:** Gemini and Grafana credentials remain server-side and are never embedded in browser code. Local caches stay in the workspace; serverless storage is treated as ephemeral.
 
 ---
 
 ## What We Learned
 - How to effectively bridge agentic LLM reasoning with deterministic industrial safety standards.
-- Deep hands-on experience leveraging the official Google ADK framework and Grafana MCP ecosystem for real-time operations.
+- Practical experience connecting Google ADK structured analysis to deterministic rules and a Grafana MCP receipt path.
 
 ---
 
