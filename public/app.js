@@ -460,7 +460,8 @@ function updateGateState() {
     const gateTitle = document.getElementById('gate-title');
     const gateDesc = document.getElementById('gate-desc');
 
-    if (severity === 'GREEN' || allSigned) {
+    // Checklist state records readiness; it must never override the backend verdict.
+    if (severity === 'GREEN') {
         gateBox.style.borderColor = 'var(--green)';
         gateBox.style.background = 'rgba(16, 185, 129, 0.08)';
         gateIcon.textContent = 'CLEAR';
@@ -473,7 +474,9 @@ function updateGateState() {
         gateIcon.textContent = severity === 'STOP' ? 'STOP' : 'LOCK';
         gateTitle.style.color = 'var(--red)';
         gateTitle.textContent = severity === 'STOP' ? 'MANDATORY STOP // SET FROZEN' : 'STAGE LOCKED // CAMERA CANNOT ROLL';
-        gateDesc.textContent = `${requiredClears.length - signedClears.size} required clearance(s) pending sign-off before rehearsal or camera roll.`;
+        gateDesc.textContent = severity === 'STOP'
+            ? 'Backend safety verdict remains STOP. Checklist state cannot authorize camera roll.'
+            : `${requiredClears.length - signedClears.size} required clearance(s) pending sign-off before rehearsal or camera roll.`;
     }
 }
 

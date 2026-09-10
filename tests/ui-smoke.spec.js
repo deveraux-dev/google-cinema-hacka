@@ -73,6 +73,21 @@ test("auto-review analyzes a newly selected scenario", async ({ page }) => {
   await expect(page.locator("#term-logs")).toContainText(/Auto-review selected this revision/);
 });
 
+test("STOP verdict cannot be overridden by checking clearances", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto(baseUrl, { waitUntil: "networkidle" });
+  await page.getByRole("button", { name: /confined space prop firearm shootout/i }).click();
+  await expect(page.locator("#verdict-badge")).toHaveText("STOP");
+
+  const clearances = page.locator("#clears-container .clear-checkbox");
+  for (const clearance of await clearances.all()) {
+    await clearance.check();
+  }
+
+  await expect(page.locator("#gate-title")).toHaveText("MANDATORY STOP // SET FROZEN");
+  await expect(page.locator("#gate-desc")).toContainText(/cannot authorize camera roll/i);
+});
+
 test("workspace navigation and stage depth remain usable", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(baseUrl, { waitUntil: "networkidle" });
