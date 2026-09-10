@@ -1,53 +1,41 @@
-# Team checklist — Sean & Sehrish
+# Team checklist - collaborator and repository owner
 
-Status as of commit `c9982c7`. Deadline: Sep 9, 2026, 2:00pm PDT.
+Status reviewed against this checkout on 2026-09-08. Deadline: Sep 9, 2026,
+2:00pm PDT.
 
-## Sean (this repo: rules engine, Gemini, Grafana)
+Judge-ready plan: `docs/JUDGE-READY-PLAN.md`.
 
-- [x] Phase A — rules engine: model, routing, first_aid, register, locks,
-      engine (`run`/`replay`), samples. 29/29 tests passing.
-- [x] `src/agent/gemini_client.py` — minimal `call_gemini(prompt)`, mocked
-      tests pass (haiku placeholder, no real key needed to prove the wiring).
-- [x] `src/agent/main.py` — engine → publish → Gemini crew brief. Runs without
-      a key (brief skipped, wall still published).
-- [ ] **Sehrish's key**: put `GEMINI_API_KEY` in `.env`, `pip install google-genai`,
-      run `python -m agent.main` and paste the `gemini_brief` output into the
-      README Status table. That is the Gemini runtime receipt.
-- [x] Grafana publish: `src/agent/publish.py` — `update_dashboard` (uid
-      `backlot`, 4 panels on a testdata csv datasource) + one `create_annotation`
-      per scene and per open lock in a single MCP session. Ran live: 301
-      annotations, dashboard queryable. Incidents dropped (not on OSS).
-- [x] README "Status" section carries the runtime receipts.
-- [ ] Offline demo segment (video only): wifi off on camera, `python -m agent.main`,
-      refresh the wall. No Gemma claim anywhere; README/ARCHITECTURE softened.
-- [x] Public-safety pass 2026-09-07: no `.env` ever committed, no key/token/private-key
-      patterns in tracked files or full history, no private-tooling references.
-      Re-run before the final push.
+## Collaborator lane - current implementation and submission
 
-## Sehrish (front end)
+- [x] Current ADK/Gemini pipeline files exist: `src/main.py`, `src/agent/models.py`, `src/agent/pipeline.py`.
+- [x] Saved ADK pipeline fixture exists: `public/output.json`.
+- [x] Install/confirm test runner in `.venv`; `pytest` is not currently importable.
+- [x] Capture and preserve a schema-compatible ADK pipeline result with its runtime mode labeled in the output; live Gemini requires configured credentials and quota.
+- [x] Integrate the deterministic severity gate from ADK hazard tags (`src/engine/safety.py`).
+- [x] Integrate the Grafana MCP publisher and label receipt state honestly (`src/engine/grafana_client.py`).
+- [x] Update README status only with runnable receipts from this checkout.
+- [x] Offline demo segment: run from saved fixture with network disabled and show the wall/reader still has the last known result.
+- [x] Re-run public-safety pass before final push: no `.env`, API keys, service account JSON, private tokens, or private tooling references.
 
-- [x] Contract documented: `docs/ENGINE-JSON-CONTRACT.md` — full field
-      reference for `engine.run()`'s output (severity ladder, Requirement,
-      Lock, first_aid, register shapes).
-- [x] Static fixture to build against with zero Python:
-      `samples/engine.output.json` (3 sample scenes: S1 RED, S2 STOP, S3 STOP).
-- [x] Live local harness for iterating: `$env:PYTHONPATH='src';
-      .venv\Scripts\python.exe -m agent.harness [port] [today]` → `GET http://127.0.0.1:8787/engine.json`,
-      CORS-open, recomputes fresh each request.
-- [ ] Build the web app against the fixture/harness (severity badges, lock
-      list, first-aid panel, register status).
-- [ ] Decide what "hosted project URL" points to (Vercel, per README) and
-      deploy it.
-- [ ] Once Sean's Grafana wall exists, decide whether the web app also embeds
-      or links to the Grafana dashboard, or stays a separate view of the same
-      JSON — not decided yet.
+## Collaborator lane - product and deployment
 
-## Both
+- [x] Contract documented: `docs/ENGINE-JSON-CONTRACT.md`.
+- [x] Static fixture exists for zero-Python iteration.
+- [x] Build only a hosted reader against the fixture/live JSON: severity badges, department deltas, hazard tags, and Grafana link (`public/index.html`).
+- [x] Deploy and verify the hosted project URL (`https://universal-callsheet.vercel.app`).
+- [x] Do not build a second workflow, auth, editor, or dashboard clone before Gemini and Grafana receipts exist.
 
-- [ ] Read the full Devpost Official Rules for Grafana track eligibility
-      (checklist item, not yet done by either of us).
-- [ ] Google Cloud $100 hackathon credit form (resources page).
-- [ ] 3-minute demo video, public YouTube/Vimeo, English or subtitled —
-      needs both halves working first (engine + wall + web app).
+## Repository owner lane
+
+- [x] Upstream production-safety foundation and jurisdiction data remain represented in `src/` and `data/`.
+- [x] Original repository Gemini/Grafana groundwork is preserved in the current implementation history.
+- [ ] Final repository visibility change: make the GitHub repository public before submission.
+
+## Shared submission checks
+
+- [x] Current Devpost/Grafana public pages reviewed on 2026-09-08 for planning.
+- [ ] Read the full Devpost Official Rules before final submission.
+- [ ] Google Cloud $100 hackathon credit form, if still useful.
+- [ ] 3-minute demo video, public YouTube/Vimeo, English or subtitled. Needs Gemini receipt + Grafana MCP receipt + hosted reader first.
 - [ ] Devpost submission form.
 - [ ] Confirm MIT license shows in the GitHub repo "About" section.

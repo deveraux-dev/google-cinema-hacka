@@ -1,136 +1,212 @@
-# Agentic Cinema Hackathon — Grafana Labs Track
+<p align="center">
+  <img src="assets/ucs-logo.jpg" alt="Universal CallSheet logo" width="128" />
+</p>
 
-A multi-step agent on **Google Cloud Gemini** that turns one script revision into
-structured per-department work deltas and hazard tags, then routes verified rule
-outputs to a self-hosted **Grafana** wall through the official MCP server.
+<h1 align="center">Universal CallSheet</h1>
 
-Team: Sean Morin, Sehrish 
+<p align="center">
+  <strong>AI structures screenplay changes. Deterministic safety rules decide whether the camera can roll.</strong>
+</p>
 
-## Track
+<p align="center">A proof-first safety review cockpit for film productions.</p>
 
-- **Partner:** Grafana Labs (Grafana OSS self-hosted, driven through the official `grafana/mcp-grafana` MCP server)
-- **Platform:** Google Cloud Gemini (Vertex AI Express Mode / AI Studio) + Agent Development Kit
+<p align="center">
+  <a href="https://universal-callsheet.vercel.app">Live app</a>
+  &nbsp; | &nbsp;
+  <a href="https://youtu.be/XzUXE0kLOAs">Demo video</a>
+  &nbsp; | &nbsp;
+  <a href="docs/ARCHITECTURE.md">Architecture</a>
+  &nbsp; | &nbsp;
+  <a href="docs/DEVPOST_SUBMISSION.md">Submission copy</a>
+</p>
 
-## The problem
+<p align="center">
+  <code>Google ADK</code>
+  <code>Gemini</code>
+  <code>FastAPI</code>
+  <code>Python safety engine</code>
+  <code>Grafana MCP</code>
+  <code>Vercel</code>
+</p>
 
-Ninety-five percent of produced films take three or more rewrites before principal
-photography. A revision lands as colored pages, distributed by hand through the script
-supervisor. Nothing cascades automatically to props, wardrobe, locations, stunts, or
-the safety officer. The documented symptoms are actors reading the wrong line and
-assistants photocopying at 3am.
+## The Product
 
-The safety half is worse. On *Deadpool 2* in Vancouver, a stunt was added with no
-risk assessment, no stunt safety checklist, and no perimeter. A rider died and
-WorkSafeBC fined the production. On *Fast & Furious 9*, the stunt changed after
-rehearsal and the matting did not move with it. The pattern across a decade of set
-deaths is the same: the work changed, the hazard assessment did not. Alberta's OHS
-Code says it in one clause (s.7(4)(c)): the hazard assessment must be repeated
-"when a work process or operation changes." Nobody on a set has a tool that does that.
+A late screenplay revision can introduce a firearm, smoke, a confined space, a stunt, or powered equipment after the production plan is already in motion. Universal CallSheet turns that revision into a reviewable production record:
 
-## What the agent does
+`changed text -> affected departments -> hazard evidence -> stage decision -> required clearances -> receipt`
 
-0. **Jurisdiction** — the user picks where the shoot is before anything runs. Every
-   threshold below is loaded from that choice. The core is harmonized; the numbers are
-   local. Onus on the user to adopt their own rules. Shipping: Alberta (NCSO-authored)
-   and British Columbia (WorkSafeBC regulation text, regulator-sourced). Every table
-   states its own provenance.
-1. **Diff** — the revised pages against the locked script, per scene.
-2. **Cascade** — typed deltas per department (props, wardrobe, locations, cast, stunts).
-3. **Hazard tag** — flags anything the rewrite introduced, by hazard row: stunts,
-   pyrotechnics, working at heights, power tools, electrical, pressure, chemical,
-   confined space, vehicles, water, firearms, exterior exposure.
-4. **Weather** — current wind and cloud for the shoot location, Pasquill-Gifford
-   stability class, lightning distance.
-5. **Escalate** — fixed rules from GREEN to STOP. When Sean's final NCSO rules land,
-   they become the deterministic safety engine. The model never decides the level;
-   the rules do.
-6. **Publish** — route deltas and escalations to Grafana through the official
-   `grafana/mcp-grafana` MCP server via Google ADK's `McpToolset`.
+The memorable outcome is intentionally simple: when a critical hazard is present, the system says `STOP`, explains why, and shows what must happen next.
 
-Gemini does the structured AI analysis in steps 1 to 3:
-`DiffOutput -> CascadeOutput -> HazardTagOutput`. These are schema-constrained model
-outputs, not deterministic rules. Steps 0 and 4 to 6 are intended to be deterministic
-once the NCSO safety table is finalized and wired.
+## Start Here
 
-## Repo boundary
+Use the header links in this order: demo video for the plain-English story, live app for the S2 refusal path, then architecture notes for the source-level explanation.
 
-This repository is **net-new** for the hackathon. No code, assets, or doctrine files
-are ported from any private repository. Everything here must be safe for public
-disclosure and judging by Google and Grafana Labs.
+For judges: watch the demo first, then use the live app to verify the same refusal outcome.
 
-Do not commit:
-- API keys, service account JSON, `.env` files
-- Any internal/private project files not authored for this hackathon
+## The Moment That Matters
 
-## Requirements checklist (from Devpost)
+```mermaid
+flowchart LR
+    A["S2 screenplay revision<br/>firearm + smoke + confined space"] --> B["UCS structures<br/>what changed"]
+    B --> C["Python safety engine<br/>checks governed hazards"]
+    C -->|critical hazard| D["STOP<br/>set frozen"]
+    D --> E["Required clearances<br/>before rehearsal or roll"]
+    D --> F["Receipt<br/>JSON + Grafana state"]
 
-- [ ] Hosted project URL
-- [ ] 3-minute demo video (YouTube/Vimeo, public, English)
-- [ ] Public repo with open-source license (this repo, MIT — see `LICENSE`)
-- [ ] Demonstrates actual runtime use of Google Cloud + Grafana (imported/called
-      in code, not just named)
-- [ ] Partner track selected: Grafana Labs
-- [ ] Devpost submission form completed
+    classDef input fill:#17212b,stroke:#8ed5ff,color:#ffffff,stroke-width:2px;
+    classDef process fill:#202a33,stroke:#8ed5ff,color:#ffffff,stroke-width:2px;
+    classDef stop fill:#8f2d35,stroke:#ff7b74,color:#ffffff,stroke-width:3px;
+    classDef proof fill:#2b2419,stroke:#ffb95f,color:#ffffff,stroke-width:2px;
 
-## Structure
-
-```
-src/agent/       Agent implementation (Gemini calls, rules, Grafana publish)
-docs/            Architecture + submission notes
-.env.example     Required environment variables (no real secrets)
+    class A input;
+    class B,C process;
+    class D stop;
+    class E,F proof;
 ```
 
-## Setup
+This is the product in one sentence: AI may interpret the revision, but deterministic permission is required before the camera can roll.
 
-```
-python -m venv .venv
-.venv\Scripts\activate
-pip install -e .
-copy .env.example .env   # fill in real credentials locally only
-```
+## See The Proof First
 
-If `pip install -e .` is unavailable (offline), set `PYTHONPATH=src` before any
-`python -m agent.<module>` command instead.
+Use the live app from the header and select `S2` in the scenario deck. The proof surface is the same in the demo and in the deployed product: a concrete revision, a deterministic `STOP`, required clearances, and an inspectable receipt.
 
-Grafana can run as a plain native binary or as whatever local setup the demo machine
-already has. The integration point in this repo is the official Grafana MCP server.
+### Replay the proof
 
-- Grafana OSS 13.2.1, standalone Windows archive: https://grafana.com/grafana/download?platform=windows&edition=oss
-- Grafana MCP server: https://github.com/grafana/mcp-grafana
+1. Open the live app and keep `Auto-review` enabled.
+2. Select `S2: Confined Space Prop Firearm Shootout`.
+3. Watch the revision move through structured analysis and the deterministic safety engine.
+4. Read the `STOP` decision, affected teams, and required clearances.
+5. Open the evidence panels and raw JSON to verify the result instead of trusting a claim.
 
-Default MCP launch uses `uvx mcp-grafana`, matching Grafana's quick-start path. To
-use a downloaded native binary instead, set:
+| What you will see | Why it matters |
+| --- | --- |
+| S2 adds a blank firearm discharge and atmospheric smoke | A concrete production change, not an abstract AI demo |
+| `DiffOutput`, `CascadeOutput`, and `HazardTagOutput` | The model work is structured and inspectable |
+| `STOP` from the Python safety engine | Final authority is deterministic and testable |
+| Required armorer, safety, and rescue clearances | The result creates an operational next step |
+| Raw JSON and receipt state | The visible story maps back to a backend response |
 
-```
-GRAFANA_MCP_COMMAND=mcp-grafana.exe
-GRAFANA_MCP_ARGS=-t stdio
-```
+## The System Flow
 
-Then point the server at `GRAFANA_URL` with a service-account token or supported
-username/password credentials.
+```mermaid
+flowchart LR
+    A["Screenplay revision"] --> B["ADK / Gemini<br/>structured extraction"]
+    B --> C["Pydantic<br/>contract validation"]
+    C --> D["Deterministic<br/>Python safety engine"]
+    D -->|GREEN| E["Standard checks<br/>may continue"]
+    D -->|RED / STOP| F["Hold camera<br/>require clearances"]
+    D --> G["Grafana MCP<br/>receipt when configured"]
+    F --> H["Frontend proof HUD<br/>JSON, evidence, next action"]
+    G --> H
 
-## Rules that bind this repo
+    classDef input fill:#17212b,stroke:#8ed5ff,color:#ffffff,stroke-width:2px;
+    classDef ai fill:#202a33,stroke:#8ed5ff,color:#ffffff,stroke-width:2px;
+    classDef gate fill:#1d3027,stroke:#56e5a9,color:#ffffff,stroke-width:3px;
+    classDef hold fill:#8f2d35,stroke:#ff7b74,color:#ffffff,stroke-width:3px;
+    classDef proof fill:#2b2419,stroke:#ffb95f,color:#ffffff,stroke-width:2px;
 
-- Deadline: Sep 9, 2026, 2:00pm PDT.
-- Project must be newly created during the contest period. Open-source
-  components allowed under an OSI license, disclosed here.
-- Grafana track: use the stack at runtime primarily through the Grafana MCP server.
-
-## Status
-
-| Half | State | Receipt |
-|---|---|---|
-| Structured AI analysis | verified at prior checkpoint | ADK + Gemini pipeline pushed at `d61f29d5d77de07d0b641bc7196b4d4e258c9dfd`; output order is `DiffOutput -> CascadeOutput -> HazardTagOutput` |
-| Deterministic safety engine | pending final NCSO rules | no runtime claim yet |
-| Grafana MCP adapter | config verified | `python -m pytest -q` -> 5 passed, 1 skipped; `python -m agent.grafana_mcp --check-config` prints sanitized `uvx mcp-grafana` config |
-| Live Grafana publish | pending local Grafana + MCP credentials | no dashboard or annotation runtime claim yet |
-
-Check the MCP config without starting Grafana:
-
-```
-$env:PYTHONPATH='src'
-python -m agent.grafana_mcp --check-config
+    class A input;
+    class B,C ai;
+    class D gate;
+    class E,F hold;
+    class G,H proof;
 ```
 
-Live publish instructions will be added only after they pass against a running
-Grafana instance through `mcp-grafana`.
+## Why The Boundary Matters
+
+The model is useful for interpreting ambiguous screenplay language. It is not trusted with the final permission decision.
+
+| Layer | Responsibility | Evidence in this repo |
+| --- | --- | --- |
+| Google ADK / Gemini | Extract changes, department impact, and governed hazard tags | `src/agent/pipeline.py`, `src/agent/models.py` |
+| Pydantic contracts | Reject malformed structured output | `src/agent/models.py`, API tests |
+| Python safety engine | Map hazard rows to `GREEN`, `REVIEW`, `RED`, or `STOP` | `src/engine/safety.py` |
+| Grafana MCP adapter | Publish significant results as an annotation when configured | `src/engine/grafana_client.py` |
+| Frontend HUD | Show the decision, evidence, provenance, and next action | `public/index.html`, `public/app.js` |
+
+The frontend checklist records sign-off progress; it cannot override a backend `STOP` verdict. That rule is covered by a browser regression test.
+
+## Code Flow
+
+```mermaid
+flowchart TD
+    A["POST /api/analyze<br/>src/main.py"] --> B["RevisionPipeline<br/>src/agent/pipeline.py"]
+    B --> C["1. DiffOutput<br/>changed screenplay text"]
+    C --> D["2. CascadeOutput<br/>affected departments"]
+    D --> E["3. HazardTagOutput<br/>governed hazard rows"]
+    E --> F["evaluate_safety<br/>src/engine/safety.py"]
+    F -->|GREEN| G["Proceed with standard checks"]
+    F -->|REVIEW / RED / STOP| H["Hold camera<br/>required clearances"]
+    F --> I["publish_to_grafana<br/>src/engine/grafana_client.py"]
+    G --> J["final_output JSON"]
+    H --> J
+    I --> J
+    J --> K["renderDashboard<br/>public/app.js"]
+
+    classDef api fill:#17212b,stroke:#8ed5ff,color:#ffffff,stroke-width:2px;
+    classDef analysis fill:#202a33,stroke:#8ed5ff,color:#ffffff,stroke-width:2px;
+    classDef gate fill:#1d3027,stroke:#56e5a9,color:#ffffff,stroke-width:3px;
+    classDef hold fill:#8f2d35,stroke:#ff7b74,color:#ffffff,stroke-width:3px;
+    classDef output fill:#2b2419,stroke:#ffb95f,color:#ffffff,stroke-width:2px;
+
+    class A api;
+    class B,C,D,E analysis;
+    class F gate;
+    class G,H hold;
+    class I,J,K output;
+```
+
+| Stage | Runtime responsibility | Source |
+| --- | --- | --- |
+| 01 | Resolve a preloaded or custom scene and accept the revision request | `src/main.py` |
+| 02 | Produce schema-constrained diff, cascade, and hazard outputs | `src/agent/pipeline.py` |
+| 03 | Apply hazard-row rules without an LLM in the decision loop | `src/engine/safety.py` |
+| 04 | Attempt the official Grafana MCP annotation for significant outcomes | `src/engine/grafana_client.py` |
+| 05 | Return one JSON record and render the proof HUD | `src/main.py`, `public/app.js` |
+
+The same path is available in live Gemini mode and in the clearly labeled local fallback. Fallback keeps the demo reviewable; it does not pretend to be a Gemini receipt.
+
+## Verified Visual Receipt
+
+The local Grafana path was verified with a Backlot Safety Wall showing scene severity and open locks. Hosted Grafana publishing is supported, but the live app labels it as published only when the current backend request returns a receipt.
+
+<p align="center">
+  <img src="docs/wall.png" alt="Grafana Backlot Safety Wall showing scene severity and open locks" width="100%" />
+</p>
+
+## Evidence Status
+
+| Capability | Status | Source of truth |
+| --- | --- | --- |
+| Vercel deployment | Verified | `Live app` link in the header |
+| Public demo video | Verified | `Demo video` link in the header |
+| S2 refusal path | Tested | `tests/ui-smoke.spec.js` |
+| Deterministic safety decision | Tested | `tests/test_safety_engine.py`, `src/engine/safety.py` |
+| Structured analysis path | Tested and fallback-safe | `tests/test_agent_pipeline.py`, `src/agent/pipeline.py` |
+| Auto-review workflow | Tested | `tests/ui-smoke.spec.js`, `src/main.py` |
+| Local Grafana MCP write path | Verified locally | `src/engine/grafana_client.py`, `docs/wall.png` |
+| Hosted Grafana MCP | Supported, unverified | Requires a configured hosted MCP endpoint and returned receipt |
+| Public repository | Pending owner action | The repository owner must change GitHub visibility to public |
+
+The app distinguishes live requests, structured fallback, history snapshots, static snapshots, and Grafana receipt state. No live Gemini or hosted Grafana claim should be inferred when the corresponding status is not visible in the current response.
+
+Current verification: 21 backend tests and 8 responsive browser tests pass on the submission branch.
+
+## Scope And Limitations
+
+- This is an assistive hackathon prototype, not legal advice and not a replacement for qualified safety leadership or regulators.
+- The governed hazard mapping currently targets the Alberta OHS model encoded in `src/engine/safety.py` and its supporting data files.
+- SQLite history on Vercel is best-effort and ephemeral; the live POST response is the source of truth.
+- Hosted Grafana publishing is not claimed until a configured endpoint returns a verified MCP receipt.
+
+## Final Hackathon Submission
+
+This submission is maintained from a collaborator lane covering the current ADK/Gemini agent and product implementation, deterministic safety integration, Grafana MCP path, reliability work, deployment, tests, and judge-facing materials. The repository owner provides the upstream production-safety foundation, domain and jurisdiction data, repository governance, final merge control, credentials, and GitHub visibility. The repository history supports one shared hackathon solution: AI structures the revision, deterministic rules decide, and the crew receives a proof-backed next action.
+
+- [Watch the demo video](https://youtu.be/XzUXE0kLOAs)
+- [Launch the live app](https://universal-callsheet.vercel.app)
+- [Read the architecture](docs/ARCHITECTURE.md)
+- [Open the submission copy](docs/DEVPOST_SUBMISSION.md)
+- [Explore the GitHub repository](https://github.com/deveraux-dev/google-cinema-hacka)
+
+Submission readiness: the hosted app, public demo video, code-flow documentation, test evidence, and local Grafana proof are prepared. The repository owner must make the GitHub repository public before final submission.

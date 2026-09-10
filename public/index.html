@@ -3,199 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universal CallSheet</title>
-    <style>
-        :root {
-            --bg: #1e1e2e;
-            --surface: #2a2a3f;
-            --text: #cdd6f4;
-            --text-muted: #a6adc8;
-            --red: #f38ba8;
-            --green: #a6e3a1;
-            --yellow: #f9e2af;
-            --blue: #89b4fa;
-            --border: #45475a;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 40px;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        header {
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        h1 { margin: 0 0 10px 0; color: var(--blue); }
-        .tagline { color: var(--text-muted); font-style: italic; }
-        
-        .severity-badge {
-            display: inline-block;
-            padding: 10px 24px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 1.5rem;
-            margin: 20px 0;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .severity-RED, .severity-STOP { background-color: rgba(243, 139, 168, 0.2); color: var(--red); border: 2px solid var(--red); }
-        .severity-GREEN { background-color: rgba(166, 227, 161, 0.2); color: var(--green); border: 2px solid var(--green); }
-        .severity-REVIEW { background-color: rgba(249, 226, 175, 0.2); color: var(--yellow); border: 2px solid var(--yellow); }
-        
-        .card {
-            background-color: var(--surface);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid var(--border);
-        }
-        .card h3 { margin-top: 0; color: var(--blue); border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-        
-        ul { margin: 0; padding-left: 20px; }
-        li { margin-bottom: 8px; }
-        
-        .tag {
-            display: inline-block;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            padding: 4px 10px;
-            border-radius: 4px;
-            margin-right: 8px;
-            margin-bottom: 8px;
-            font-size: 0.9em;
-        }
-        .grafana-status {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 15px;
-            border-radius: 6px;
-            background: rgba(137, 180, 250, 0.1);
-            border: 1px solid var(--blue);
-        }
-        .grafana-status a { color: var(--blue); text-decoration: none; font-weight: bold; }
-        .grafana-status a:hover { text-decoration: underline; }
-    </style>
+    <meta name="theme-color" content="#121316">
+    <meta name="description" content="Universal CallSheet: structured screenplay revision analysis and deterministic safety governance for film production.">
+    <title>Universal CallSheet | Revision safety cockpit</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to analysis</a>
 
-<div class="container" id="app">
-    <p>Loading UCS data...</p>
+<header class="top-nav">
+    <div class="nav-brand">
+        <img src="assets/ucs-logo.jpg" alt="Universal CallSheet" class="brand-logo">
+        <div class="brand-text">
+            <span class="brand-title">UNIVERSAL CALLSHEET</span>
+            <span class="brand-sub">Revision safety cockpit</span>
+        </div>
+    </div>
+    <div class="nav-controls">
+        <div class="status-pill status-connecting" id="network-status" role="status">
+            <span class="dot-pulse" aria-hidden="true"></span> CONNECTING API
+        </div>
+        <div class="status-pill status-offline" id="offline-badge" role="status" hidden>
+            <span class="dot-pulse-offline" aria-hidden="true"></span> SNAPSHOT MODE
+        </div>
+        <a id="grafana-nav-link" href="#" aria-disabled="true" class="grafana-nav-btn is-disabled">
+            <span class="nav-icon" aria-hidden="true">↗</span> Grafana receipt
+        </a>
+    </div>
+</header>
+
+<nav class="quick-nav" aria-label="UCS workspace navigation">
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+    <div class="quick-nav-inner">
+        <span class="quick-nav-label">WORKSPACE</span>
+        <a href="#review-heading" class="quick-nav-link is-active" data-section-link="review-heading">Review <span>01</span></a>
+        <a href="#verdict-heading" class="quick-nav-link" data-section-link="verdict-heading">Decision <span>02</span></a>
+        <a href="#evidence-heading" class="quick-nav-link" data-section-link="evidence-heading">Evidence <span>03</span></a>
+        <a href="#technical-proof" class="quick-nav-link" data-section-link="technical-proof">Proof <span>04</span></a>
+        <span class="quick-nav-state" id="quick-nav-state">READY TO REVIEW</span>
+    </div>
+</nav>
+
+<main class="main-container" id="main-content">
+    <div class="stage-backdrop" aria-hidden="true">
+        <span class="stage-plate stage-plate-one" data-parallax="0.035"></span>
+        <span class="stage-plate stage-plate-two" data-parallax="-0.022"></span>
+        <span class="stage-plate stage-plate-three" data-parallax="0.018"></span>
+    </div>
+    <section class="hero-strip" aria-labelledby="page-title">
+        <div>
+            <p class="eyebrow">SCREENPLAY REVISION GOVERNANCE</p>
+            <h1 id="page-title">Know what changed before the camera rolls.</h1>
+            <p class="hero-copy">UCS turns a script revision into a clear stage decision, the people who must act, and the evidence behind it.</p>
+            <p class="hero-trust-line"><strong>AI proposes.</strong> Deterministic safety rules decide. A receipt shows what happened.</p>
+        </div>
+        <div class="hero-proof" aria-label="Runtime architecture">
+            <span>AI PROPOSES</span><span>SAFETY DECIDES</span><span>RECEIPT PROVES</span>
+        </div>
+    </section>
+
+    <section class="judge-reel" aria-labelledby="judge-reel-heading">
+        <div class="reel-card reel-card-primary">
+            <div class="reel-brand">
+                <img src="assets/ucs-logo.jpg" alt="" class="reel-logo">
+                <div>
+                    <p class="eyebrow">JUDGE DEMO REEL</p>
+                    <h2 id="judge-reel-heading">Universal CallSheet in 99 seconds</h2>
+                </div>
+            </div>
+            <p class="reel-copy">A confined-space firearm revision becomes structured impact, deterministic STOP, required clearances, and a visible receipt trail.</p>
+            <div class="reel-actions" aria-label="Demo actions">
+                <a class="demo-link demo-link-primary" href="https://youtu.be/XzUXE0kLOAs" target="_blank" rel="noopener noreferrer">Watch YouTube demo</a>
+                <a class="demo-link" href="#review-heading">Open S2 proof path</a>
+            </div>
+        </div>
+        <div class="reel-card">
+            <p class="eyebrow">PROBLEM FLOW</p>
+            <ol class="flowchart" aria-label="Problem to proof flow">
+                <li><span>01</span><strong>Script changes</strong><small>New physical work appears.</small></li>
+                <li><span>02</span><strong>AI structures</strong><small>Diff, teams, and hazards.</small></li>
+                <li><span>03</span><strong>Rules decide</strong><small>STOP, RED, or GREEN.</small></li>
+                <li><span>04</span><strong>Receipt proves</strong><small>JSON and Grafana state.</small></li>
+            </ol>
+        </div>
+        <div class="reel-card">
+            <p class="eyebrow">JUDGE SIGNALS</p>
+            <div class="signal-scale" aria-label="Judge-ready signal scale">
+                <div><span>Problem clarity</span><meter min="0" max="10" value="9">9 of 10</meter><strong>9</strong></div>
+                <div><span>Proof path</span><meter min="0" max="10" value="9">9 of 10</meter><strong>9</strong></div>
+                <div><span>Claim discipline</span><meter min="0" max="10" value="8">8 of 10</meter><strong>8</strong></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="context-ribbon" aria-label="Production context">
+        <div><span class="context-label">PRODUCTION</span><strong id="ctx-prod">Backlot Test: Stage 4</strong></div>
+        <div><span class="context-label">CALL SHEET</span><strong id="ctx-day">Day 2 of 42</strong></div>
+        <div><span class="context-label">LOCATION</span><strong id="ctx-loc">Warehouse 9</strong></div>
+        <div><span class="context-label">LEADS</span><strong id="ctx-leads">1st AD / Safety</strong></div>
+        <div><span class="context-label">JURISDICTION</span><strong id="ctx-juris">Alberta OHS</strong></div>
+    </section>
+
+    <section class="review-start" aria-labelledby="review-heading">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">01 / SELECT A REVISION</p>
+                <h2 id="review-heading">What changed on the page?</h2>
+            </div>
+            <div class="mode-switch" role="tablist" aria-label="Revision source">
+                <button class="tab-btn active" id="tab-scenarios-btn" role="tab" aria-selected="true" aria-controls="scenario-deck-panel" onclick="switchTab('scenarios')">Scenario deck</button>
+                <button class="tab-btn" id="tab-editor-btn" role="tab" aria-selected="false" aria-controls="custom-editor-panel" onclick="switchTab('editor')">Custom revision</button>
+            </div>
+        </div>
+        <div class="scenario-deck" id="scenario-deck-panel" role="tabpanel" aria-labelledby="tab-scenarios-btn"></div>
+        <section class="custom-editor-panel" id="custom-editor-panel" role="tabpanel" aria-labelledby="tab-editor-btn" hidden>
+            <div class="editor-grid">
+                <label class="editor-col"><span class="editor-label">Original scene</span><textarea id="custom-orig-text" class="screenplay-textarea" placeholder="Paste the original screenplay scene..."></textarea></label>
+                <label class="editor-col"><span class="editor-label">Revised scene</span><textarea id="custom-rev-text" class="screenplay-textarea" placeholder="Paste the revised screenplay scene..."></textarea></label>
+            </div>
+        </section>
+        <div class="review-action-row">
+            <div class="selection-summary"><span class="selection-dot" aria-hidden="true"></span><span id="selection-summary-text">Select a scenario to review its revision.</span></div>
+            <button type="button" class="auto-review-toggle is-on" id="auto-review-toggle" aria-pressed="true" onclick="toggleAutoReview()"><span class="toggle-indicator" aria-hidden="true"></span><span>Auto-review</span><small id="auto-review-status">ON</small></button>
+            <button class="run-pipeline-btn" id="main-run-btn" onclick="triggerCurrentAnalysis()" aria-live="polite">
+                <span aria-hidden="true">▶</span> Analyze revision
+            </button>
+        </div>
+    </section>
+
+    <section class="verdict-section" aria-labelledby="verdict-heading">
+        <div class="section-heading section-heading-tight">
+            <div><p class="eyebrow">02 / STAGE DECISION</p><h2 id="verdict-heading">Can the camera roll?</h2><span class="scene-tag" id="display-scene-id">SCENE —</span></div>
+            <span class="provenance-badge" id="provenance-badge">WAITING FOR ANALYSIS</span>
+        </div>
+        <div class="verdict-card safety-verdict-card" id="verdict-card">
+            <div class="verdict-main">
+                <div class="verdict-kicker">CURRENT DECISION</div>
+                <div class="verdict-line"><div class="severity-badge-lg" id="verdict-badge">—</div><div><h3 class="verdict-reason" id="verdict-reason-text">Choose a revision, then run the analysis.</h3><p class="verdict-helper" id="verdict-helper">UCS will identify changed hazards, apply deterministic safety rules, and return the required next action.</p></div></div>
+            </div>
+            <div class="camera-gate" id="camera-gate-box">
+                <div class="gate-status"><span class="gate-icon" id="gate-icon">WAIT</span><div><strong id="gate-title">AWAITING REVISION</strong><p id="gate-desc">No stage decision has been issued yet.</p></div></div>
+            </div>
+            <div class="verdict-meta"><div><span class="meta-label">NEXT ACTION</span><strong id="next-action-text">Analyze the selected revision</strong></div><div><span class="meta-label">AFFECTED TEAMS</span><strong id="affected-teams-text">Will appear after analysis</strong></div></div>
+        </div>
+    </section>
+
+    <section class="chain-status-panel" aria-label="Runtime chain status">
+        <div class="chain-step" id="chain-analysis"><span class="chain-index">01</span><span class="chain-label">Structured analysis</span><strong>Waiting</strong></div>
+        <div class="chain-step" id="chain-safety"><span class="chain-index">02</span><span class="chain-label">Safety engine</span><strong>Waiting</strong></div>
+        <div class="chain-step" id="chain-grafana"><span class="chain-index">03</span><span class="chain-label">Grafana MCP</span><strong>Waiting</strong></div>
+        <div class="chain-step" id="chain-frontend"><span class="chain-index">04</span><span class="chain-label">Frontend receipt</span><strong>Waiting</strong></div>
+    </section>
+
+    <section class="evidence-layout" aria-labelledby="evidence-heading">
+        <h2 class="visually-hidden" id="evidence-heading">Analysis evidence</h2>
+        <div class="evidence-main">
+            <details class="evidence-panel scroll-reveal" open>
+                <summary><span><b>Revision impact</b><small>What changed in the screenplay</small></span><span class="summary-state">OPEN</span></summary>
+                <div class="evidence-body"><div class="screenplay-viewer" id="screenplay-diff-content"><p class="empty-state">Run an analysis to render the revision diff.</p></div></div>
+            </details>
+            <details class="evidence-panel scroll-reveal" open>
+                <summary><span><b>Required clearances</b><small>Who must sign off before roll</small></span><span class="clears-counter" id="clears-counter-badge">0 / 0</span></summary>
+                <div class="evidence-body"><div class="clears-list" id="clears-container"><p class="empty-state">Clearances will appear after analysis.</p></div></div>
+            </details>
+            <details class="evidence-panel scroll-reveal">
+                <summary><span><b>Department cascade</b><small>Operational work created by this revision</small></span><span class="summary-state">DETAIL</span></summary>
+                <div class="evidence-body"><div class="dept-grid" id="department-deltas-container"><p class="empty-state">Department impacts will appear after analysis.</p></div></div>
+            </details>
+        </div>
+        <aside class="evidence-rail">
+            <details class="evidence-panel scroll-reveal">
+                <summary><span><b>Hazard evidence</b><small>Rules-triggering signals</small></span><span class="summary-state">DETAIL</span></summary>
+                <div class="evidence-body"><div class="hazard-tag-deck" id="hazards-container"><p class="empty-state">Hazards will appear after analysis.</p></div></div>
+            </details>
+            <details class="evidence-panel scroll-reveal">
+                <summary><span><b>Statutory basis</b><small>Applicable safety references</small></span><span class="summary-state">DETAIL</span></summary>
+                <div class="evidence-body"><div class="statutory-grid" id="statutory-container"><p class="empty-state">Citations will appear after analysis.</p></div></div>
+            </details>
+            <div class="technical-panel scroll-reveal" id="technical-proof">
+                <div class="technical-head"><div><p class="eyebrow">TECHNICAL PROOF</p><h3>Receipt and chain</h3></div><button class="json-trace-btn" onclick="showRawJsonConnection()" aria-label="Raw backend JSON">{ } JSON</button></div>
+                <div class="telemetry-body" id="term-logs" role="log" aria-live="polite"><div class="term-line">System ready. Select a revision to begin.</div></div>
+                <div class="telemetry-status" id="telemetry-status-text">WAITING FOR REVISION</div>
+            </div>
+            <section class="review-map scroll-reveal" aria-labelledby="review-map-heading">
+                <div class="review-map-head"><div><p class="eyebrow">REVIEW MAP</p><h3 id="review-map-heading">What needs attention</h3></div><span class="review-map-dot" aria-hidden="true"></span></div>
+                <div class="review-map-row"><span>Decision</span><strong id="rail-decision">Waiting for analysis</strong></div>
+                <div class="review-map-row"><span>Sign-offs</span><strong id="rail-clears">No clearances loaded</strong></div>
+                <div class="review-map-row"><span>Next move</span><strong id="rail-next">Select a revision and analyze it.</strong></div>
+                <a class="proof-link review-map-link" href="#verdict-heading">View stage decision <span aria-hidden="true">↗</span></a>
+            </section>
+        </aside>
+    </section>
+    <section class="claim-panel scroll-reveal" aria-labelledby="claim-heading">
+        <div class="claim-panel-head"><div><p class="eyebrow">TRUST AND DELIVERY</p><h3 id="claim-heading">What this screen can prove</h3></div><p>Every label follows the backend receipt.</p></div>
+        <div class="claim-grid">
+            <div class="claim-item" id="claim-analysis"><strong>Analysis source</strong><span>Waiting for a fresh revision request.</span></div>
+            <div class="claim-item" id="claim-safety"><strong>Safety decision</strong><span>Deterministic Python rules own the stage decision.</span></div>
+            <div class="claim-item" id="claim-grafana"><strong>Grafana receipt</strong><span>Only shown as published when the backend returns a receipt.</span></div>
+        </div>
+        <nav class="proof-links" aria-label="Proof shortcuts">
+            <a class="proof-link" href="#review-heading">Review a revision</a>
+            <a class="proof-link" href="#verdict-heading">Jump to decision</a>
+            <a class="proof-link" href="#technical-proof">Open technical proof</a>
+        </nav>
+    </section>
+</main>
+
+<div class="modal-overlay" id="detail-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="if(event.target === this) closeModal()">
+    <div class="modal-content"><div class="modal-header"><h3 id="modal-title">Evidence detail</h3><button class="modal-close" onclick="closeModal()" aria-label="Close detail modal">×</button></div><div id="modal-body"></div></div>
 </div>
 
-<script>
-    async function loadData() {
-        try {
-            const response = await fetch('output.json');
-            const data = await response.json();
-            
-            const app = document.getElementById('app');
-            
-            const severity = data.safety?.severity || 'UNKNOWN';
-            
-            let deltasHtml = '';
-            if (data.department_deltas && data.department_deltas.length > 0) {
-                deltasHtml = data.department_deltas.map(d => `<li><strong>${d.department}:</strong> ${d.impact || d.delta}</li>`).join('');
-            } else {
-                deltasHtml = '<li>No department impacts detected.</li>';
-            }
-
-            let hazardsHtml = '';
-            if (data.hazard_tags && data.hazard_tags.length > 0) {
-                hazardsHtml = data.hazard_tags.map(t => `<span class="tag">Row ${t.row}: ${t.label}</span>`).join('');
-            } else {
-                hazardsHtml = '<span class="tag">None</span>';
-            }
-
-            let clearsHtml = '';
-            if (data.safety?.required_clears && data.safety.required_clears.length > 0) {
-                clearsHtml = data.safety.required_clears.map(c => `<li>⚠️ ${c}</li>`).join('');
-            } else {
-                clearsHtml = '<li>No mandatory clears required.</li>';
-            }
-
-            let grafanaHtml = '';
-            if (data.grafana?.published) {
-                const link = data.grafana.dashboard_url ? `<a href="${data.grafana.dashboard_url}" target="_blank">View Dashboard</a>` : '';
-                grafanaHtml = `
-                    <div class="grafana-status">
-                        <span>✅ Published to Grafana via MCP</span>
-                        ${link}
-                    </div>
-                `;
-            } else {
-                grafanaHtml = `
-                    <div class="grafana-status" style="background: rgba(243, 139, 168, 0.1); border-color: var(--red);">
-                        <span>❌ Grafana Publish Skipped: ${data.grafana?.error || 'Unknown'}</span>
-                    </div>
-                `;
-            }
-
-            app.innerHTML = `
-                <header>
-                    <h1>${data.project}</h1>
-                    <div class="tagline">${data.tagline}</div>
-                </header>
-
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <h2 style="margin:0;">Scene: ${data.scene.id}</h2>
-                        <div style="color: var(--text-muted); font-size: 1.2rem;">${data.scene.heading}</div>
-                    </div>
-                    <div class="severity-badge severity-${severity}">${severity}</div>
-                </div>
-                
-                <p><strong>Safety Reason:</strong> ${data.safety?.reason || 'N/A'}</p>
-
-                ${grafanaHtml}
-
-                <div style="margin-top: 30px;">
-                    <div class="card">
-                        <h3>Hazard Tags Detected</h3>
-                        <div>${hazardsHtml}</div>
-                    </div>
-
-                    <div class="card">
-                        <h3>Required Clears</h3>
-                        <ul style="list-style-type: none; padding-left: 0;">
-                            ${clearsHtml}
-                        </ul>
-                    </div>
-
-                    <div class="card">
-                        <h3>Department Deltas</h3>
-                        <ul>
-                            ${deltasHtml}
-                        </ul>
-                    </div>
-                </div>
-                
-                <div style="margin-top: 50px; font-size: 0.8em; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 20px;">
-                    <p>Jurisdiction: ${data.jurisdiction} | Primary Model: ${data.model_primary}</p>
-                    <p><em>This is a safety workflow assistant, not legal advice. Final authority remains with production safety leadership and applicable regulators.</em></p>
-                </div>
-            `;
-
-        } catch (e) {
-            document.getElementById('app').innerHTML = `
-                <div class="card" style="border-color: var(--red);">
-                    <h3 style="color: var(--red);">Error Loading Data</h3>
-                    <p>Could not load output.json. Ensure the Python pipeline has run successfully and the frontend is served via a local web server.</p>
-                    <pre>${e.message}</pre>
-                </div>
-            `;
-        }
-    }
-
-    loadData();
-</script>
+<footer><div class="footer-content"><strong>Universal CallSheet</strong><span>Structured screenplay revision analysis with deterministic safety governance.</span><span class="footer-disclaimer">Assistive governance framework. Final authority remains with designated safety personnel and applicable regulatory bodies.</span></div></footer>
+<script src="app.js"></script>
 </body>
 </html>

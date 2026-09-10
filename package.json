@@ -1,0 +1,12 @@
+{
+  "name": "universal-callsheet",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "test:ui": "playwright test tests/ui-smoke.spec.js --reporter=line",
+    "install:browsers": "playwright install chromium"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0"
+  }
+}

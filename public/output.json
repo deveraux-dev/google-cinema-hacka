@@ -1,85 +1,178 @@
 {
   "project": "Universal CallSheet",
-  "tagline": "Deterministic script revision cascades and offline safety governance for film production.",
-  "jurisdiction": "AB",
-  "model_primary": "gemini-3.5-flash",
-  "model_reviewer": "gemini-3.1-flash",
+  "tagline": "Structured script revision analysis and deterministic safety governance for film production.",
+  "production_context": {
+    "production_name": "Backlot Test: Sovereign Stage 4",
+    "call_sheet_day": "Day 2 of 42 (Night Exterior)",
+    "location": {
+      "name": "Warehouse 9 / Backlot Stage",
+      "hospital_minutes": 15,
+      "nearest_hospital": "Foothills Medical Centre (Level 1 Trauma)"
+    },
+    "crew_on_duty": {
+      "first_ad": "Ann Frost",
+      "safety_officer": "Sam Officer",
+      "armorer": "Al Arms",
+      "rigger": "Dana Rigger",
+      "first_aider": "Sam Aid",
+      "headcount": 42
+    },
+    "jurisdiction": {
+      "code": "AB",
+      "name": "Alberta OHS Code (AR 191/2021 current to 2025-03-31)",
+      "secondary": "WorkSafeBC (BC Reg 296/97)"
+    },
+    "site_conditions": {
+      "temperature": "12\u00b0C",
+      "wind_speed_kmh": 22,
+      "wind_threshold_kmh": 40,
+      "status": "GREEN / WITHIN SAFE LIMITS"
+    }
+  },
+  "jurisdiction": "Alberta OHS Code (AR 191/2021) / Section 7(4)(c)",
+  "model_primary": "gemini-3.7-flash",
+  "analysis": {
+    "mode": "offline_structured_fallback",
+    "note": "Google ADK/Gemini was unavailable or returned an error; local keyword extraction produced schema-compatible output.",
+    "structured_output_order": [
+      "DiffOutput",
+      "CascadeOutput",
+      "HazardTagOutput"
+    ],
+    "deterministic_decision_owner": "engine.safety.evaluate_safety"
+  },
   "scene": {
     "id": "S1",
-    "heading": "EXT. LOADING DOCK - NIGHT"
+    "heading": "EXT. LOADING DOCK - NIGHT",
+    "original_script": "[Scene 1] EXT. LOADING DOCK - NIGHT\nThe loading dock is quiet. A security guard walks past holding a flashlight.",
+    "revised_script": "[Scene 1] EXT. LOADING DOCK - NIGHT\nThe loading dock is quiet. A security guard walks past holding a flashlight.\nSuddenly, a pyrotechnic flash pot explodes near the dumpster.\nA masked performer jumps from a 20-foot elevated platform down to the concrete, rolling to safety.\nThe crew resets the powered hydraulic lift between takes."
   },
   "diff": [
     {
       "scene_id": "S1",
       "element": "action",
-      "old_text": "The loading dock is quiet. A security guard walks past.",
-      "new_text": "The loading dock is quiet. A security guard walks past. Suddenly, a flash pot explodes near the dumpster. A masked performer jumps from a 20-foot elevated platform down to the concrete, rolling to safety. The crew resets the powered hydraulic lift between takes."
+      "old_text": "[Scene 1] EXT. LOADING DOCK - NIGHT\nThe loading dock is quiet. A security guard walks past holding a flashlight.",
+      "new_text": "[Scene 1] EXT. LOADING DOCK - NIGHT\nThe loading dock is quiet. A security guard walks past holding a flashlight.\nSuddenly, a pyrotechnic flash pot explodes near the dumpster.\nA masked performer jumps from a 20-foot elevated platform down to the concrete, rolling to safety.\nThe crew resets the powered hydraulic lift between takes."
     }
   ],
   "department_deltas": [
     {
       "department": "SPFX",
-      "impact": "Requires the setup, execution, and safety management of a pyrotechnic flash pot explosion near the dumpster."
+      "impact": "Requires setup, perimeter clearance, and execution of practical pyrotechnics."
     },
     {
       "department": "Stunts",
-      "impact": "Requires a stunt double for the masked performer to execute a 20-foot high jump from an elevated platform onto concrete, including safety rigging, crash mats, and stunt coordination."
+      "impact": "Stunt performer required for physical fall/jump action and deceleration mats."
     },
     {
-      "department": "Wardrobe",
-      "impact": "Must provide a costume and mask for the new masked performer, including duplicates for the stunt double."
+      "department": "Grip / Rigging",
+      "impact": "Fall protection and elevated platform rigging required."
     },
     {
       "department": "Grip",
-      "impact": "Responsible for operating and resetting the powered hydraulic lift used between takes."
-    },
-    {
-      "department": "Set Dec",
-      "impact": "Needs to source and position a 20-foot elevated platform and a dumpster in the loading dock area."
+      "impact": "Powered mobile equipment / hydraulic lift operation."
     }
   ],
   "hazard_tags": [
     {
       "row": 2,
       "label": "pyro",
-      "detail": "A pyrotechnic flash pot explodes near the dumpster."
+      "detail": "Practical pyrotechnic device / flash pot explosion introduced."
     },
     {
       "row": 8,
       "label": "stunts",
-      "detail": "A stunt performer executes a 20-foot high jump from an elevated platform onto concrete."
+      "detail": "Physical stunt action requiring coordinator walk-through."
     },
     {
       "row": 9,
       "label": "heights",
-      "detail": "The performer jumps from a 20-foot elevated platform, which is well over the 3-meter threshold."
+      "detail": "Elevated platform or fall hazard >= 3 metres requiring fall protection."
     },
     {
       "row": 11,
       "label": "motion_pme",
-      "detail": "Operating a powered hydraulic lift in the loading dock area."
+      "detail": "Powered mobile equipment / hydraulic lift."
     },
     {
       "row": 13,
       "label": "loto",
-      "detail": "Resetting the powered hydraulic lift between takes, requiring hazardous energy control."
+      "detail": "Hazardous energy isolation required before resetting equipment between takes."
     }
   ],
   "safety": {
     "severity": "RED",
-    "reason": "Serious safety work introduced: Row 2 (pyro), Row 8 (stunts), Row 9 (heights), Row 13 (loto). Requires safety review before work proceeds.",
+    "reason": "High-risk safety hazards introduced: Row 2 (Pyrotechnic Devices & Flash Pots), Row 8 (High-Risk Physical Stunts & Acrobatics), Row 9 (Working at Heights (>= 3 Metres)), Row 13 (Lockout / Tagout & Hydraulic Energy Isolation). Mandatory pre-take clearances required per Alberta OHS Code.",
     "required_clears": [
-      "Equipment owner lockout clear",
-      "Rigger/fall protection clear",
-      "SPFX lead clear",
-      "Safety officer clear",
-      "Stunt coordinator clear"
+      "Equipment Owner Lockout Clear",
+      "Key Grip Clear",
+      "Key Rigger / Fall Protection Clear (Dana Rigger)",
+      "SPFX Lead Clear",
+      "Safety Officer Clear (Sam Officer)",
+      "Stunt Coordinator Clear"
+    ],
+    "statutory_citations": [
+      {
+        "citation": "Alberta OHS Code Part 2, s.7(4)(c)",
+        "title": "Mandatory Hazard Assessment Revision",
+        "statute_text": "An employer must ensure that the hazard assessment is repeated before work begins on a new work site or when a work process or operation changes.",
+        "mandatory": true
+      },
+      {
+        "citation": "Alberta OHS Code Part 28, s.498 (Pyrotechnics & Special Effects)",
+        "title": "Pyrotechnic Devices & Flash Pots",
+        "statute_text": "Pyrotechnic special effects require an authorized special effects pyrotechnician, local fire jurisdiction permit, and an enforced 50-foot safety exclusion perimeter.",
+        "clears": [
+          "SPFX Lead Clear",
+          "Safety Officer Clear (Sam Officer)"
+        ],
+        "severity": "RED"
+      },
+      {
+        "citation": "Alberta OHS Code Part 2, s.9 (Hazard Assessment & Stunt Coordination)",
+        "title": "High-Risk Physical Stunts & Acrobatics",
+        "statute_text": "High-velocity falls, vehicle stunts, and performer combat require a stunt coordinator walk-through, rehearsal inspection, and crash deceleration zones.",
+        "clears": [
+          "Stunt Coordinator Clear",
+          "Safety Officer Clear (Sam Officer)"
+        ],
+        "severity": "RED"
+      },
+      {
+        "citation": "Alberta OHS Code Part 9, s.139 (Fall Protection Systems)",
+        "title": "Working at Heights (>= 3 Metres)",
+        "statute_text": "An employer must ensure that a fall protection system is used where a worker or performer may fall 3 metres (approx 10 feet) or more.",
+        "clears": [
+          "Key Rigger / Fall Protection Clear (Dana Rigger)",
+          "Safety Officer Clear (Sam Officer)"
+        ],
+        "severity": "RED"
+      },
+      {
+        "citation": "Alberta OHS Code Part 19, s.256 (Powered Mobile Equipment)",
+        "title": "Powered Mobile Equipment & Lifts",
+        "statute_text": "Powered hydraulic lifts, telescopic handlers, and condor cranes require certified operators, visual spotters, and cleared travel lanes.",
+        "clears": [
+          "Key Grip Clear"
+        ],
+        "severity": "REVIEW"
+      },
+      {
+        "citation": "Alberta OHS Code Part 13, s.212 (Hazardous Energy Control / LOTO)",
+        "title": "Lockout / Tagout & Hydraulic Energy Isolation",
+        "statute_text": "Before servicing, resetting, or reloading powered mechanical lifts or hydraulic rigs between takes, all energy sources must be isolated and verified zero-state.",
+        "clears": [
+          "Equipment Owner Lockout Clear",
+          "Safety Officer Clear (Sam Officer)"
+        ],
+        "severity": "RED"
+      }
     ]
   },
   "grafana": {
     "published": false,
     "annotation_id": "",
     "dashboard_url": "",
-    "error": "GRAFANA_URL or GRAFANA_API_KEY missing from environment. Skipping Grafana publish."
+    "error": "GRAFANA_URL plus GRAFANA_SERVICE_ACCOUNT_TOKEN or GRAFANA_USERNAME/GRAFANA_PASSWORD are required. Skipping Grafana publish."
   }
 }
