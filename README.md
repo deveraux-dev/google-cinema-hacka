@@ -192,14 +192,6 @@ The app distinguishes live requests, structured fallback, history snapshots, sta
 
 ## Run Locally
 
-### Requirements
-
-- Python 3.11+
-- Node.js and npm
-- Optional: Google Chrome for browser tests
-
-### Start the app
-
 ```powershell
 python -m pip install -e .
 python -m uvicorn src.main:app --host 127.0.0.1 --port 8003
@@ -207,7 +199,9 @@ python -m uvicorn src.main:app --host 127.0.0.1 --port 8003
 
 Open [http://127.0.0.1:8003](http://127.0.0.1:8003).
 
-### Run the tests
+No credentials are needed for the local proof path; the app uses its clearly labeled structured fallback when Gemini is unavailable.
+
+Run the backend tests with:
 
 ```powershell
 python -m pytest -q
@@ -224,26 +218,6 @@ npm run test:ui
 
 The browser suite covers the desktop, laptop, tablet, and mobile HUD, the custom revision path, automatic S2 review, navigation, and the rule that a `STOP` cannot be overridden by checking clearances.
 
-## Configuration
-
-Credentials stay on the server. The browser receives only the JSON response.
-
-```text
-GEMINI_API_KEY=<server-side key>
-GEMINI_MODEL=gemini-3.7-flash
-```
-
-For hosted Grafana MCP:
-
-```text
-GRAFANA_MCP_URL=https://<hosted-mcp-service>/mcp
-GRAFANA_MCP_SERVER_TOKEN=<server-side token>
-GRAFANA_PUBLIC_URL=https://<grafana-host>
-GRAFANA_MCP_TIMEOUT_SECONDS=20
-```
-
-Without Gemini credentials or when the provider is unavailable, the app uses a schema-compatible local fallback and labels that mode in the HUD. Without Grafana configuration, the safety decision still returns, while publishing is reported as skipped.
-
 ## Scope And Limitations
 
 - This is an assistive hackathon prototype, not legal advice and not a replacement for qualified safety leadership or regulators.
@@ -251,29 +225,9 @@ Without Gemini credentials or when the provider is unavailable, the app uses a s
 - SQLite history on Vercel is best-effort and ephemeral; the live POST response is the source of truth.
 - Hosted Grafana publishing is not claimed until a configured endpoint returns a verified MCP receipt.
 
-## Project Architecture & Ownership
-
-This submission is maintained from a collaborator lane that covers the current agent and product implementation: ADK/Gemini revision analysis, schema contracts, fallback behavior, deterministic safety integration, Grafana MCP integration, FastAPI reliability, browser product, deployment preview, README/docs, and presentation assets. The repository owner retains the upstream production-safety foundation, domain and jurisdiction data, repository governance, final merge control, credentials, and GitHub visibility. Frontend copy mirrors backend responses without changing the deterministic safety authority.
-
-### Collaborator lane
-
-- Browser product and responsive proof HUD in `public/`
-- ADK/Gemini revision pipeline and Pydantic contracts in `src/agent/`
-- Schema-compatible fallback, deterministic safety integration, and FastAPI reliability in `src/`
-- Grafana MCP adapter, backend tests, and deployment verification
-- Judge demo reel and S2 proof path
-- Vercel deployment and frontend regression coverage
-- README, architecture notes, demo script, and submission materials
-
-### Repository owner lane
-
-- Upstream production-safety model, jurisdiction data, and early engine foundations in `src/`, `data/`, and the repository history
-- Original Gemini/Grafana groundwork and production-domain design carried into the current implementation
-- Repository governance, final review and merge, credentials, and GitHub visibility
-
-The repository history supports this split while the result remains one shared hackathon solution: AI structures the revision, deterministic rules decide, and the crew receives a proof-backed next action.
-
 ## Final Hackathon Submission
+
+This submission is maintained from a collaborator lane covering the current ADK/Gemini agent and product implementation, deterministic safety integration, Grafana MCP path, reliability work, deployment, tests, and judge-facing materials. The repository owner provides the upstream production-safety foundation, domain and jurisdiction data, repository governance, final merge control, credentials, and GitHub visibility. The repository history supports one shared hackathon solution: AI structures the revision, deterministic rules decide, and the crew receives a proof-backed next action.
 
 - [Watch the demo video](https://youtu.be/XzUXE0kLOAs)
 - [Launch the live app](https://universal-callsheet.vercel.app)
@@ -282,7 +236,3 @@ The repository history supports this split while the result remains one shared h
 - [Explore the GitHub repository](https://github.com/deveraux-dev/google-cinema-hacka)
 
 Submission readiness: the hosted app, public demo video, code-flow documentation, test evidence, and local Grafana proof are prepared. The repository owner must make the GitHub repository public before final submission.
-
-## License
-
-See [LICENSE](LICENSE).
