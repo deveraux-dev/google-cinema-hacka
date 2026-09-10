@@ -251,34 +251,35 @@ Without Gemini credentials or when the provider is unavailable, the app uses a s
 - SQLite history on Vercel is best-effort and ephemeral; the live POST response is the source of truth.
 - Hosted Grafana publishing is not claimed until a configured endpoint returns a verified MCP receipt.
 
-## Final Hackathon Solution
+## Project Architecture & Ownership
 
-Universal CallSheet is presented as one complete vertical slice for the hackathon:
+This submission is maintained from a collaborator lane: browser product, responsive HUD, README and documentation, deployment preview, demo flow, and presentation assets. The backend engine, credentials, live Gemini behavior, Grafana publisher, and backend receipts remain owned by the repository owner. Frontend copy mirrors backend responses without changing the deterministic safety authority.
 
-`late script change -> structured agent analysis -> deterministic safety gate -> Grafana receipt -> crew-facing proof`
+### Collaborator lane
 
-The submission focuses on one memorable result rather than a feature list: a dangerous revision is refused, the reason is visible, the required people are named, and the system shows the evidence behind the decision.
+- Browser product and responsive proof HUD in `public/`
+- Judge demo reel and S2 proof path
+- Vercel deployment and frontend regression coverage
+- README, architecture notes, demo script, and submission materials
 
-### Contribution proof
+### Repository owner lane
 
-| Contributor | Completed work | Repository evidence |
-| --- | --- | --- |
-| Sehrish | Browser product, responsive HUD, judge demo reel, Vercel deployment, README/docs, video/submission assets, and UI regression coverage | `public/`, `README.md`, `docs/`, `tests/ui-smoke.spec.js` |
-| Sean, repository owner | FastAPI backend, ADK/Gemini pipeline, Pydantic contracts, deterministic safety engine, jurisdiction data, Grafana MCP publisher, and backend tests | `src/`, `data/`, `tests/test_*.py`, `public/output.json` |
-| Shared submission work | Scenario design, proof path, demo narrative, claim review, and final validation | `docs/DEMO_VIDEO_SCRIPT.md`, `docs/JUDGE-READY-PLAN.md`, `docs/TEAM-CHECKLIST.md` |
+- FastAPI routes and scenario contracts in `src/main.py`
+- ADK/Gemini pipeline and Pydantic models in `src/agent/`
+- Deterministic safety engine and jurisdiction data in `src/engine/` and `data/`
+- Grafana MCP publisher and backend verification in `src/engine/grafana_client.py` and `tests/`
 
-### Competition readiness
+The result is one shared hackathon solution: AI structures the revision, deterministic rules decide, and the crew receives a proof-backed next action.
 
-| Submission signal | Current state |
-| --- | --- |
-| Clear problem and memorable outcome | S2 revision reaches deterministic `STOP` |
-| Hosted project | Vercel deployment is verified |
-| Demo proof | Public demo video is linked in the header |
-| Technical credibility | Code flow, tests, contracts, and evidence status are documented |
-| Partner integration | Local Grafana MCP path is verified; hosted publishing remains honestly labeled |
-| Repository submission | Owner must make the GitHub repository public before final submission |
+## Final Hackathon Submission
 
-The contribution split is documented for clarity, while the judging story remains one product: AI proposes structure, deterministic rules decide, and production stays in control.
+- [Watch the demo video](https://youtu.be/XzUXE0kLOAs)
+- [Launch the live app](https://universal-callsheet.vercel.app)
+- [Read the architecture](docs/ARCHITECTURE.md)
+- [Open the submission copy](docs/DEVPOST_SUBMISSION.md)
+- [Explore the GitHub repository](https://github.com/deveraux-dev/google-cinema-hacka)
+
+Submission readiness: the hosted app, public demo video, code-flow documentation, test evidence, and local Grafana proof are prepared. The repository owner must make the GitHub repository public before final submission.
 
 ## License
 
