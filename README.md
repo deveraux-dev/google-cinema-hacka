@@ -1,187 +1,148 @@
 <p align="center">
-  <img src="assets/ucs-logo.jpg" alt="Universal CallSheet logo" width="112" />
+  <img src="assets/ucs-logo.jpg" alt="Universal CallSheet logo" width="128" />
 </p>
 
 <h1 align="center">Universal CallSheet</h1>
 
 <p align="center">
-  <strong>AI reads the screenplay revision. Deterministic safety rules decide whether the camera can roll.</strong>
+  <strong>AI structures screenplay changes. Deterministic safety rules decide whether the camera can roll.</strong>
 </p>
 
+<p align="center">A proof-first safety review cockpit for film productions.</p>
+
 <p align="center">
-  <a href="https://universal-callsheet.vercel.app">Live App</a>
-  &nbsp;|&nbsp;
-  <a href="https://youtu.be/XzUXE0kLOAs">Demo Video</a>
-  &nbsp;|&nbsp;
-  <a href="docs/DEVPOST_SUBMISSION.md">Devpost Copy</a>
-  &nbsp;|&nbsp;
+  <a href="https://universal-callsheet.vercel.app">Live app</a>
+  &nbsp; | &nbsp;
+  <a href="https://youtu.be/XzUXE0kLOAs">Demo video</a>
+  &nbsp; | &nbsp;
   <a href="docs/ARCHITECTURE.md">Architecture</a>
+  &nbsp; | &nbsp;
+  <a href="docs/DEVPOST_SUBMISSION.md">Submission copy</a>
 </p>
 
 <p align="center">
   <code>Google ADK</code>
   <code>Gemini</code>
   <code>FastAPI</code>
-  <code>Deterministic Safety Engine</code>
+  <code>Python safety engine</code>
   <code>Grafana MCP</code>
   <code>Vercel</code>
 </p>
 
-Universal CallSheet is a proof-first production safety agent for film crews. It turns a last-minute screenplay revision into a stage decision, required sign-offs, and an auditable evidence trail.
+## The Product
 
-## Start Here
+A late screenplay revision can introduce a firearm, smoke, a confined space, a stunt, or powered equipment after the production plan is already in motion. Universal CallSheet turns that revision into a reviewable production record:
 
-| What | Link |
+`changed text -> affected departments -> hazard evidence -> stage decision -> required clearances -> receipt`
+
+The memorable outcome is intentionally simple: when a critical hazard is present, the system says `STOP`, explains why, and shows what must happen next.
+
+## See The Proof First
+
+| Start here | What it proves |
 | --- | --- |
-| Live app | https://universal-callsheet.vercel.app |
-| Demo video | https://youtu.be/XzUXE0kLOAs |
-| Source branch | `frontend-deploy` |
-| Best judge path | Open the app, keep Auto-review on, select S2, inspect STOP, clearances, JSON, and receipt state. |
+| [Open the live app](https://universal-callsheet.vercel.app) | The deployed review cockpit and S2 proof path |
+| [Watch the 99-second demo](https://youtu.be/XzUXE0kLOAs) | The product story and end-to-end interaction |
+| Select `S2` in the scenario deck | A confined-space firearm revision reaches `STOP` |
+| Open `Raw backend JSON` | The visible result comes from the FastAPI contract |
+| Open `Receipt and chain` | Runtime mode, safety ownership, and Grafana status are explicit |
 
-For judges: watch the 99-second demo first for the story, then use the live app to replay the S2 refusal path.
+### The 60-second judge path
 
-## The Moment That Matters
+1. Open the live app and keep `Auto-review` enabled.
+2. Select `S2: Confined Space Prop Firearm Shootout`.
+3. Watch the revision move through structured analysis and the deterministic safety engine.
+4. Read the `STOP` decision, affected teams, and required clearances.
+5. Open the evidence panels and raw JSON to verify the result instead of trusting a claim.
+
+## The Core Flow
 
 ```mermaid
 flowchart LR
-    A["Scene S2 revision<br/>confined space + firearm + smoke"] --> B["Gemini / fallback<br/>structures the change"]
-    B --> C["Python safety engine<br/>applies deterministic rules"]
-    C -->|critical hazard mix| D["STOP<br/>camera cannot roll"]
-    D --> E["Required clearances<br/>1st AD, safety, armorer, ventilation"]
-    D --> F["Receipt trail<br/>HUD JSON + Grafana state"]
+    A["Screenplay revision"] --> B["ADK / Gemini\nstructured extraction"]
+    B --> C["Pydantic\ncontract validation"]
+    C --> D["Deterministic\nPython safety engine"]
+    D -->|GREEN| E["Standard checks\nmay continue"]
+    D -->|RED / STOP| F["Hold camera\nrequire clearances"]
+    D --> G["Grafana MCP\nreceipt when configured"]
+    F --> H["Frontend proof HUD\nJSON, evidence, next action"]
+    G --> H
 
     classDef input fill:#17212b,stroke:#8ed5ff,color:#ffffff,stroke-width:2px;
-    classDef ai fill:#1d2a33,stroke:#8ed5ff,color:#ffffff,stroke-width:2px;
-    classDef gate fill:#1f2f27,stroke:#56e5a9,color:#ffffff,stroke-width:2px;
-    classDef stop fill:#8f2d35,stroke:#ff7b74,color:#ffffff,stroke-width:3px;
-    classDef proof fill:#241f18,stroke:#ffb95f,color:#ffffff,stroke-width:2px;
+    classDef ai fill:#202a33,stroke:#8ed5ff,color:#ffffff,stroke-width:2px;
+    classDef gate fill:#1d3027,stroke:#56e5a9,color:#ffffff,stroke-width:3px;
+    classDef hold fill:#8f2d35,stroke:#ff7b74,color:#ffffff,stroke-width:3px;
+    classDef proof fill:#2b2419,stroke:#ffb95f,color:#ffffff,stroke-width:2px;
 
     class A input;
-    class B ai;
-    class C gate;
-    class D stop;
-    class E,F proof;
+    class B,C ai;
+    class D gate;
+    class E,F hold;
+    class G,H proof;
 ```
 
-The product in one sentence: creative AI is allowed upstream; deterministic permission is required downstream.
+## Why The Boundary Matters
 
-## What A Judge Sees In 60 Seconds
+The model is useful for interpreting ambiguous screenplay language. It is not trusted with the final permission decision.
 
-| Signal | Where it appears | What it proves |
+| Layer | Responsibility | Evidence in this repo |
 | --- | --- | --- |
-| Product identity | Logo, title, live app, demo video | The submission has a clear front door |
-| Concrete outcome | S2 reaches `STOP` | The system refuses unsafe production work |
-| Technical boundary | AI extraction before Python decision | The model does not own final safety authority |
-| Operational value | Required clearances and affected departments | The result is useful to a real production team |
-| Trust layer | JSON, fallback labels, Grafana state | Claims are visible and auditable |
+| Google ADK / Gemini | Extract changes, department impact, and governed hazard tags | `src/agent/pipeline.py`, `src/agent/models.py` |
+| Pydantic contracts | Reject malformed structured output | `src/agent/models.py`, API tests |
+| Python safety engine | Map hazard rows to `GREEN`, `REVIEW`, `RED`, or `STOP` | `src/engine/safety.py` |
+| Grafana MCP adapter | Publish significant results as an annotation when configured | `src/engine/grafana_client.py` |
+| Frontend HUD | Show the decision, evidence, provenance, and next action | `public/index.html`, `public/app.js` |
 
-## Why Universal CallSheet?
+The frontend checklist records sign-off progress; it cannot override a backend `STOP` verdict. That rule is covered by a browser regression test.
 
-Film revisions can change physical work faster than safety paperwork changes. One new line can introduce firearms, atmospheric smoke, restricted egress, pyrotechnics, heights, rigging, or powered equipment before every department has updated its plan.
+## Verified Visual Receipt
 
-Universal CallSheet gives the model a narrow job and gives the safety decision a hard boundary:
+The local Grafana path was verified with a Backlot Safety Wall showing scene severity and open locks. Hosted Grafana publishing is supported, but the live app labels it as published only when the current backend request returns a receipt.
 
-- **Structured extraction:** Google ADK/Gemini turns revision text into strict `DiffOutput`, `CascadeOutput`, and `HazardTagOutput` objects.
-- **Deterministic gate:** Python safety rules own `GREEN`, `RED`, and `STOP`. The model does not decide whether camera may roll.
-- **Bounded automation:** Auto-review can submit a selected scenario, but it still goes through the same backend validation and safety gate.
-- **Receipt discipline:** The HUD labels live requests, static snapshots, fallback mode, and Grafana receipt state separately.
+<p align="center">
+  <img src="docs/wall.png" alt="Grafana Backlot Safety Wall showing scene severity and open locks" width="100%" />
+</p>
 
-## Replay the Proof
+## Evidence Status
 
-| Step | What you will see | Why it matters |
+| Capability | Status | Source of truth |
 | --- | --- | --- |
-| 1 | S2 is the default proof path: confined-space firearm shootout | Concrete safety consequence, not a generic feature tour |
-| 2 | Auto-review submits the revision to `/api/analyze` | Agentic behavior is bounded and visible |
-| 3 | The safety engine returns `STOP` | The camera-roll decision is deterministic |
-| 4 | Required clearances appear | The result creates operational next actions |
-| 5 | Raw backend JSON and runtime chain are inspectable | The user can verify what happened |
-| 6 | Grafana state is labeled exactly as returned | The project avoids pretending a receipt exists when it does not |
+| Vercel deployment | Verified | [universal-callsheet.vercel.app](https://universal-callsheet.vercel.app) |
+| Public demo video | Verified | [YouTube demo](https://youtu.be/XzUXE0kLOAs) |
+| S2 refusal path | Tested | `tests/ui-smoke.spec.js` |
+| Deterministic safety decision | Tested | `tests/test_safety_engine.py`, `src/engine/safety.py` |
+| Structured analysis path | Tested and fallback-safe | `tests/test_agent_pipeline.py`, `src/agent/pipeline.py` |
+| Auto-review workflow | Tested | `tests/ui-smoke.spec.js`, `src/main.py` |
+| Local Grafana MCP write path | Verified locally | `src/engine/grafana_client.py`, `docs/wall.png` |
+| Hosted Grafana MCP | Supported, unverified | Requires a configured hosted MCP endpoint and returned receipt |
+| Public repository | Pending owner action | The repository owner must change GitHub visibility to public |
 
-## System Path
-
-```mermaid
-flowchart TD
-    A["Screenplay revision"] --> B["Google ADK / Gemini<br/>structured analysis"]
-    B --> C["Pydantic contract<br/>validation"]
-    C --> D{"Deterministic<br/>safety engine"}
-    D -->|GREEN| E["Proceed with<br/>standard checks"]
-    D -->|RED / STOP| F["Hold camera<br/>require clearances"]
-    D --> G["Grafana MCP<br/>adapter"]
-    D --> H["Frontend<br/>proof HUD"]
-    G --> I["Annotation receipt<br/>when configured"]
-    H --> J["Diff, hazards,<br/>citations, JSON"]
-
-    classDef source fill:#17212b,stroke:#8ed5ff,color:#ffffff;
-    classDef contract fill:#202329,stroke:#a1a1aa,color:#ffffff;
-    classDef decision fill:#1f2f27,stroke:#56e5a9,color:#ffffff,stroke-width:3px;
-    classDef clear fill:#153326,stroke:#56e5a9,color:#ffffff;
-    classDef hold fill:#8f2d35,stroke:#ff7b74,color:#ffffff;
-    classDef receipt fill:#241f18,stroke:#ffb95f,color:#ffffff;
-
-    class A,B source;
-    class C contract;
-    class D decision;
-    class E clear;
-    class F hold;
-    class G,H,I,J receipt;
-```
-
-## Claim-Proof Ledger
-
-We use a strict vocabulary so the README does not make a stronger claim than the code, tests, deployment, or receipt supports.
-
-| Claim | Status | Evidence |
-| --- | --- | --- |
-| Hosted project URL | Verified | Production Vercel URL returns 200 and serves the judge demo reel. |
-| Demo video | Verified | Public YouTube demo: https://youtu.be/XzUXE0kLOAs |
-| S2 refusal path | Tested | UI smoke test verifies selecting S2 reaches `STOP`. |
-| Structured screenplay analysis | Tested / fallback-safe | Google ADK pipeline and schema tests exist; fallback mode is labeled in the HUD. |
-| Safety decision | Tested | `engine.safety.evaluate_safety` owns the decision; refusal paths are covered by tests. |
-| Auto-review | Tested | UI and API tests verify `trigger: auto_review` and the automatic review path. |
-| Local Grafana MCP | Verified locally | Official `mcp-grafana` stdio path created annotations during local verification. |
-| Hosted Grafana MCP | Supported / unverified | Streamable HTTP configuration exists, but no hosted MCP receipt is claimed unless the backend returns one. |
-| Public repository | Submission requirement | The repo owner must make the repository public before final judging. |
-
-## Judge Lens
-
-Official requirement: the project must be a functional Gemini/Google Cloud agent, include a hosted project URL, include a public demo video, include a public open-source repository, and demonstrate runtime use of the chosen partner service rather than merely naming it.
-
-Strong judge signals in this submission:
-
-- **Problem clarity:** screenplay revisions can introduce regulated hazards before call sheets and department plans catch up.
-- **Complete product experience:** the app gives a first assistant director a review surface, decision, evidence, and next action.
-- **Meaningful technology use:** Gemini/ADK structure ambiguous text; deterministic code owns the safety boundary; Grafana is treated as the post-gate receipt layer.
-- **Impact:** the memorable outcome is a refusal: the system explains why the camera cannot roll.
-- **Trust:** fallback and receipt states are labeled instead of hidden.
-
-## Built With
-
-- Google ADK and Gemini for structured screenplay extraction.
-- Python, FastAPI, Pydantic, and deterministic safety rules.
-- Official Grafana MCP support through local stdio and hosted Streamable HTTP configuration.
-- Vanilla HTML, CSS, and JavaScript for the proof HUD.
-- Vercel-compatible FastAPI routing.
+The app distinguishes live requests, structured fallback, history snapshots, static snapshots, and Grafana receipt state. No live Gemini or hosted Grafana claim should be inferred when the corresponding status is not visible in the current response.
 
 ## Run Locally
+
+### Requirements
+
+- Python 3.11+
+- Node.js and npm
+- Optional: Google Chrome for browser tests
+
+### Start the app
 
 ```powershell
 python -m pip install -e .
 python -m uvicorn src.main:app --host 127.0.0.1 --port 8003
 ```
 
-Open:
+Open [http://127.0.0.1:8003](http://127.0.0.1:8003).
 
-```text
-http://127.0.0.1:8003/
-```
-
-Run backend tests:
+### Run the tests
 
 ```powershell
 python -m pytest -q
 ```
 
-Run browser tests with installed Chrome:
+For the responsive browser suite:
 
 ```powershell
 npm install
@@ -190,18 +151,18 @@ $env:BASE_URL='http://127.0.0.1:8003/'
 npm run test:ui
 ```
 
-## Environment
+The browser suite covers the desktop, laptop, tablet, and mobile HUD, the custom revision path, automatic S2 review, navigation, and the rule that a `STOP` cannot be overridden by checking clearances.
 
-Keep all credentials server-side. The browser reads only the JSON response; it never receives these values.
+## Configuration
 
-Gemini:
+Credentials stay on the server. The browser receives only the JSON response.
 
 ```text
 GEMINI_API_KEY=<server-side key>
 GEMINI_MODEL=gemini-3.7-flash
 ```
 
-Hosted Grafana MCP:
+For hosted Grafana MCP:
 
 ```text
 GRAFANA_MCP_URL=https://<hosted-mcp-service>/mcp
@@ -210,20 +171,29 @@ GRAFANA_PUBLIC_URL=https://<grafana-host>
 GRAFANA_MCP_TIMEOUT_SECONDS=20
 ```
 
-Never expose these variables as browser or `NEXT_PUBLIC_*` variables.
+Without Gemini credentials or when the provider is unavailable, the app uses a schema-compatible local fallback and labels that mode in the HUD. Without Grafana configuration, the safety decision still returns, while publishing is reported as skipped.
 
-For Vercel, configure the same variables in the project environment settings. A hosted `GRAFANA_MCP_URL` is required for production MCP publishing; local stdio is not available inside Vercel serverless functions.
+## Repository Map
 
-## Limitations
+```text
+src/main.py                    FastAPI routes and production scenarios
+src/agent/                     ADK/Gemini extraction pipeline and contracts
+src/engine/safety.py           Deterministic hazard-to-severity rules
+src/engine/grafana_client.py   MCP annotation publisher
+public/                        Browser HUD and static assets
+tests/                         Backend and browser regression tests
+docs/ARCHITECTURE.md           Detailed system boundaries
+docs/DEMO_VIDEO_SCRIPT.md      Recording plan and truthful narration
+```
 
-- Local stdio Grafana MCP is verified. Hosted MCP is supported but remains unverified until a real hosted endpoint returns a receipt.
-- Vercel serverless SQLite history is ephemeral; the live POST response is the source of truth.
-- Only the encoded Alberta OHS hazard rules are covered.
-- Universal CallSheet is an assistive hackathon prototype, not legal advice or a replacement for qualified safety leadership or regulators.
-- The repository must be made public by the repo owner for final hackathon compliance.
+## Scope And Limitations
 
-## Compliance and Provenance
+- This is an assistive hackathon prototype, not legal advice and not a replacement for qualified safety leadership or regulators.
+- The governed hazard mapping currently targets the Alberta OHS model encoded in `src/engine/safety.py` and its supporting data files.
+- SQLite history on Vercel is best-effort and ephemeral; the live POST response is the source of truth.
+- Hosted Grafana publishing is not claimed until a configured endpoint returns a verified MCP receipt.
+- Final hackathon submission compliance still depends on the repository owner making the GitHub repository public.
 
-This repository contains new Universal CallSheet implementation work. It does not copy private implementation code, credentials, receipts, or assets from other projects.
+## License
 
-The reusable pattern is the proof architecture: AI proposes or extracts, deterministic code gates, the external tool receives only cleared output, and the UI shows the receipt state.
+See [LICENSE](LICENSE).
