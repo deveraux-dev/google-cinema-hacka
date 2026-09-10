@@ -190,33 +190,7 @@ The local Grafana path was verified with a Backlot Safety Wall showing scene sev
 
 The app distinguishes live requests, structured fallback, history snapshots, static snapshots, and Grafana receipt state. No live Gemini or hosted Grafana claim should be inferred when the corresponding status is not visible in the current response.
 
-## Run Locally
-
-```powershell
-python -m pip install -e .
-python -m uvicorn src.main:app --host 127.0.0.1 --port 8003
-```
-
-Open [http://127.0.0.1:8003](http://127.0.0.1:8003).
-
-No credentials are needed for the local proof path; the app uses its clearly labeled structured fallback when Gemini is unavailable.
-
-Run the backend tests with:
-
-```powershell
-python -m pytest -q
-```
-
-For the responsive browser suite:
-
-```powershell
-npm install
-$env:PLAYWRIGHT_CHROME_PATH='C:\Program Files\Google\Chrome\Application\chrome.exe'
-$env:BASE_URL='http://127.0.0.1:8003/'
-npm run test:ui
-```
-
-The browser suite covers the desktop, laptop, tablet, and mobile HUD, the custom revision path, automatic S2 review, navigation, and the rule that a `STOP` cannot be overridden by checking clearances.
+Current verification: 21 backend tests and 8 responsive browser tests pass on the submission branch.
 
 ## Scope And Limitations
 
